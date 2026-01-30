@@ -1,0 +1,13 @@
+{
+  "name": "specstory-guard",
+  "version": "0.1.0",
+  "description": "Pre-commit guardrail that scans .specstory/history for potential secrets.",
+  "scope": {
+    "history_dir": ".specstory/history",
+    "enforcement": "pre-commit"
+  },
+  "entrypoints": {
+    "setup": "scripts/setup.py",
+    "scan": "scripts/scan.py"
+  }
+}

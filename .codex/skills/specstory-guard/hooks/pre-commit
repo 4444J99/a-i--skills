@@ -1,0 +1,27 @@
+#!/bin/sh
+# specstory-guard pre-commit hook
+
+set -e
+
+REPO_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || true)
+if [ -z "$REPO_ROOT" ]; then
+  exit 0
+fi
+
+SCAN_SCRIPT="$REPO_ROOT/skills/specstory-guard/scripts/scan.py"
+if [ ! -f "$SCAN_SCRIPT" ]; then
+  echo "specstory-guard: scan script not found at $SCAN_SCRIPT" >&2
+  exit 1
+fi
+
+PYTHON_BIN="python3"
+if ! command -v "$PYTHON_BIN" >/dev/null 2>&1; then
+  PYTHON_BIN="python"
+fi
+
+if ! command -v "$PYTHON_BIN" >/dev/null 2>&1; then
+  echo "specstory-guard: python not found (need python3 or python)" >&2
+  exit 1
+fi
+
+"$PYTHON_BIN" "$SCAN_SCRIPT" --root "$REPO_ROOT"

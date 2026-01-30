@@ -4,6 +4,20 @@ THE FOLLOWING SETS FORTH ATTRIBUTION NOTICES FOR THIRD PARTY SOFTWARE THAT MAY B
 
 ---
 
+## **Apache License 2.0**
+
+The following components are licensed under Apache License 2.0:
+
+**SpecStory Agent Skills**, Copyright (c) 2024-2026 SpecStory, Inc.
+
+Source: https://github.com/specstoryai/agent-skills
+
+Used in: specstory-guard, specstory-link-trail, specstory-organize, specstory-project-stats, specstory-session-summary, specstory-yak
+
+**License Text:** See http://www.apache.org/licenses/LICENSE-2.0
+
+---
+
 ## **BSD 2-Clause License**
 
 The following components are licensed under BSD 2-Clause License reproduced below:
