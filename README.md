@@ -55,7 +55,7 @@ The `document-skills/` subdirectory contains skills that Anthropic developed to 
 
 **Important Disclaimer:** These document skills are point-in-time snapshots and are not actively maintained or updated. Versions of these skills ship pre-included with Claude. They are primarily intended as reference examples to illustrate how Anthropic approaches developing more complex skills that work with binary file formats and document structures.
 
-# Try in Claude Code, Claude.ai, and the API
+# Try in Claude Code, Codex, Gemini CLI, Claude.ai, and the API
 
 ## Claude Code
 You can register this repository as a Claude Code Plugin marketplace by running the following command in Claude Code:
@@ -76,6 +76,41 @@ Alternatively, directly install either Plugin via:
 ```
 
 After installing the plugin, you can use the skill by just mentioning it. For instance, if you install the `document-skills` plugin from the marketplace, you can ask Claude Code to do something like: "Use the PDF skill to extract the form fields from path/to/some-file.pdf"
+
+Note: `document-skills` and `example-skills` both include `docx`, `pdf`, `pptx`, and `xlsx` in different forms. Install one collection at a time to avoid duplicate skill names.
+
+## Codex (OpenAI)
+Codex can load skills from a repo-local `.codex/skills` directory. This repo provides generated link directories for the top-level skills and the document skills:
+
+```bash
+# Top-level skills (default)
+python3 scripts/refresh_skill_collections.py
+
+# Document skills (reference set)
+python3 scripts/refresh_skill_collections.py --mode copy
+```
+
+Use `.codex/skills` for the top-level set and `.codex/skills-document` for the document set.
+To use symlinks instead of copies, run with `--mode symlink`.
+
+## Gemini CLI
+This repo ships two Gemini extensions:
+
+```bash
+# Example skills (top-level)
+gemini extensions install ./extensions/gemini/example-skills
+
+# Document skills (reference set)
+gemini extensions install ./extensions/gemini/document-skills
+```
+
+If you add or remove skills, re-run:
+
+```bash
+python3 scripts/refresh_skill_collections.py
+```
+Use `--mode symlink` if you prefer symlinks on your platform.
+Generated link directories are committed; include the refreshed outputs in PRs that change skills.
 
 ## Claude.ai
 
@@ -115,6 +150,14 @@ The frontmatter requires only two fields:
 - `description` - A complete description of what the skill does and when to use it
 
 The markdown content below contains the instructions, examples, and guidelines that Claude will follow. For more details, see [How to create custom skills](https://support.claude.com/en/articles/12512198-creating-custom-skills).
+
+After adding or removing a skill, run:
+
+```bash
+python3 scripts/refresh_skill_collections.py
+python3 scripts/validate_skills.py --collection example --unique
+python3 scripts/validate_skills.py --collection document --unique
+```
 
 # Partner Skills
 

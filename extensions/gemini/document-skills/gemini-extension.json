@@ -1,0 +1,7 @@
+{
+  "name": "document-skills",
+  "version": "1.1.0",
+  "label": "Document Skills",
+  "description": "Reference document skills under document-skills/.",
+  "contextFileName": "GEMINI.md"
+}

@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Anthropic example skills",
-    "version": "1.0.0"
+    "version": "1.1.0"
   },
   "plugins": [
     {
@@ -15,10 +15,10 @@
       "source": "./",
       "strict": false,
       "skills": [
-        "./document-skills/xlsx",
         "./document-skills/docx",
+        "./document-skills/pdf",
         "./document-skills/pptx",
-        "./document-skills/pdf"
+        "./document-skills/xlsx"
       ]
     },
     {
@@ -27,16 +27,55 @@
       "source": "./",
       "strict": false,
       "skills": [
-        "./skill-creator",
-        "./mcp-builder",
-        "./canvas-design",
+        "./accessibility-patterns",
         "./algorithmic-art",
-        "./internal-comms",
-        "./webapp-testing",
+        "./api-design-patterns",
         "./artifacts-builder",
+        "./audio-engineering-patterns",
+        "./blockchain-integration-builder",
+        "./brand-guidelines",
+        "./canvas-design",
+        "./content-distribution",
+        "./creative-writing-craft",
+        "./cv-resume-builder",
+        "./deployment-cicd",
+        "./doc-coauthoring",
+        "./docx",
+        "./enc1101-curriculum-designer",
+        "./evaluation-to-growth",
+        "./feedback-pedagogy",
+        "./freelance-client-ops",
+        "./gcp-resource-optimizer",
+        "./generative-art-algorithms",
+        "./github-repo-curator",
+        "./grant-proposal-writer",
+        "./interfaith-sacred-geometry",
+        "./internal-comms",
+        "./interview-preparation",
+        "./knowledge-architecture",
+        "./mcp-builder",
+        "./mcp-server-orchestrator",
+        "./modular-synthesis-philosophy",
+        "./narratological-algorithms",
+        "./networking-outreach",
+        "./nextjs-fullstack-patterns",
+        "./pdf",
+        "./portfolio-presentation",
+        "./pptx",
+        "./product-requirements-designer",
+        "./project-orchestration",
+        "./reality-tv-narrative-analyzer",
+        "./skill-creator",
         "./slack-gif-creator",
+        "./speckit",
+        "./template-skill",
+        "./testing-patterns",
         "./theme-factory",
-        "./brand-guidelines"
+        "./three-js-interactive-builder",
+        "./web-artifacts-builder",
+        "./webapp-testing",
+        "./workshop-presentation-design",
+        "./xlsx"
       ]
     }
   ]
