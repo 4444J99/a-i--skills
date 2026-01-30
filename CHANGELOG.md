@@ -12,3 +12,8 @@ This project follows semantic versioning.
 ### Changed
 - Marketplace and Gemini extension versions to 1.1.0.
 - Release workflow to include regenerated bundles and committed artifacts.
+
+## [1.1.1] - 2026-01-30
+### Changed
+- Link to `CHANGELOG.md` from `README.md`.
+- Bump marketplace and Gemini extension versions to 1.1.1.
