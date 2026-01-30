@@ -48,10 +48,11 @@ python3 scripts/validate_skills.py --collection document --unique
    python3 scripts/validate_skills.py --collection example --unique
    python3 scripts/validate_skills.py --collection document --unique
    ```
-2. Bump versions in:
+2. Update `CHANGELOG.md` with the release summary.
+3. Bump versions in:
    - `.claude-plugin/marketplace.json` (`metadata.version`)
    - `extensions/gemini/example-skills/gemini-extension.json`
    - `extensions/gemini/document-skills/gemini-extension.json`
-3. Update `README.md` if install steps or collection membership changed.
-4. Verify CI passes (`.github/workflows/validate-skills.yml`).
-5. Tag and publish if you distribute through a marketplace.
+4. Update `README.md` if install steps or collection membership changed.
+5. Verify CI passes (`.github/workflows/validate-skills.yml`).
+6. Tag and publish, then create a release (prefer `gh release create vX.Y.Z --generate-notes` or attach the changelog section as notes).
