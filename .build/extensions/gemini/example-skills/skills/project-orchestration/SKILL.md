@@ -344,6 +344,5 @@ Avoid:
 
 ## References
 
-- `references/review-templates.md` - Weekly/monthly review templates
-- `references/project-templates.md` - Project kickoff templates
+- `references/review-templates.md` - Weekly/monthly/quarterly review templates
 - `references/stuck-interventions.md` - Detailed unsticking strategies

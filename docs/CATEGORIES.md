@@ -1,8 +1,8 @@
 # Skill Categories
 
-This repository contains 80 AI agent skills organized into the following categories.
+This repository contains 95 AI agent skills organized into the following categories.
 
-## 📝 Creative & Content (10 skills)
+## 📝 Creative & Content (13 skills)
 
 **Purpose**: Generate and manipulate creative content, art, and media.
 
@@ -16,6 +16,9 @@ This repository contains 80 AI agent skills organized into the following categor
 - `reality-tv-narrative-analyzer` - Analyze reality TV narratives
 - `theme-factory` - Design system theme generation
 - `three-js-interactive-builder` - Interactive 3D experiences with Three.js
+- `generative-music-composer` - Algorithmic music composition
+- `interactive-theatre-designer` - Interactive theatrical experiences
+- `movement-notation-systems` - Dance and movement notation
 
 ## 💼 Professional & Business (11 skills)
 
@@ -75,13 +78,16 @@ This repository contains 80 AI agent skills organized into the following categor
 - `mcp-server-orchestrator` - MCP server management
 - `web-artifacts-builder` - Web artifact generation
 
-## 📊 Data & Analysis (3 skills)
+## 📊 Data & Analysis (6 skills)
 
-**Purpose**: Data analysis, visualization, and SQL optimization.
+**Purpose**: Data analysis, visualization, SQL optimization, and ML workflows.
 
 - `data-storytelling-analyst` - Data visualization and storytelling
 - `sql-query-optimizer` - SQL query optimization
 - `systemic-product-analyst` - Product analytics and systems thinking
+- `data-pipeline-architect` - Data pipeline design and orchestration
+- `ml-experiment-tracker` - Machine learning experiment tracking
+- `time-series-analyst` - Time series analysis and forecasting
 
 ## 🔒 Security & Compliance (5 skills)
 
@@ -116,13 +122,15 @@ This repository contains 80 AI agent skills organized into the following categor
 - `feedback-pedagogy` - Pedagogical feedback techniques
 - `socratic-tutor` - Socratic teaching method
 
-## 🧠 Knowledge Management (3 skills)
+## 🧠 Knowledge Management (5 skills)
 
-**Purpose**: Personal knowledge systems and information architecture.
+**Purpose**: Personal knowledge systems, information architecture, and research synthesis.
 
-- `absorb-alchemize` - Knowledge absorption and synthesis
 - `knowledge-architecture` - Information architecture design
 - `second-brain-librarian` - Personal knowledge management (PKM)
+- `knowledge-graph-builder` - Build and query knowledge graphs
+- `recursive-systems-architect` - Design self-referential systems
+- `research-synthesis-workflow` - Research literature synthesis
 
 ## 📋 Project Management (4 skills)
 
@@ -133,7 +141,7 @@ This repository contains 80 AI agent skills organized into the following categor
 - `project-alchemy-orchestrator` - Complex project orchestration
 - `project-orchestration` - Project workflow management
 
-## 🎯 Specialized & Domain-Specific (7 skills)
+## 🎯 Specialized & Domain-Specific (6 skills)
 
 **Purpose**: Niche domains and specialized use cases.
 
@@ -141,6 +149,12 @@ This repository contains 80 AI agent skills organized into the following categor
 - `game-mechanics-designer` - Game design patterns
 - `interfaith-sacred-geometry` - Sacred geometry and interfaith studies
 - `local-llm-fine-tuning` - LLM fine-tuning workflows
+- `defi-trading-systems` - DeFi trading strategy development
+- `location-ar-experience` - Location-based AR experiences
+
+## 🔌 Integrations (9 skills)
+
+**Purpose**: Third-party integrations and API patterns.
 
 ### SpecStory Integration (6 skills)
 Tools for working with SpecStory AI coding session histories:
@@ -151,13 +165,18 @@ Tools for working with SpecStory AI coding session histories:
 - `specstory-session-summary` - Session summaries
 - `specstory-yak` - Yak shaving analysis
 
+### API & Protocol Patterns (3 skills)
+- `mcp-integration-patterns` - MCP server integration patterns
+- `oauth-flow-architect` - OAuth authentication flows
+- `webhook-integration-patterns` - Webhook design and handling
+
 ## 🛠️ Utilities & Tools (3 skills)
 
-**Purpose**: Skill development and repository maintenance.
+**Purpose**: Skill development, agent orchestration, and repository maintenance.
 
 - `skill-creator` - Create new skills
 - `speckit` - SpecStory toolkit
-- `template-skill` - Skill template
+- `agent-swarm-orchestrator` - Multi-agent swarm coordination
 
 ---
 
@@ -198,6 +217,6 @@ Tools for working with SpecStory AI coding session histories:
 
 ---
 
-**Total**: 85 skills across 11 major categories
+**Total**: 95 skills across 12 major categories
 
 For detailed information about any skill, see its `SKILL.md` file in the skill directory.

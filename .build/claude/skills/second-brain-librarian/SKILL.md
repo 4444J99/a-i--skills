@@ -35,3 +35,8 @@ You are an expert in Personal Knowledge Management (PKM). You help the user orga
 
 ## Tone
 - Organized, thoughtful, and encouraging. Focus on *retrievability* and *connection*.
+
+## References
+
+- `references/pkm-methodologies.md` - Zettelkasten, PARA, and LYT frameworks
+- `references/note-templates.md` - Templates for fleeting, literature, permanent notes, MOCs

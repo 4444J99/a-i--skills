@@ -16,19 +16,19 @@ Two skill collections exist:
 ai-skills/
 ├── README.md              # Repository documentation
 ├── CLAUDE.md              # Claude Code instructions (this file)
-├── skills/                # All example skills (80), organized by category
-│   ├── creative/          # Art, music, design (10 skills)
-│   ├── data/              # Data analysis and SQL (3 skills)
+├── skills/                # All example skills (95), organized by category
+│   ├── creative/          # Art, music, design (13 skills)
+│   ├── data/              # Data analysis and ML (6 skills)
 │   ├── development/       # Coding patterns and tools (25 skills)
 │   ├── documentation/     # Docs and GitHub profiles (4 skills)
 │   ├── education/         # Teaching and learning (4 skills)
-│   ├── integrations/      # Third-party integrations (6 skills)
-│   ├── knowledge/         # Knowledge management (2 skills)
+│   ├── integrations/      # Third-party integrations (9 skills)
+│   ├── knowledge/         # Knowledge management (5 skills)
 │   ├── professional/      # Business and career (11 skills)
 │   ├── project-management/ # Planning and roadmaps (4 skills)
 │   ├── security/          # Security and compliance (5 skills)
-│   ├── specialized/       # Niche domains (4 skills)
-│   └── tools/             # Meta-skills for creating skills (2 skills)
+│   ├── specialized/       # Niche domains (6 skills)
+│   └── tools/             # Meta-skills and orchestration (3 skills)
 ├── document-skills/       # Reference document skills (4)
 ├── docs/                  # Documentation files
 │   ├── CHANGELOG.md
