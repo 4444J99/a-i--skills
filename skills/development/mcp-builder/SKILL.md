@@ -326,3 +326,18 @@ Load these resources as needed during development:
   - XML format specifications
   - Example questions and answers
   - Running an evaluation with the provided scripts
+
+---
+
+## Related Skills
+
+### Complementary Skills (Use Together)
+- **[mcp-server-orchestrator](../mcp-server-orchestrator/)** - Coordinate multiple MCP servers; use after building individual servers
+- **[mcp-integration-patterns](../../integrations/mcp-integration-patterns/)** - Patterns for integrating MCP servers with other systems
+- **[testing-patterns](../testing-patterns/)** - Write tests for your MCP server implementations
+
+### Alternative Skills (Similar Purpose)
+- **[api-design-patterns](../api-design-patterns/)** - If building REST/GraphQL APIs instead of MCP servers
+
+### Prerequisite Skills (Learn First)
+- **[backend-implementation-patterns](../backend-implementation-patterns/)** - Foundation for server-side development patterns

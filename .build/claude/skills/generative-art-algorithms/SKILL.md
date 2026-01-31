@@ -472,6 +472,23 @@ randomSeed(hashCode("my-artwork-2024"));
 
 ---
 
+---
+
+## Related Skills
+
+### Complementary Skills (Use Together)
+- **[algorithmic-art](../algorithmic-art/)** - Complete workflow for creating interactive p5.js generative art
+- **[canvas-design](../canvas-design/)** - Canvas API patterns for custom rendering
+- **[theme-factory](../theme-factory/)** - Design color palettes and visual themes
+
+### Alternative Skills (Similar Purpose)
+- **[three-js-interactive-builder](../three-js-interactive-builder/)** - For 3D generative art with Three.js
+
+### Prerequisite Skills (Learn First)
+- None required - includes foundational creative coding patterns
+
+---
+
 ## References
 
 - `references/noise-recipes.md` - Noise function patterns

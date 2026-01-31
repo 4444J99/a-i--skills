@@ -412,6 +412,23 @@ jobs:
 
 ---
 
+---
+
+## Related Skills
+
+### Complementary Skills (Use Together)
+- **[tdd-workflow](../tdd-workflow/)** - Test-driven development workflow; combine with testing-patterns for complete TDD practice
+- **[verification-loop](../verification-loop/)** - Iterative verification process that uses tests as quality gates
+- **[deployment-cicd](../deployment-cicd/)** - CI/CD integration for running tests in pipelines
+
+### Alternative Skills (Similar Purpose)
+- **[webapp-testing](../webapp-testing/)** - Specialized web application testing with browser automation focus
+
+### Prerequisite Skills (Learn First)
+- None required - this is a foundational skill
+
+---
+
 ## References
 
 - `references/vitest-patterns.md` - Vitest specific patterns

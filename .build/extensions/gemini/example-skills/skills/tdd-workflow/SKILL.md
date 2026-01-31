@@ -288,3 +288,18 @@ Complements:
 5. **COMMIT**: Only commit if all tests pass
 
 Never skip steps. Never commit untested code.
+
+---
+
+## Related Skills
+
+### Complementary Skills (Use Together)
+- **[testing-patterns](../testing-patterns/)** - Comprehensive test patterns for unit, integration, and E2E tests
+- **[verification-loop](../verification-loop/)** - Pre-commit verification workflow that validates all quality gates
+- **[deployment-cicd](../deployment-cicd/)** - CI pipeline setup for automated test execution
+
+### Alternative Skills (Similar Purpose)
+- None - TDD is a specific methodology that complements other testing approaches
+
+### Prerequisite Skills (Learn First)
+- **[testing-patterns](../testing-patterns/)** - Understanding test types and frameworks helps with TDD

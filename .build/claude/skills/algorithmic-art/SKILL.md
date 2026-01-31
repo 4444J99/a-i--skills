@@ -403,3 +403,18 @@ This skill includes helpful templates and documentation:
 - The **algorithm is where to create** something unique
 - Don't copy the flow field example - build what the philosophy demands
 - But DO keep the exact UI structure and Anthropic branding from the template
+
+---
+
+## Related Skills
+
+### Complementary Skills (Use Together)
+- **[generative-art-algorithms](../generative-art-algorithms/)** - Deep dive into specific generative algorithms (noise, fractals, L-systems)
+- **[canvas-design](../canvas-design/)** - Canvas API patterns for custom rendering beyond p5.js
+- **[theme-factory](../theme-factory/)** - Design color palettes and visual themes for your generative art
+
+### Alternative Skills (Similar Purpose)
+- **[three-js-interactive-builder](../three-js-interactive-builder/)** - For 3D generative art instead of 2D
+
+### Prerequisite Skills (Learn First)
+- None required - includes all necessary p5.js patterns

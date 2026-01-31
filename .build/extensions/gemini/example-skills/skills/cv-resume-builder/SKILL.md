@@ -282,6 +282,23 @@ with emerging technology.
 
 ---
 
+---
+
+## Related Skills
+
+### Complementary Skills (Use Together)
+- **[portfolio-presentation](../portfolio-presentation/)** - Build a portfolio to showcase alongside your resume
+- **[interview-preparation](../interview-preparation/)** - Prepare for interviews after your resume lands opportunities
+- **[networking-outreach](../networking-outreach/)** - Professional networking to complement job applications
+
+### Alternative Skills (Similar Purpose)
+- None - this is the primary resume/CV skill
+
+### Prerequisite Skills (Learn First)
+- None required - this is a standalone professional skill
+
+---
+
 ## References
 
 - `references/action-verbs.md` - Strong verbs by category

@@ -168,3 +168,18 @@ npm run build && npm run lint && npm test
 ```
 
 Use full verification before commits.
+
+---
+
+## Related Skills
+
+### Complementary Skills (Use Together)
+- **[testing-patterns](../testing-patterns/)** - Comprehensive testing approaches for the test verification phase
+- **[tdd-workflow](../tdd-workflow/)** - Test-driven development that produces code ready for verification
+- **[deployment-cicd](../deployment-cicd/)** - CI pipelines that automate the verification loop
+
+### Alternative Skills (Similar Purpose)
+- None - verification-loop is a quality gate process, not an alternative to other practices
+
+### Prerequisite Skills (Learn First)
+- **[testing-patterns](../testing-patterns/)** - Understanding testing helps interpret verification results

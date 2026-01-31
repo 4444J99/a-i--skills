@@ -263,6 +263,23 @@ See `references/deck-structure.md`
 
 ---
 
+---
+
+## Related Skills
+
+### Complementary Skills (Use Together)
+- **[cv-resume-builder](../cv-resume-builder/)** - Build a resume to accompany your portfolio
+- **[interview-preparation](../interview-preparation/)** - Prepare to discuss portfolio projects in interviews
+- **[brand-guidelines](../brand-guidelines/)** - Create consistent visual identity across portfolio
+
+### Alternative Skills (Similar Purpose)
+- None - this is the primary portfolio presentation skill
+
+### Prerequisite Skills (Learn First)
+- None required - this is a standalone professional skill
+
+---
+
 ## References
 
 - `references/case-study-template.md` - Full case study format

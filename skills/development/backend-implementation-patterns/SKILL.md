@@ -238,3 +238,19 @@ Complements:
 - **postgres-advanced-patterns**: For data layer
 - **security-implementation-guide**: For security
 - **tdd-workflow**: For testing
+
+---
+
+## Related Skills
+
+### Complementary Skills (Use Together)
+- **[api-design-patterns](../api-design-patterns/)** - Design your API structure before implementing
+- **[postgres-advanced-patterns](../postgres-advanced-patterns/)** - Advanced database patterns for the data layer
+- **[testing-patterns](../testing-patterns/)** - Write tests for your API endpoints
+- **[deployment-cicd](../deployment-cicd/)** - Deploy your backend services
+
+### Alternative Skills (Similar Purpose)
+- **[nextjs-fullstack-patterns](../nextjs-fullstack-patterns/)** - If building with Next.js App Router
+
+### Prerequisite Skills (Learn First)
+- **[api-design-patterns](../api-design-patterns/)** - Understanding API design helps structure implementations

@@ -481,6 +481,23 @@ components:
 
 ---
 
+---
+
+## Related Skills
+
+### Complementary Skills (Use Together)
+- **[backend-implementation-patterns](../backend-implementation-patterns/)** - Implement the APIs you design
+- **[testing-patterns](../testing-patterns/)** - Test your API endpoints
+- **[deployment-cicd](../deployment-cicd/)** - Deploy and version your APIs
+
+### Alternative Skills (Similar Purpose)
+- **[mcp-builder](../mcp-builder/)** - If building MCP servers instead of REST/GraphQL APIs
+
+### Prerequisite Skills (Learn First)
+- None required - this is a foundational design skill
+
+---
+
 ## References
 
 - `references/openapi-template.md` - Full OpenAPI template
