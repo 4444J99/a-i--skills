@@ -103,6 +103,7 @@
         "./skills/knowledge/second-brain-librarian",
         "./skills/security/security-implementation-guide",
         "./skills/security/security-threat-modeler",
+        "./skills/tools/skill-chain-prompts",
         "./skills/tools/skill-creator",
         "./skills/professional/slack-gif-creator",
         "./skills/education/socratic-tutor",

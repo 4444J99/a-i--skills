@@ -1,0 +1,75 @@
+# API Development Chain
+# Full API lifecycle from design to deployment
+#
+# Usage: /skill-chain-prompts run api-development
+
+chain:
+  name: api-development
+  description: Full API development from design to deployment
+  version: "1.0.0"
+
+steps:
+  - id: design
+    skill: api-design-patterns
+    description: Design API structure, endpoints, and contracts
+    outputs:
+      - openapi-spec      # OpenAPI/Swagger specification
+      - endpoint-list     # List of endpoints with methods
+      - data-models       # Request/response schemas
+    context: |
+      Focus on RESTful design principles.
+      Define clear resource naming and relationships.
+      Include error response formats.
+
+  - id: test-first
+    skill: tdd-workflow
+    description: Write tests before implementation
+    depends_on: [design]
+    inputs: [endpoint-list, data-models]
+    outputs:
+      - test-suite        # API endpoint tests
+    context: |
+      Create tests for each endpoint.
+      Include happy path and error cases.
+      Test authentication/authorization if applicable.
+
+  - id: implement
+    skill: backend-implementation-patterns
+    description: Implement API endpoints following TDD
+    depends_on: [test-first]
+    inputs: [openapi-spec, test-suite]
+    outputs:
+      - source-code       # Implementation files
+    retries: 1
+    context: |
+      Implement endpoints to pass existing tests.
+      Follow patterns from api-design-patterns.
+      Handle errors consistently.
+
+  - id: verify
+    skill: verification-loop
+    description: Verify implementation meets design contract
+    depends_on: [implement]
+    checkpoint: true      # Pause for review before deployment
+    outputs:
+      - verification-report
+    context: |
+      Run all tests.
+      Verify OpenAPI spec matches implementation.
+      Check for security issues.
+
+  - id: deploy
+    skill: deployment-cicd
+    description: Deploy API to staging or production
+    depends_on: [verify]
+    optional: true        # Deployment may not always be needed
+    args: "--environment staging"
+    context: |
+      Configure CI/CD pipeline.
+      Set up environment variables.
+      Configure monitoring and logging.
+
+execution:
+  mode: sequential
+  on_failure: pause
+  timeout: "60m"

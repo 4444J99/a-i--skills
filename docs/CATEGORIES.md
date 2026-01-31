@@ -1,6 +1,6 @@
 # Skill Categories
 
-This repository contains 98 AI agent skills organized into the following categories.
+This repository contains 99 AI agent skills organized into the following categories.
 
 ## 📝 Creative & Content (13 skills)
 
@@ -171,11 +171,12 @@ Tools for working with SpecStory AI coding session histories:
 - `oauth-flow-architect` - OAuth authentication flows
 - `webhook-integration-patterns` - Webhook design and handling
 
-## 🛠️ Utilities & Tools (5 skills)
+## 🛠️ Utilities & Tools (6 skills)
 
 **Purpose**: Skill development, agent orchestration, and repository maintenance.
 
 - `skill-creator` - Create new skills
+- `skill-chain-prompts` - Orchestrate multi-skill workflows with prompt-based chaining
 - `speckit` - SpecStory toolkit
 - `agent-swarm-orchestrator` - Multi-agent swarm coordination
 - `multi-agent-workforce-planner` - Design parallel agent workstreams for large feature sets
@@ -220,6 +221,6 @@ Tools for working with SpecStory AI coding session histories:
 
 ---
 
-**Total**: 98 skills across 12 major categories
+**Total**: 99 skills across 12 major categories
 
 For detailed information about any skill, see its `SKILL.md` file in the skill directory.

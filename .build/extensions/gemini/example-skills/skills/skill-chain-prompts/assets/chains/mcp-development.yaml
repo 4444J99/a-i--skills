@@ -1,0 +1,76 @@
+# MCP Development Chain
+# Build an MCP server from concept to deployment
+#
+# Usage: /skill-chain-prompts run mcp-development
+
+chain:
+  name: mcp-development
+  description: Create an MCP (Model Context Protocol) server
+  version: "1.0.0"
+
+steps:
+  - id: design
+    skill: mcp-builder
+    description: Design and scaffold MCP server structure
+    outputs:
+      - mcp-server          # Server implementation
+      - tools-list          # List of MCP tools
+      - schema              # Tool schemas and types
+      - config              # Server configuration
+    context: |
+      Define tools the server will expose.
+      Design input/output schemas.
+      Set up project structure.
+      Choose transport (stdio, http, etc.).
+
+  - id: test
+    skill: testing-patterns
+    description: Write tests for MCP tools
+    depends_on: [design]
+    inputs: [tools-list, schema]
+    outputs:
+      - test-suite          # Tool tests
+      - mocks               # Mock data and fixtures
+    context: |
+      Test each tool independently.
+      Test error handling.
+      Test edge cases and validation.
+
+  - id: verify
+    skill: verification-loop
+    description: Verify MCP server functionality
+    depends_on: [test]
+    inputs: [mcp-server, test-suite]
+    outputs:
+      - verification-report # Test results and findings
+    checkpoint: true       # Review before orchestration
+    context: |
+      Run full test suite.
+      Test with actual MCP client.
+      Verify all tools work correctly.
+      Check performance and reliability.
+
+  - id: orchestrate
+    skill: mcp-server-orchestrator
+    description: Configure server orchestration and deployment
+    depends_on: [verify]
+    inputs: [mcp-server, config]
+    outputs:
+      - deployment-config   # Orchestration configuration
+      - documentation       # Setup and usage docs
+    optional: true         # May not need orchestration
+    context: |
+      Configure for production use.
+      Set up monitoring.
+      Create usage documentation.
+      Configure with other MCP servers if needed.
+
+execution:
+  mode: sequential
+  on_failure: pause
+  timeout: "60m"
+
+# Notes:
+# - Consider adding documentation step if server is for public use
+# - Add integration testing step for complex servers
+# - May need security review for sensitive operations

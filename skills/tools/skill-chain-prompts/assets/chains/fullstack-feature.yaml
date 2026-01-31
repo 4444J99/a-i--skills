@@ -1,0 +1,97 @@
+# Full-Stack Feature Chain
+# Complete feature implementation across frontend and backend
+#
+# Usage: /skill-chain-prompts run fullstack-feature
+
+chain:
+  name: fullstack-feature
+  description: Implement a complete full-stack feature from requirements to verification
+  version: "1.0.0"
+
+steps:
+  - id: requirements
+    skill: product-requirements-designer
+    description: Define feature requirements and acceptance criteria
+    outputs:
+      - prd                 # Product requirements document
+      - user-stories        # User stories with acceptance criteria
+      - acceptance-criteria # Detailed testable criteria
+    context: |
+      Gather feature requirements.
+      Define user personas and use cases.
+      Create measurable acceptance criteria.
+
+  - id: api
+    skill: api-design-patterns
+    description: Design API contract for the feature
+    depends_on: [requirements]
+    inputs: [prd, user-stories]
+    outputs:
+      - openapi-spec       # API specification
+      - endpoints          # Endpoint definitions
+    context: |
+      Design API to support frontend needs.
+      Consider data flow and state management.
+      Plan for error handling.
+
+  - id: backend
+    skill: backend-implementation-patterns
+    description: Implement backend services and endpoints
+    depends_on: [api]
+    inputs: [openapi-spec]
+    outputs:
+      - backend-code       # Service implementation
+      - migrations         # Database migrations if needed
+    context: |
+      Implement API endpoints.
+      Set up data models and persistence.
+      Handle business logic.
+
+  - id: frontend
+    skill: frontend-design-systems
+    description: Build frontend components and pages
+    depends_on: [api]     # Can run parallel to backend
+    inputs: [openapi-spec, user-stories]
+    outputs:
+      - components         # UI components
+      - pages              # Page implementations
+      - styles             # Styling
+    context: |
+      Build reusable components.
+      Implement responsive design.
+      Handle loading and error states.
+
+  - id: testing
+    skill: testing-patterns
+    description: Write comprehensive tests for the feature
+    depends_on: [backend, frontend]
+    inputs: [backend-code, components, acceptance-criteria]
+    outputs:
+      - test-suite         # Unit, integration, e2e tests
+    context: |
+      Write unit tests for components.
+      Write integration tests for API.
+      Write e2e tests for critical flows.
+
+  - id: verify
+    skill: verification-loop
+    description: End-to-end verification against requirements
+    depends_on: [testing]
+    inputs: [acceptance-criteria, test-suite]
+    checkpoint: true      # Review before considering complete
+    outputs:
+      - verification-report
+    context: |
+      Verify all acceptance criteria met.
+      Run full test suite.
+      Manual testing of key flows.
+
+execution:
+  mode: sequential        # Could be parallel for backend/frontend
+  on_failure: pause
+  timeout: "120m"
+
+# Notes:
+# - backend and frontend steps could run in parallel
+# - Consider breaking into smaller chains for very large features
+# - Add deployment step if needed

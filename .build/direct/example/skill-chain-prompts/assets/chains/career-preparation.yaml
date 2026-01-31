@@ -1,0 +1,74 @@
+# Career Preparation Chain
+# Complete job search preparation workflow
+#
+# Usage: /skill-chain-prompts run career-preparation
+
+chain:
+  name: career-preparation
+  description: Prepare for job search with resume, portfolio, and interview prep
+  version: "1.0.0"
+
+steps:
+  - id: resume
+    skill: cv-resume-builder
+    description: Create or update resume/CV for target roles
+    outputs:
+      - resume              # Formatted resume document
+      - skills-summary      # Key skills and achievements
+      - work-history        # Detailed work history
+    context: |
+      Tailor resume to target role/industry.
+      Quantify achievements where possible.
+      Optimize for ATS systems.
+
+  - id: portfolio
+    skill: portfolio-presentation
+    description: Build portfolio showcasing best work
+    depends_on: [resume]
+    inputs: [skills-summary, work-history]
+    outputs:
+      - portfolio           # Portfolio presentation/website
+      - case-studies        # Detailed project case studies
+    context: |
+      Select strongest projects.
+      Write compelling case studies.
+      Align with target role requirements.
+
+  - id: interview
+    skill: interview-preparation
+    description: Prepare for technical and behavioral interviews
+    depends_on: [portfolio]
+    inputs: [skills-summary, case-studies]
+    outputs:
+      - interview-prep      # Preparation materials
+      - talking-points      # Key points for common questions
+      - star-stories        # STAR format stories
+    checkpoint: true       # Review prep before networking
+    context: |
+      Prepare for common interview questions.
+      Practice technical concepts.
+      Develop STAR stories for behavioral questions.
+
+  - id: networking
+    skill: networking-outreach
+    description: Create networking and outreach strategy
+    depends_on: [resume]   # Can start after resume
+    inputs: [resume, skills-summary]
+    outputs:
+      - outreach-templates  # Email/LinkedIn templates
+      - contact-list        # Target contacts and companies
+      - strategy            # Networking action plan
+    optional: true         # Not everyone needs networking focus
+    context: |
+      Identify target companies.
+      Create personalized outreach templates.
+      Plan networking activities.
+
+execution:
+  mode: sequential
+  on_failure: pause
+
+# Notes:
+# - interview and networking can run in parallel after portfolio
+# - Add additional skills as needed (e.g., salary-negotiation)
+# - Consider industry-specific customizations

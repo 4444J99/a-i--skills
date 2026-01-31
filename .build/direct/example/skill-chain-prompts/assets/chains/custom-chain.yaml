@@ -1,0 +1,104 @@
+# Custom Chain Template
+# Use this template to create your own skill chains
+#
+# Instructions:
+# 1. Copy this file and rename it
+# 2. Update chain name and description
+# 3. Define your steps with appropriate skills
+# 4. Set dependencies between steps
+# 5. Add checkpoints for review points
+# 6. Mark optional steps as needed
+
+chain:
+  name: custom-chain          # Change to your chain name (lowercase, hyphens)
+  description: Description of what this chain accomplishes
+  version: "1.0.0"
+
+steps:
+  # First step - no dependencies
+  - id: first-step            # Unique identifier for this step
+    skill: skill-name         # Skill to invoke (must match skill's name in frontmatter)
+    description: What this step does
+    outputs:                  # Artifacts this step creates (used by later steps)
+      - artifact-one
+      - artifact-two
+    context: |                # Additional context for the skill
+      Any specific instructions for this step.
+      Reference prior outputs or requirements.
+
+  # Second step - depends on first
+  - id: second-step
+    skill: another-skill
+    description: What this step does
+    depends_on: [first-step]  # Wait for first-step to complete
+    inputs: [artifact-one]    # Use outputs from prior steps
+    outputs:
+      - new-artifact
+    # checkpoint: true        # Uncomment to pause for review after this step
+    # optional: true          # Uncomment to make this step skippable
+    # retries: 2              # Uncomment to retry on failure
+
+  # Third step with checkpoint
+  - id: review-step
+    skill: verification-loop  # Or any review-focused skill
+    description: Review and verify work so far
+    depends_on: [second-step]
+    checkpoint: true          # Chain pauses here for user review
+    outputs:
+      - review-result
+
+  # Optional final step
+  - id: final-step
+    skill: final-skill
+    description: Optional completion step
+    depends_on: [review-step]
+    optional: true            # User can skip this step
+
+# Execution configuration
+execution:
+  mode: sequential            # Options: sequential, parallel
+  on_failure: pause           # Options: pause, skip, abort
+  # timeout: "60m"            # Optional: maximum time for chain
+
+# ============================================================================
+# REFERENCE: Available execution options
+# ============================================================================
+#
+# execution.mode:
+#   - sequential: Steps run one at a time in order (default)
+#   - parallel: Independent steps can run concurrently
+#
+# execution.on_failure:
+#   - pause: Stop and wait for user decision (default)
+#   - skip: Mark failed step and continue
+#   - abort: Stop chain immediately
+#
+# ============================================================================
+# REFERENCE: Step options
+# ============================================================================
+#
+# Required fields:
+#   - id: Unique step identifier
+#   - skill: Skill name to invoke
+#
+# Optional fields:
+#   - description: What the step does
+#   - depends_on: [step-ids] - Steps that must complete first
+#   - inputs: [artifact-names] - Required inputs from prior steps
+#   - outputs: [artifact-names] - What this step produces
+#   - context: Additional instructions for the skill
+#   - checkpoint: true - Pause chain after this step
+#   - optional: true - Step can be skipped
+#   - retries: N - Retry count on failure
+#   - args: Arguments to pass to skill
+#
+# ============================================================================
+# TIPS
+# ============================================================================
+#
+# 1. Keep chains focused: 3-7 steps is ideal
+# 2. Use checkpoints after significant work
+# 3. Mark deployment/publishing steps as optional
+# 4. Use clear, descriptive step IDs
+# 5. Document context for complex steps
+# 6. Test your chain before relying on it

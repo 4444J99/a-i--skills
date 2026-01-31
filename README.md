@@ -1,14 +1,14 @@
 # AI Agent Skills Repository
 
-> **98 production-ready skills** for AI coding assistants | Open Source (Apache 2.0)
+> **99 production-ready skills** for AI coding assistants | Open Source (Apache 2.0)
 
 [![Validate Skills](https://github.com/your-org/ai-skills/workflows/Validate%20Skills/badge.svg)](https://github.com/your-org/ai-skills/actions)
-[![Skills](https://img.shields.io/badge/skills-98-blue.svg)](./docs/CATEGORIES.md)
+[![Skills](https://img.shields.io/badge/skills-99-blue.svg)](./docs/CATEGORIES.md)
 [![License](https://img.shields.io/badge/license-Apache%202.0-green.svg)](./LICENSE)
 
 ## 🚀 Quick Links
 
-- **📚 [Browse All Skills by Category](./docs/CATEGORIES.md)** - Organized overview of all 98 skills
+- **📚 [Browse All Skills by Category](./docs/CATEGORIES.md)** - Organized overview of all 99 skills
 - **🎯 [Getting Started Guide](./docs/guides/getting-started.md)** - New to skills? Start here
 - **🔍 [Find Skills by Purpose](./.build/collections/by-purpose/)** - Code quality, testing, security, etc.
 - **📖 [Creating Skills Guide](./docs/guides/creating-skills.md)** - Build your own skills
