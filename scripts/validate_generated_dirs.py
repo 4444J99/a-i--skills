@@ -98,7 +98,7 @@ def _check_registry(errors: list[str]) -> None:
 
 
 def _check_lockfile(errors: list[str]) -> None:
-    """Verify skills-lock.json exists if present."""
+    """Verify skills-lock.json exists and skill count matches collections."""
     lockfile_path = BUILD_DIR / "skills-lock.json"
     if not lockfile_path.exists():
         # Lockfile is optional but warn
@@ -109,6 +109,20 @@ def _check_lockfile(errors: list[str]) -> None:
         data = _json.loads(lockfile_path.read_text(encoding="utf-8"))
     except Exception as exc:  # noqa: BLE001
         errors.append(f"{lockfile_path}: invalid JSON ({exc})")
+        return
+
+    lock_skills = data.get("skills", [])
+    # Cross-check count against combined collection lists
+    total_expected = 0
+    for collection in ("example-skills.txt", "document-skills.txt"):
+        list_path = BUILD_DIR / "collections" / collection
+        if list_path.exists():
+            total_expected += len(_load_list(list_path))
+    if total_expected and len(lock_skills) != total_expected:
+        errors.append(
+            f"{lockfile_path}: skill count mismatch "
+            f"(lockfile={len(lock_skills)}, collections={total_expected})"
+        )
 
 
 def main() -> int:

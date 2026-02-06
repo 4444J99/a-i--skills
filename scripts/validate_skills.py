@@ -150,6 +150,10 @@ def _validate_skill(skill_dir: Path, check_links: bool = False) -> list[str]:
                 f"maximum {MAX_DESCRIPTION_LENGTH})"
             )
 
+    license_val = data.get("license")
+    if not license_val:
+        errors.append(f"{skill_dir}: missing 'license' in frontmatter")
+
     # Validate optional fields if present
     complexity = data.get("complexity")
     if complexity and complexity not in VALID_COMPLEXITY:
@@ -198,6 +202,12 @@ def _validate_skill(skill_dir: Path, check_links: bool = False) -> list[str]:
         tags_raw = data.get("tags")
         if not tags_raw or not _parse_list_field(tags_raw):
             errors.append(f"{skill_dir}: core skill missing 'tags'")
+        # Bundles (skills with includes) are exempt from triggers
+        includes_raw_core = data.get("includes")
+        if not includes_raw_core:
+            triggers_raw = data.get("triggers")
+            if not triggers_raw or not _parse_list_field(triggers_raw):
+                errors.append(f"{skill_dir}: core skill missing 'triggers'")
 
     # Check for broken links if requested
     if check_links:
@@ -269,9 +279,8 @@ def main() -> int:
         if complements_raw:
             for item in _parse_list_field(complements_raw):
                 if item not in all_skill_names:
-                    print(
-                        f"WARNING: {skill_dir}: complements references "
-                        f"unknown skill '{item}'"
+                    errors.append(
+                        f"{skill_dir}: complements references unknown skill '{item}'"
                     )
 
     if errors:

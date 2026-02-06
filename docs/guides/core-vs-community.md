@@ -90,10 +90,12 @@ Community skills can be promoted to core after review:
 | Aspect | Core | Community |
 |--------|------|-----------|
 | `tier` value | `core` | `community` (or omitted) |
-| Required fields | name, description, complexity, time_to_learn, tags, triggers | name, description |
+| Required fields | name, description, complexity, time_to_learn, tags, triggers* | name, description |
 | Maintained by | Repository team | Contributors |
 | Promotion | N/A | Submit PR with all required fields |
 | Validation | Strict | Standard |
+
+\* Bundle skills (those with an `includes` field) are exempt from the `triggers` requirement.
 
 ## See Also
 
