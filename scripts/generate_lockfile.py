@@ -9,19 +9,13 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+from skill_lib import find_skill_dirs
+
 ROOT = Path(__file__).resolve().parents[1]
 BUILD_DIR = ROOT / ".build"
 SKILLS_DIR = ROOT / "skills"
 DOC_SKILLS_DIR = ROOT / "document-skills"
 LOCK_FILE = BUILD_DIR / "skills-lock.json"
-
-
-def _find_skill_dirs(base_dir: Path) -> list[Path]:
-    """Return sorted list of directories containing a SKILL.md file."""
-    return sorted(
-        [p.parent for p in base_dir.rglob("SKILL.md") if p.parent != base_dir],
-        key=lambda p: p.name,
-    )
 
 
 def _sha256_tree(directory: Path) -> str:
@@ -54,7 +48,7 @@ def _git_head() -> str:
 
 
 def main() -> int:
-    skill_dirs = _find_skill_dirs(SKILLS_DIR) + _find_skill_dirs(DOC_SKILLS_DIR)
+    skill_dirs = find_skill_dirs(SKILLS_DIR) + find_skill_dirs(DOC_SKILLS_DIR)
 
     if not skill_dirs:
         print("ERROR: no skills found", file=sys.stderr)

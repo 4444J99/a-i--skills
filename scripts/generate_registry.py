@@ -7,6 +7,8 @@ import re
 from datetime import datetime, timezone
 from pathlib import Path
 
+from skill_lib import extract_frontmatter, find_skill_dirs, parse_list_field
+
 ROOT = Path(__file__).resolve().parents[1]
 SKILLS_DIR = ROOT / "skills"
 DOC_SKILLS_DIR = ROOT / "document-skills"
@@ -20,60 +22,6 @@ LIST_FIELDS = (
     "prerequisites", "tags", "inputs", "outputs", "side_effects",
     "triggers", "complements", "includes",
 )
-
-
-def _find_skill_dirs(base_dir: Path) -> list[Path]:
-    return sorted(
-        [p.parent for p in base_dir.rglob("SKILL.md") if p.parent != base_dir],
-        key=lambda p: p.name,
-    )
-
-
-def _extract_frontmatter(text: str) -> dict[str, str]:
-    lines = text.splitlines()
-    if not lines or lines[0].strip() != "---":
-        return {}
-    end = None
-    for i in range(1, len(lines)):
-        if lines[i].strip() == "---":
-            end = i
-            break
-    if end is None:
-        return {}
-
-    data: dict[str, str] = {}
-    current_key = None
-    for raw in lines[1:end]:
-        if not raw.strip() or raw.lstrip().startswith("#"):
-            continue
-        if raw.startswith(" ") or raw.startswith("\t"):
-            if current_key:
-                data[current_key] = f"{data[current_key]}\n{raw.lstrip()}"
-            continue
-        key, sep, value = raw.partition(":")
-        if not sep:
-            continue
-        current_key = key.strip()
-        data[current_key] = value.strip()
-    return data
-
-
-def _parse_list_field(value: str) -> list[str]:
-    """Parse an inline or multiline YAML list from frontmatter."""
-    if not value:
-        return []
-    stripped = value.strip()
-    if stripped.startswith("[") and stripped.endswith("]"):
-        inner = stripped[1:-1]
-        return [item.strip() for item in inner.split(",") if item.strip()]
-    items: list[str] = []
-    for line in stripped.split("\n"):
-        line = line.strip()
-        if line.startswith("- "):
-            items.append(line[2:].strip())
-        elif line:
-            items.append(line)
-    return items
 
 
 def _category_from_path(skill_dir: Path, base_dir: Path) -> str:
@@ -95,7 +43,7 @@ def _build_skill_entry(skill_dir: Path, base_dir: Path, collection: str) -> dict
     except OSError:
         return None
 
-    fm = _extract_frontmatter(text)
+    fm = extract_frontmatter(text)
     name = fm.get("name")
     if not name or name != skill_dir.name:
         return None
@@ -115,7 +63,7 @@ def _build_skill_entry(skill_dir: Path, base_dir: Path, collection: str) -> dict
     # Parse list fields
     for field in LIST_FIELDS:
         raw = fm.get(field)
-        entry[field] = _parse_list_field(raw) if raw else []
+        entry[field] = parse_list_field(raw) if raw else []
 
     # Resource directories
     entry["resources"] = {
@@ -150,8 +98,8 @@ def _build_bundles(skills: list[dict]) -> list[dict]:
 
 
 def main() -> int:
-    example_dirs = _find_skill_dirs(SKILLS_DIR)
-    document_dirs = _find_skill_dirs(DOC_SKILLS_DIR)
+    example_dirs = find_skill_dirs(SKILLS_DIR)
+    document_dirs = find_skill_dirs(DOC_SKILLS_DIR)
 
     skills: list[dict] = []
     for d in example_dirs:

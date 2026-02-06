@@ -11,6 +11,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -20,6 +21,10 @@ except ImportError:
     raise SystemExit(
         "mcp package required. Install with: pip install mcp"
     )
+
+# Ensure scripts/ is importable
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from skill_lib import extract_frontmatter, parse_list_field
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILLS_DIR = ROOT / "skills"
@@ -36,50 +41,6 @@ mcp = FastMCP("ai-skills")
 _skills_cache: list[dict] | None = None
 
 
-def _extract_frontmatter(text: str) -> dict[str, str]:
-    lines = text.splitlines()
-    if not lines or lines[0].strip() != "---":
-        return {}
-    end = None
-    for i in range(1, len(lines)):
-        if lines[i].strip() == "---":
-            end = i
-            break
-    if end is None:
-        return {}
-    data: dict[str, str] = {}
-    current_key = None
-    for raw in lines[1:end]:
-        if not raw.strip() or raw.lstrip().startswith("#"):
-            continue
-        if raw.startswith(" ") or raw.startswith("\t"):
-            if current_key:
-                data[current_key] = f"{data[current_key]}\n{raw.lstrip()}"
-            continue
-        key, sep, value = raw.partition(":")
-        if not sep:
-            continue
-        current_key = key.strip()
-        data[current_key] = value.strip()
-    return data
-
-
-def _parse_list_field(value: str) -> list[str]:
-    if not value:
-        return []
-    stripped = value.strip()
-    if stripped.startswith("[") and stripped.endswith("]"):
-        return [item.strip() for item in stripped[1:-1].split(",") if item.strip()]
-    items: list[str] = []
-    for line in stripped.split("\n"):
-        line = line.strip()
-        if line.startswith("- "):
-            items.append(line[2:].strip())
-        elif line:
-            items.append(line)
-    return items
-
-
 def _scan_skills() -> list[dict]:
     """Scan SKILL.md files to build skill list (fallback when no registry)."""
     skills: list[dict] = []
@@ -92,7 +53,7 @@ def _scan_skills() -> list[dict]:
                 text = skill_md.read_text(encoding="utf-8")
             except OSError:
                 continue
-            fm = _extract_frontmatter(text)
+            fm = extract_frontmatter(text)
             name = fm.get("name")
             if not name or name != skill_dir.name:
                 continue
@@ -109,13 +70,13 @@ def _scan_skills() -> list[dict]:
                 "category": category,
                 "collection": collection,
                 "path": str(skill_dir.relative_to(ROOT)),
-                "tags": _parse_list_field(fm.get("tags", "")),
-                "triggers": _parse_list_field(fm.get("triggers", "")),
-                "complements": _parse_list_field(fm.get("complements", "")),
-                "includes": _parse_list_field(fm.get("includes", "")),
-                "inputs": _parse_list_field(fm.get("inputs", "")),
-                "outputs": _parse_list_field(fm.get("outputs", "")),
-                "side_effects": _parse_list_field(fm.get("side_effects", "")),
+                "tags": parse_list_field(fm.get("tags", "")),
+                "triggers": parse_list_field(fm.get("triggers", "")),
+                "complements": parse_list_field(fm.get("complements", "")),
+                "includes": parse_list_field(fm.get("includes", "")),
+                "inputs": parse_list_field(fm.get("inputs", "")),
+                "outputs": parse_list_field(fm.get("outputs", "")),
+                "side_effects": parse_list_field(fm.get("side_effects", "")),
                 "tier": fm.get("tier"),
                 "complexity": fm.get("complexity"),
                 "source": "repo",
@@ -157,7 +118,7 @@ def _load_skills() -> list[dict]:
                     text = skill_md.read_text(encoding="utf-8")
                 except OSError:
                     continue
-                fm = _extract_frontmatter(text)
+                fm = extract_frontmatter(text)
                 name = fm.get("name")
                 if not name or name != skill_dir.name:
                     continue
@@ -168,13 +129,13 @@ def _load_skills() -> list[dict]:
                     "category": "custom",
                     "collection": "custom",
                     "path": str(skill_dir),
-                    "tags": _parse_list_field(fm.get("tags", "")),
-                    "triggers": _parse_list_field(fm.get("triggers", "")),
-                    "complements": _parse_list_field(fm.get("complements", "")),
-                    "includes": _parse_list_field(fm.get("includes", "")),
-                    "inputs": _parse_list_field(fm.get("inputs", "")),
-                    "outputs": _parse_list_field(fm.get("outputs", "")),
-                    "side_effects": _parse_list_field(fm.get("side_effects", "")),
+                    "tags": parse_list_field(fm.get("tags", "")),
+                    "triggers": parse_list_field(fm.get("triggers", "")),
+                    "complements": parse_list_field(fm.get("complements", "")),
+                    "includes": parse_list_field(fm.get("includes", "")),
+                    "inputs": parse_list_field(fm.get("inputs", "")),
+                    "outputs": parse_list_field(fm.get("outputs", "")),
+                    "side_effects": parse_list_field(fm.get("side_effects", "")),
                     "tier": fm.get("tier"),
                     "complexity": fm.get("complexity"),
                     "source": "custom",

@@ -14,6 +14,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+from skill_lib import extract_frontmatter_strict, parse_list_field
+
 ROOT = Path(__file__).resolve().parents[1]
 SKILLS_DIR = ROOT / "skills"
 DOC_SKILLS_DIR = ROOT / "document-skills"
@@ -29,55 +31,6 @@ VALID_SIDE_EFFECTS = {
 VALID_TIERS = {"core", "community"}
 MIN_DESCRIPTION_LENGTH = 20
 MAX_DESCRIPTION_LENGTH = 600
-
-
-def _extract_frontmatter(text: str) -> dict[str, str]:
-    """Parse YAML frontmatter from a SKILL.md file."""
-    lines = text.splitlines()
-    if not lines or lines[0].strip() != "---":
-        raise ValueError("missing YAML frontmatter opening '---'")
-
-    end = None
-    for i in range(1, len(lines)):
-        if lines[i].strip() == "---":
-            end = i
-            break
-    if end is None:
-        raise ValueError("missing YAML frontmatter closing '---'")
-
-    data: dict[str, str] = {}
-    current_key = None
-    for raw in lines[1:end]:
-        if not raw.strip() or raw.lstrip().startswith("#"):
-            continue
-        if raw.startswith(" ") or raw.startswith("\t"):
-            if current_key:
-                data[current_key] = f"{data[current_key]}\n{raw.lstrip()}"
-            continue
-        key, sep, value = raw.partition(":")
-        if not sep:
-            raise ValueError(f"invalid frontmatter line: {raw}")
-        current_key = key.strip()
-        data[current_key] = value.strip()
-    return data
-
-
-def _parse_list_field(value: str) -> list[str]:
-    """Parse a frontmatter list field (inline or multiline YAML)."""
-    if not value:
-        return []
-    stripped = value.strip()
-    if stripped.startswith("[") and stripped.endswith("]"):
-        inner = stripped[1:-1]
-        return [item.strip() for item in inner.split(",") if item.strip()]
-    items: list[str] = []
-    for line in stripped.split("\n"):
-        line = line.strip()
-        if line.startswith("- "):
-            items.append(line[2:].strip())
-        elif line:
-            items.append(line)
-    return items
 
 
 def _changed_files(base: str) -> list[str]:
@@ -125,7 +78,7 @@ def _validate_skill(skill_dir: Path) -> tuple[list[str], list[str]]:
         return [f"unable to read SKILL.md ({exc})"], []
 
     try:
-        data = _extract_frontmatter(text)
+        data = extract_frontmatter_strict(text)
     except ValueError as exc:
         return [str(exc)], []
 
@@ -174,7 +127,7 @@ def _validate_skill(skill_dir: Path) -> tuple[list[str], list[str]]:
     for list_field in ("inputs", "outputs", "side_effects", "triggers", "complements", "includes"):
         raw = data.get(list_field)
         if raw:
-            items = _parse_list_field(raw)
+            items = parse_list_field(raw)
             if not items:
                 errors.append(f"'{list_field}' is present but empty or unparseable")
             if list_field == "side_effects":
