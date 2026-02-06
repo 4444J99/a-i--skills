@@ -19,7 +19,7 @@ ai-skills/
 ├── skills/                # All example skills (101), organized by category
 │   ├── creative/          # Art, music, design (13 skills)
 │   ├── data/              # Data analysis and ML (6 skills)
-│   ├── development/       # Coding patterns and tools (26 skills, incl. bundles)
+│   ├── development/       # Coding patterns and tools (27 skills, incl. bundles)
 │   ├── documentation/     # Docs and GitHub profiles (4 skills)
 │   ├── education/         # Teaching and learning (4 skills)
 │   ├── integrations/      # Third-party integrations (9 skills)
