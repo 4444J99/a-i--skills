@@ -55,12 +55,10 @@ This repository contains 101 AI agent skills organized into the following catego
 - `nextjs-fullstack-patterns` - Next.js fullstack development
 - `postgres-advanced-patterns` - Advanced PostgreSQL optimization
 
-### Frontend (5 skills)
+### Frontend (3 skills)
 - `accessibility-patterns` - Web accessibility (WCAG/ARIA)
-- `canvas-design` - HTML5 Canvas patterns
 - `frontend-design-systems` - Component design systems
 - `responsive-design-patterns` - Mobile-first responsive design
-- `three-js-interactive-builder` - 3D web experiences
 
 ### Testing (2 skills)
 - `testing-patterns` - Test design patterns
@@ -104,19 +102,16 @@ This repository contains 101 AI agent skills organized into the following catego
 - `security-implementation-guide` - Security best practices
 - `security-threat-modeler` - Threat modeling and analysis
 
-## 📚 Documentation (7 skills)
+## 📚 Documentation (4 skills)
 
 **Purpose**: Technical writing, documentation, and content management.
 
 - `doc-coauthoring` - Collaborative documentation
-- `document-skills` - Document format handling
-  - `docx` - Word document manipulation
-  - `pdf` - PDF processing and generation
-  - `pptx` - PowerPoint creation
-  - `xlsx` - Excel spreadsheet handling
 - `github-profile-architect` - GitHub profile optimization
 - `github-repo-curator` - Repository maintenance
 - `github-repository-standards` - Repository best practices
+
+> See also: `document-skills/` for document format handling (docx, pdf, pptx, xlsx)
 
 ## 🎓 Education (4 skills)
 
