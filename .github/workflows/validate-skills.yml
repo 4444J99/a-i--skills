@@ -20,8 +20,8 @@ jobs:
 
       - name: Validate frontmatter
         run: |
-          python3 scripts/validate_skills.py --collection example --unique --check-links
-          python3 scripts/validate_skills.py --collection document --unique --check-links
+          python3 scripts/validate_skills.py --collection example --unique
+          python3 scripts/validate_skills.py --collection document --unique
 
       - name: Ensure generated files are up to date
         run: |

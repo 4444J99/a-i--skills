@@ -39,6 +39,7 @@ mcp = FastMCP("ai-skills")
 # ---------------------------------------------------------------------------
 
 _skills_cache: list[dict] | None = None
+_cache_mtime: float = 0.0
 
 
 def _scan_skills() -> list[dict]:
@@ -86,7 +87,17 @@ def _scan_skills() -> list[dict]:
 
 def _load_skills() -> list[dict]:
     """Load skills from registry JSON or by scanning. Supports custom directory."""
-    global _skills_cache
+    global _skills_cache, _cache_mtime
+
+    # Invalidate cache if registry file has changed
+    if _skills_cache is not None:
+        try:
+            current_mtime = REGISTRY_PATH.stat().st_mtime
+        except OSError:
+            current_mtime = 0.0
+        if current_mtime != _cache_mtime:
+            _skills_cache = None
+
     if _skills_cache is not None:
         return _skills_cache
 
@@ -145,6 +156,12 @@ def _load_skills() -> list[dict]:
                 if name in repo_names:
                     skills = [s for s in skills if s["name"] != name]
                 skills.append(custom_skill)
+
+    # Record mtime for cache invalidation
+    try:
+        _cache_mtime = REGISTRY_PATH.stat().st_mtime
+    except OSError:
+        _cache_mtime = 0.0
 
     _skills_cache = skills
     return skills
