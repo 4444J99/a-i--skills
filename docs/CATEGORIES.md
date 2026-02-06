@@ -1,6 +1,6 @@
 # Skill Categories
 
-This repository contains 99 AI agent skills organized into the following categories.
+This repository contains 101 AI agent skills organized into the following categories.
 
 ## 📝 Creative & Content (13 skills)
 
@@ -36,16 +36,17 @@ This repository contains 99 AI agent skills organized into the following categor
 - `workshop-presentation-design` - Workshop and presentation creation
 - `slack-gif-creator` - Create GIFs for Slack communication
 
-## 💻 Development (25 skills)
+## 💻 Development (26 skills)
 
 ### Code Quality (3 skills)
 - `code-refactoring-patterns` - Systematic code refactoring
 - `coding-standards-enforcer` - Automated code quality enforcement
 - `verification-loop` - Comprehensive QA verification workflow
 
-### Workflows (3 skills)
+### Workflows (4 skills)
 - `continuous-learning-agent` - Agent self-improvement patterns
 - `feature-workflow-orchestrator` - End-to-end feature delivery
+- `iterative-code-exploration` - Progressive context retrieval for unfamiliar codebases
 - `tdd-workflow` - Test-driven development process
 
 ### Backend (4 skills)
@@ -72,11 +73,14 @@ This repository contains 99 AI agent skills organized into the following categor
 - `mobile-platform-architect` - Mobile platform architecture
 - `rust-systems-design` - Rust systems programming
 
-### Tools (3 skills)
+### Tools (4 skills)
 - `artifacts-builder` - Build artifact systems
 - `mcp-builder` - Model Context Protocol builder
 - `mcp-server-orchestrator` - MCP server management
 - `web-artifacts-builder` - Web artifact generation
+
+### Bundles (1 skill)
+- `fullstack-starter-pack` - Curated bundle of essential fullstack development skills
 
 ## 📊 Data & Analysis (6 skills)
 
@@ -89,13 +93,14 @@ This repository contains 99 AI agent skills organized into the following categor
 - `ml-experiment-tracker` - Machine learning experiment tracking
 - `time-series-analyst` - Time series analysis and forecasting
 
-## 🔒 Security & Compliance (5 skills)
+## 🔒 Security & Compliance (6 skills)
 
 **Purpose**: Security implementation, threat modeling, and compliance.
 
 - `contract-risk-analyzer` - Contract risk assessment
 - `gdpr-compliance-check` - GDPR compliance validation
 - `incident-response-commander` - Incident response procedures
+- `security-essentials-pack` - Curated bundle of essential security skills
 - `security-implementation-guide` - Security best practices
 - `security-threat-modeler` - Threat modeling and analysis
 
@@ -201,7 +206,7 @@ Tools for working with SpecStory AI coding session histories:
 ### By Complexity
 
 **Beginner-Friendly**:
-- `template-skill`, `skill-creator`, `verification-loop`, `tdd-workflow`
+- `skill-creator`, `verification-loop`, `tdd-workflow`
 
 **Intermediate**:
 - Most development, documentation, and project management skills
@@ -221,6 +226,6 @@ Tools for working with SpecStory AI coding session histories:
 
 ---
 
-**Total**: 99 skills across 12 major categories
+**Total**: 101 skills across 12 major categories
 
 For detailed information about any skill, see its `SKILL.md` file in the skill directory.

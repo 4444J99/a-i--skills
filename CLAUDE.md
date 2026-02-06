@@ -19,16 +19,16 @@ ai-skills/
 ├── skills/                # All example skills (101), organized by category
 │   ├── creative/          # Art, music, design (13 skills)
 │   ├── data/              # Data analysis and ML (6 skills)
-│   ├── development/       # Coding patterns and tools (27 skills, incl. bundles)
+│   ├── development/       # Coding patterns and tools (26 skills, incl. bundles)
 │   ├── documentation/     # Docs and GitHub profiles (4 skills)
 │   ├── education/         # Teaching and learning (4 skills)
 │   ├── integrations/      # Third-party integrations (9 skills)
-│   ├── knowledge/         # Knowledge management (5 skills)
+│   ├── knowledge/         # Knowledge management (6 skills)
 │   ├── professional/      # Business and career (11 skills)
 │   ├── project-management/ # Planning and roadmaps (4 skills)
 │   ├── security/          # Security and compliance (6 skills, incl. bundle)
 │   ├── specialized/       # Niche domains (6 skills)
-│   └── tools/             # Meta-skills and orchestration (3 skills)
+│   └── tools/             # Meta-skills and orchestration (6 skills)
 ├── document-skills/       # Reference document skills (4)
 ├── docs/                  # Documentation files
 │   ├── CHANGELOG.md
