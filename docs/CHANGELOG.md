@@ -28,6 +28,16 @@ This project follows semantic versioning.
 - 5 exemplar skills updated with new semantic fields (mcp-builder, tdd-workflow, api-design-patterns, canvas-design, security-threat-modeler)
 - Skill count: 95 → 101
 
+### Fixed
+- Broken references across 16 skills (28 missing reference files added)
+- MCP server cache staleness via mtime-based invalidation
+- Volatile fields (`generated_at`, `git_commit`) in lockfile/registry causing CI freshness failures
+- Skill count discrepancies in CATEGORIES.md
+- Duplicate CI workflows consolidated
+- Link checker false positives from fenced code blocks
+- Missing shebangs on 10 standalone CLI scripts (specstory-guard, pdf)
+- Health check false positives for `__init__.py` and test files
+
 ## [1.1.0] - 2026-01-30
 ### Added
 - Multi-agent distribution bundles for Claude Code, Codex, and Gemini CLI (copy-based skill directories).

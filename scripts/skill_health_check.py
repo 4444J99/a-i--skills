@@ -32,6 +32,11 @@ def _check_scripts(skill_dir: Path) -> list[str]:
     for script in scripts_dir.iterdir():
         if script.is_dir() or script.name.startswith("."):
             continue
+        # Skip package inits and test files — they aren't standalone CLI scripts
+        if script.name == "__init__.py":
+            continue
+        if script.name.startswith("test_") or script.name.endswith("_test.py"):
+            continue
         # Check shebang for executable-looking files (not .json, .tar.gz, etc.)
         if script.suffix in ("", ".py", ".sh", ".bash", ".zsh", ".rb", ".pl"):
             try:

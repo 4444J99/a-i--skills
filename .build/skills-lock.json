@@ -419,7 +419,7 @@
     {
       "name": "specstory-guard",
       "path": "skills/integrations/specstory-guard",
-      "sha256": "133c5857d0616bdf384b5744299d4c15c8b46f13269301e900ef401912eded0e"
+      "sha256": "173e68104478ed34e0d29ffa4ff496a7dd13879844cfd48cfe5cc1731c67975c"
     },
     {
       "name": "specstory-link-trail",
@@ -514,7 +514,7 @@
     {
       "name": "pdf",
       "path": "document-skills/pdf",
-      "sha256": "0b8695b6ec6dfe7bbab3463769a8c25af341313dc457c51b7aa6d669653e784c"
+      "sha256": "41c1900d84e48ab59b9157ce670163a05feb745aaaa6ce8b50ca145629854c59"
     },
     {
       "name": "pptx",
