@@ -5,6 +5,14 @@
 
 # a-i--skills
 
+[![CI](https://github.com/organvm-iv-taxis/a-i--skills/actions/workflows/ci.yml/badge.svg)](https://github.com/organvm-iv-taxis/a-i--skills/actions/workflows/ci.yml)
+[![Coverage](https://img.shields.io/badge/coverage-pending-lightgrey)](https://github.com/organvm-iv-taxis/a-i--skills)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/organvm-iv-taxis/a-i--skills/blob/main/LICENSE)
+[![Organ IV](https://img.shields.io/badge/Organ-IV%20Taxis-10B981)](https://github.com/organvm-iv-taxis)
+[![Status](https://img.shields.io/badge/status-active-brightgreen)](https://github.com/organvm-iv-taxis/a-i--skills)
+[![Python](https://img.shields.io/badge/lang-Python-informational)](https://github.com/organvm-iv-taxis/a-i--skills)
+
+
 **A composable skill framework for AI agent orchestration** -- 101 production-ready skill modules spanning creative, technical, enterprise, and governance domains, organized into a federated registry with multi-agent runtime support.
 
 > Part of [ORGAN-IV: Taxis](https://github.com/organvm-iv-taxis) -- the orchestration and governance layer of the [ORGAN system](https://github.com/meta-organvm).
