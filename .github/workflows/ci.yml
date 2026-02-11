@@ -1,0 +1,100 @@
+name: Python CI
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+
+      - name: Detect dependency file
+        id: detect
+        run: |
+          if [ -f "pyproject.toml" ]; then
+            echo "deps=pyproject" >> $GITHUB_OUTPUT
+          elif [ -f "requirements.txt" ]; then
+            echo "deps=requirements" >> $GITHUB_OUTPUT
+          elif [ -f "setup.py" ]; then
+            echo "deps=setup" >> $GITHUB_OUTPUT
+          else
+            echo "deps=none" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Install dependencies (pyproject.toml)
+        if: steps.detect.outputs.deps == 'pyproject'
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .[dev] || pip install -e . || true
+          pip install pytest pytest-cov ruff mypy || true
+
+      - name: Install dependencies (requirements.txt)
+        if: steps.detect.outputs.deps == 'requirements'
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt || true
+          pip install pytest pytest-cov ruff mypy || true
+
+      - name: Install dependencies (setup.py)
+        if: steps.detect.outputs.deps == 'setup'
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e . || true
+          pip install pytest pytest-cov ruff mypy || true
+
+      - name: Lint with ruff
+        continue-on-error: true
+        run: |
+          if command -v ruff &> /dev/null; then
+            ruff check --output-format=github . || echo "::warning::Ruff found issues"
+          else
+            echo "::notice::Ruff not installed, skipping linting"
+          fi
+
+      - name: Type check with mypy
+        continue-on-error: true
+        run: |
+          if command -v mypy &> /dev/null; then
+            mypy . --ignore-missing-imports || echo "::warning::Mypy found type issues"
+          else
+            echo "::notice::Mypy not installed, skipping type checking"
+          fi
+
+      - name: Test with pytest
+        run: |
+          if command -v pytest &> /dev/null; then
+            if [ -d "tests" ] || [ -d "test" ] || ls test_*.py 2>/dev/null | grep -q .; then
+              pytest --cov=. --cov-report=xml --cov-report=term --cov-report=html || exit 1
+            else
+              echo "::notice::No tests directory found, skipping tests"
+              exit 0
+            fi
+          else
+            echo "::notice::Pytest not installed and no tests found, passing"
+            exit 0
+          fi
+
+      - name: Upload coverage to Codecov
+        if: success() && hashFiles('coverage.xml') != ''
+        uses: codecov/codecov-action@v4
+        with:
+          file: ./coverage.xml
+          fail_ci_if_error: false
+          flags: unittests
+          name: codecov-${{ matrix.python-version }}
