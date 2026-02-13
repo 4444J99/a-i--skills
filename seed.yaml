@@ -1,0 +1,37 @@
+# seed.yaml — Automation Contract for organvm-iv-taxis/a-i--skills
+# Schema: seed/v1.0
+# Generated: 2026-02-12 (AUTONOMY Sprint)
+# Category: flagship_with_deps
+
+schema_version: "1.0"
+organ: IV
+organ_name: Orchestration
+repo: a-i--skills
+org: organvm-iv-taxis
+
+metadata:
+  implementation_status: PRODUCTION
+  tier: standard
+  promotion_status: LOCAL
+  last_validated: "2026-02-11"
+  generated: "2026-02-12"
+  sprint: "AUTONOMY"
+
+agents:
+  - name: ci
+    trigger: on_push
+    workflow: .github/workflows/ci-python.yml
+    description: "Continuous integration pipeline"
+
+consumes:
+  - type: dependency
+    source: organvm-iv-taxis/agent--claude-smith
+    description: Depends on organvm-iv-taxis/agent--claude-smith
+
+subscriptions:
+  - event: repo.created
+    source: any
+    action: "Update registry, assign seed.yaml template"
+  - event: ci.passed
+    source: any
+    action: Check if repo qualifies for promotion
