@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A I: Skills — Taxis</title>
+<meta name="description" content="Public repository of AI agent skills: specialized capabilities and workflows across 12 categories">
+<!-- ORGANVM:PITCH:AUTO v1.0 generated 2026-02-24T12:37:09Z -->
+<style>
+/* ===== RESET & TOKENS ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg-primary: #0a0f0a;
+  --bg-secondary: #0f1a0f;
+  --accent: #22c55e;
+  --text-primary: #d4d4d8;
+  --text-muted: #6b7280;
+  --gold: #4ade80;
+  --font-heading: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  --font-body: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  --font-mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  --hero-bg: #0a0f0a;
+  --section-bg: #0d150d;
+  --card-bg: rgba(255,255,255,0.04);
+  --card-border: rgba(34,197,94,0.2);
+  --organ-badge: #22c55e;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--font-body);color:var(--text-primary);background:var(--bg-primary);line-height:1.6;overflow-x:hidden}
+
+/* ===== TYPOGRAPHY ===== */
+h1,h2,h3{font-family:var(--font-heading);font-weight:700;line-height:1.2}
+h1{font-size:clamp(2.2rem,5vw,4rem)}
+h2{font-size:clamp(1.6rem,3vw,2.4rem);margin-bottom:1rem}
+h3{font-size:clamp(1.1rem,1.8vw,1.4rem)}
+.label{font-family:var(--font-body);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)}
+.mono{font-family:var(--font-mono)}
+
+/* ===== LAYOUT ===== */
+section{position:relative;width:100%;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:4rem 0}
+.container{width:100%;max-width:1100px;margin:0 auto;padding:2rem}
+
+/* ===== NAV DOTS ===== */
+#nav-dots{position:fixed;right:1.5rem;top:50%;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:.75rem}
+#nav-dots a{display:block;width:10px;height:10px;border-radius:50%;background:var(--accent);opacity:.25;transition:all .3s;text-indent:-9999px}
+#nav-dots a.active{opacity:1;transform:scale(1.4)}
+@media(max-width:768px){#nav-dots{right:.5rem;gap:.5rem}#nav-dots a{width:8px;height:8px}}
+
+/* ===== HERO ===== */
+#hero{background:var(--hero-bg);min-height:100vh;flex-direction:column;overflow:hidden}
+#hero-canvas{position:absolute;inset:0;z-index:0}
+#hero .container{position:relative;z-index:1;text-align:center}
+.hero-badge{display:inline-block;font-family:var(--font-mono);font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;padding:.35rem 1rem;border:1px solid var(--organ-badge);border-radius:20px;color:var(--organ-badge);margin-bottom:1.5rem}
+#hero h1{margin-bottom:.75rem}
+#hero .tagline{font-family:var(--font-heading);font-size:clamp(1rem,1.8vw,1.3rem);color:var(--accent);opacity:.85;margin-bottom:1.5rem;font-style:italic}
+#hero .description{font-size:clamp(.85rem,1.2vw,1rem);color:var(--text-muted);max-width:600px;margin:0 auto 2.5rem}
+.scroll-hint{animation:bounce 2s infinite;color:var(--text-muted);opacity:.4;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+
+/* ===== PROBLEM ===== */
+#problem{background:var(--hero-bg)}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:2rem}
+.card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:1.5rem;opacity:0;transform:translateY(30px);transition:all .6s cubic-bezier(.25,.46,.45,.94)}
+.card.visible{opacity:1;transform:translateY(0)}
+.card h3{color:var(--accent);margin-bottom:.5rem;font-size:1rem}
+.card p{color:var(--text-muted);font-size:.9rem}
+
+/* ===== SOLUTION ===== */
+#solution{background:var(--section-bg)}
+#solution .text-block{max-width:700px;margin:0 auto}
+#solution .text-block p{font-size:1.05rem;line-height:1.8;color:var(--text-primary);opacity:.85}
+
+/* ===== FEATURES ===== */
+#features{background:var(--hero-bg)}
+.feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin-top:2rem}
+.feature-card{padding:1.5rem;border-radius:12px;border:1px solid var(--card-border);background:var(--card-bg);opacity:0;transform:translateY(20px);transition:all .6s cubic-bezier(.25,.46,.45,.94)}
+.feature-card.visible{opacity:1;transform:translateY(0)}
+.feature-card h3{color:var(--accent);margin-bottom:.5rem;font-size:.95rem}
+.feature-card p{color:var(--text-muted);font-size:.85rem}
+
+/* ===== ARCHITECTURE ===== */
+#architecture{background:var(--section-bg)}
+.tech-badges{display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center;margin:2rem 0}
+.tech-badge{font-family:var(--font-mono);font-size:.7rem;padding:.35rem .8rem;border-radius:4px;border:1px solid var(--card-border);color:var(--accent);background:var(--card-bg)}
+.arch-text{max-width:700px;margin:1.5rem auto 0;color:var(--text-muted);font-size:.95rem;text-align:center}
+
+/* ===== MARKET (ORGAN-III only) ===== */
+#market{background:var(--hero-bg)}
+.market-info{max-width:600px;margin:1rem auto 0;text-align:center}
+.market-info p{color:var(--text-muted);font-size:.95rem;line-height:1.7}
+.market-badges{display:flex;gap:1rem;justify-content:center;margin-top:1.5rem;flex-wrap:wrap}
+.market-badge{font-family:var(--font-mono);font-size:.75rem;padding:.4rem 1rem;border-radius:20px;border:1px solid var(--accent);color:var(--accent)}
+
+/* ===== POSITIONING ===== */
+#positioning{background:var(--hero-bg)}
+.organ-banner{text-align:center;margin-bottom:2rem}
+.organ-banner .organ-label{font-family:var(--font-mono);font-size:.8rem;color:var(--organ-badge);letter-spacing:.1em;text-transform:uppercase}
+.organ-banner .organ-title{font-size:1.5rem;color:var(--accent);margin-top:.25rem}
+.edge-list{display:grid;grid-template-columns:1fr 1fr;gap:1rem;max-width:600px;margin:1.5rem auto}
+.edge-item{font-family:var(--font-mono);font-size:.8rem;color:var(--text-muted);padding:.5rem;border-radius:6px;background:var(--card-bg);border:1px solid var(--card-border)}
+.edge-item .edge-dir{color:var(--accent);font-size:.65rem;text-transform:uppercase;display:block;margin-bottom:.25rem}
+.siblings{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:2rem}
+.sibling-tag{font-family:var(--font-mono);font-size:.7rem;padding:.25rem .6rem;border-radius:4px;background:var(--card-bg);color:var(--text-muted);border:1px solid var(--card-border)}
+
+/* ===== CTA ===== */
+#cta{background:var(--hero-bg);text-align:center;min-height:60vh;position:relative;overflow:hidden}
+#cta .container{position:relative;z-index:1}
+#cta h2{color:var(--accent);margin-bottom:1rem}
+#cta p{color:var(--text-muted);margin-bottom:2rem;max-width:500px;margin-left:auto;margin-right:auto}
+.cta-btn{display:inline-block;padding:.8rem 2rem;border-radius:8px;background:var(--accent);color:#fff;text-decoration:none;font-family:var(--font-mono);font-size:.85rem;font-weight:600;transition:all .3s;border:2px solid var(--accent)}
+.cta-btn:hover{background:transparent;color:var(--accent)}
+.cta-links{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+
+/* ===== REDUCED MOTION ===== */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:0s!important;transition-duration:0s!important}
+  .scroll-hint{animation:none}
+  .card,.feature-card{opacity:1!important;transform:none!important}
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  section{min-height:auto;padding:3rem 0}
+  #hero,#cta{min-height:100vh}
+  .container{padding:1.5rem}
+  .edge-list{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV DOTS -->
+<nav id="nav-dots" aria-label="Section navigation"></nav>
+
+<!-- HERO -->
+<section id="hero" data-section="0">
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+  <div class="container">
+    <span class="hero-badge">Taxis &middot; standard</span>
+    <h1>A I: Skills</h1>
+    <p class="tagline">Public repository of AI agent skills: specialized capabilities and workflows across 12 categories</p>
+    <p class="description">Public repository of AI agent skills: specialized capabilities and workflows across 12 categories</p>
+    <p class="scroll-hint" aria-hidden="true">scroll to explore</p>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section id="problem" data-section="1">
+  <div class="container">
+    <p class="label">The Problem</p>
+    <h2>Why This Exists</h2>
+    <div class="card-grid">
+      <div class="card visible"><h3>Under Construction</h3><p>Problem statement coming soon.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section id="solution" data-section="2">
+  <div class="container">
+    <p class="label">The Approach</p>
+    <h2>How It Works</h2>
+    <div class="text-block">
+      <p>Public repository of AI agent skills: specialized capabilities and workflows across 12 categories</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" data-section="3">
+  <div class="container">
+    <p class="label">Capabilities</p>
+    <h2>Key Features</h2>
+    <div class="feature-grid">
+      <div class="feature-card visible"><h3>In Development</h3><p>Feature list coming soon.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section id="architecture" data-section="4">
+  <div class="container">
+    <p class="label">Technical</p>
+    <h2>Architecture</h2>
+    <div class="tech-badges">
+      <span class="tech-badge">Python</span>
+    </div>
+    <p class="arch-text"></p>
+  </div>
+</section>
+
+
+
+<!-- POSITIONING -->
+<section id="positioning" data-section="5">
+  <div class="container">
+    <div class="organ-banner">
+      <span class="organ-label">Part of ORGANVM</span>
+      <h2 class="organ-title">IV &mdash; Taxis</h2>
+    </div>
+    <div class="edge-list">
+      <div class="edge-item"><span class="edge-dir">consumes</span>{'type': 'dependency', 'source': 'organvm-iv-taxis/agent--claude-smith', 'description': 'Depends on organvm-iv-taxis/agent--claude-smith'}</div>
+    </div>
+    <div class="siblings">
+      <span class="sibling-tag">orchestration-start-here</span>
+      <span class="sibling-tag">petasum-super-petasum</span>
+      <span class="sibling-tag">universal-node-network</span>
+      <span class="sibling-tag">.github</span>
+      <span class="sibling-tag">agentic-titan</span>
+      <span class="sibling-tag">agent--claude-smith</span>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta" data-section="6">
+  <div class="container">
+    <h2>Explore A I: Skills</h2>
+    <p>Public repository of AI agent skills: specialized capabilities and workflows across 12 categories</p>
+    <div class="cta-links">
+      <a href="https://github.com/organvm-iv-taxis/a-i--skills" class="cta-btn" target="_blank" rel="noopener">View on GitHub</a>
+    </div>
+  </div>
+</section>
+
+<script>
+/* ===== INTERSECTION OBSERVER FOR REVEALS ===== */
+(function() {
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.card, .feature-card').forEach(el => observer.observe(el));
+})();
+
+/* ===== NAV DOTS ===== */
+(function() {
+  const sections = document.querySelectorAll('section[data-section]');
+  const nav = document.getElementById('nav-dots');
+  sections.forEach((s, i) => {
+    const a = document.createElement('a');
+    a.href = '#' + s.id;
+    a.textContent = s.id;
+    nav.appendChild(a);
+  });
+  const dots = nav.querySelectorAll('a');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const idx = e.target.dataset.section;
+        dots.forEach(d => d.classList.remove('active'));
+        if (dots[idx]) dots[idx].classList.add('active');
+      }
+    });
+  }, { threshold: 0.4 });
+  sections.forEach(s => io.observe(s));
+})();
+
+/* ===== HERO ANIMATION ===== */
+(function() {
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (prefersReduced) { return; }
+  const canvas = document.getElementById('hero-canvas');
+if (!canvas) return;
+const ctx = canvas.getContext('2d');
+const dpr = window.devicePixelRatio || 1;
+function resize() {
+  canvas.width = canvas.offsetWidth * dpr;
+  canvas.height = canvas.offsetHeight * dpr;
+  ctx.scale(dpr, dpr);
+}
+resize();
+window.addEventListener('resize', resize);
+const W = () => canvas.offsetWidth;
+const H = () => canvas.offsetHeight;
+const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+  const states = [
+    {label: 'INIT', x: 0.2, y: 0.3},
+    {label: 'READY', x: 0.4, y: 0.5},
+    {label: 'RUN', x: 0.6, y: 0.3},
+    {label: 'DONE', x: 0.8, y: 0.5}
+  ];
+  const transitions = [[0,1],[1,2],[2,3],[3,1]];
+  let activeEdge = 0, progress = 0;
+  function draw() {
+    ctx.clearRect(0, 0, W(), H());
+    progress += 0.008;
+    if (progress > 1) { progress = 0; activeEdge = (activeEdge + 1) % transitions.length; }
+    transitions.forEach(([a, b], idx) => {
+      const ax = states[a].x * W(), ay = states[a].y * H();
+      const bx = states[b].x * W(), by = states[b].y * H();
+      ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(bx, by);
+      ctx.strokeStyle = idx === activeEdge ? accent + '50' : accent + '15';
+      ctx.lineWidth = idx === activeEdge ? 2 : 1; ctx.stroke();
+      if (idx === activeEdge) {
+        const px = ax + (bx - ax) * progress, py = ay + (by - ay) * progress;
+        ctx.beginPath(); ctx.arc(px, py, 4, 0, Math.PI * 2);
+        ctx.fillStyle = accent; ctx.fill();
+      }
+    });
+    states.forEach(s => {
+      const sx = s.x * W(), sy = s.y * H();
+      ctx.beginPath(); ctx.arc(sx, sy, 20, 0, Math.PI * 2);
+      ctx.strokeStyle = accent + '40'; ctx.lineWidth = 1.5; ctx.stroke();
+      ctx.fillStyle = accent + '08'; ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+</body>
+</html>
