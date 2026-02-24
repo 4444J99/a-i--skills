@@ -144,10 +144,10 @@ These are committed artifacts; include refreshed outputs in PRs that change skil
 ## System Context (auto-generated — do not edit)
 
 **Organ:** ORGAN-IV (Orchestration) | **Tier:** standard | **Status:** LOCAL
-**Org:** `unknown` | **Repo:** `a-i--skills`
+**Org:** `organvm-iv-taxis` | **Repo:** `a-i--skills`
 
 ### Edges
-- **Consumes** ← `organvm-iv-taxis/agent--claude-smith`: unknown
+- **Consumes** ← `organvm-iv-taxis/agent--claude-smith`: Agent template and orchestration dependency
 
 ### Siblings in Orchestration
 `orchestration-start-here`, `petasum-super-petasum`, `universal-node-network`, `.github`, `agentic-titan`, `agent--claude-smith`

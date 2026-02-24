@@ -12,8 +12,8 @@ org: organvm-iv-taxis
 metadata:
   implementation_status: PRODUCTION
   tier: standard
-  promotion_status: LOCAL
-  last_validated: "2026-02-11"
+  promotion_status: CANDIDATE
+  last_validated: "2026-02-24"
   generated: "2026-02-12"
   sprint: "AUTONOMY"
 
@@ -29,9 +29,6 @@ consumes:
     description: Depends on organvm-iv-taxis/agent--claude-smith
 
 subscriptions:
-  - event: repo.created
-    source: any
-    action: "Update registry, assign seed.yaml template"
-  - event: ci.passed
-    source: any
-    action: Check if repo qualifies for promotion
+  - event: registry.updated
+    source: META-ORGANVM
+    action: Re-validate skill collection against registry
