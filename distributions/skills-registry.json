@@ -1449,6 +1449,51 @@
       }
     },
     {
+      "name": "d2l-discussion-responder",
+      "description": "Review D2L/Brightspace discussion threads as an instructor, identify unanswered questions, verify course facts, and draft concise replies in the instructor's voice. Use when asked to respond to student discussions or catch up on an LMS forum; post only within the user's explicit authorization and verify each submitted reply.",
+      "category": "education",
+      "collection": "example",
+      "path": "skills/education/d2l-discussion-responder",
+      "license": "MIT",
+      "complexity": null,
+      "time_to_learn": null,
+      "tier": null,
+      "governance_norm_group": null,
+      "governance_auto_activate": false,
+      "prerequisites": [],
+      "tags": [],
+      "inputs": [],
+      "outputs": [],
+      "side_effects": [],
+      "triggers": [
+        "user-asks-to-answer-student-discussions",
+        "user-asks-about-d2l",
+        "user-asks-about-brightspace",
+        "context:education"
+      ],
+      "complements": [
+        "feedback-pedagogy",
+        "socratic-tutor"
+      ],
+      "includes": [],
+      "governance_phases": [
+        "shape",
+        "build",
+        "prove"
+      ],
+      "organ_affinity": [
+        "organ-vi"
+      ],
+      "resources": {
+        "scripts": [],
+        "references": [
+          "course-facts-template.md",
+          "d2l-browser-operations.md"
+        ],
+        "assets": []
+      }
+    },
+    {
       "name": "data-backup-patterns",
       "description": "Implement reliable data backup and recovery strategies with automated scheduling, encryption, rotation policies, and disaster recovery testing. Covers database backups, file system snapshots, and cloud storage patterns. Triggers on backup strategy, disaster recovery, or data protection requests.",
       "category": "development",
@@ -5459,6 +5504,45 @@
       }
     },
     {
+      "name": "recommendation-letter",
+      "description": "Draft, revise, or polish an evidence-based letter of recommendation for a scholarship, employment, or graduate study. Produce useful editable Markdown from facts supplied by the recommender, with optional PDF output when requested and a renderer is available. Use when asked for a recommendation, reference letter, or revision of an existing letter; establish the relationship, use concrete evidence, and preserve honest limits without inventing facts.",
+      "category": "education",
+      "collection": "example",
+      "path": "skills/education/recommendation-letter",
+      "license": "MIT",
+      "complexity": null,
+      "time_to_learn": null,
+      "tier": null,
+      "governance_norm_group": null,
+      "governance_auto_activate": false,
+      "prerequisites": [],
+      "tags": [],
+      "inputs": [],
+      "outputs": [],
+      "side_effects": [],
+      "triggers": [
+        "user-asks-to-write-recommendation-letter",
+        "user-asks-for-reference-letter",
+        "user-asks-to-polish-a-recommendation"
+      ],
+      "complements": [],
+      "includes": [],
+      "governance_phases": [
+        "shape",
+        "build"
+      ],
+      "organ_affinity": [
+        "organ-vi"
+      ],
+      "resources": {
+        "scripts": [],
+        "references": [
+          "recommendation-rubric.md"
+        ],
+        "assets": []
+      }
+    },
+    {
       "name": "recursive-boil-down",
       "description": "Decompose a system, repository, or architecture into four tiers \u2014 Macro (whole system), Bricks (components), Elements (conceptual primitives), Primitives (base operations) \u2014 reading target source plus its seed.yaml, then output a comparison table of the new system against existing substrates to expose reuse and overlap before anything new is built. Triggers on \"boil down\", \"decompose into primitives\", \"recursive boil-down\", or analyzing a new repo/architecture against what already exists.",
       "category": "knowledge",
@@ -6705,7 +6789,7 @@
       "category": "integrations",
       "collection": "example",
       "path": "skills/integrations/specstory-session-summary",
-      "license": "MIT",
+      "license": "Apache-2.0",
       "complexity": null,
       "time_to_learn": null,
       "tier": null,
@@ -7835,6 +7919,17 @@
         "time-series-analyst"
       ]
     },
+    "education": {
+      "count": 6,
+      "skills": [
+        "d2l-discussion-responder",
+        "enc1101-curriculum-designer",
+        "evaluation-to-growth",
+        "feedback-pedagogy",
+        "recommendation-letter",
+        "socratic-tutor"
+      ]
+    },
     "documentation": {
       "count": 6,
       "skills": [
@@ -7858,15 +7953,6 @@
         "project-alchemy-orchestrator",
         "project-orchestration",
         "promotion-readiness-checklist"
-      ]
-    },
-    "education": {
-      "count": 4,
-      "skills": [
-        "enc1101-curriculum-designer",
-        "evaluation-to-growth",
-        "feedback-pedagogy",
-        "socratic-tutor"
       ]
     }
   },
