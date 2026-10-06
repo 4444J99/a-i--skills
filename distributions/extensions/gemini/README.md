@@ -5,11 +5,8 @@ This directory contains Gemini CLI extensions that expose the skills in this rep
 Install locally:
 
 ```bash
-# Example skills
+# Skill catalog
 gemini extensions install ./extensions/gemini/example-skills
-
-# Document skills
-gemini extensions install ./extensions/gemini/document-skills
 ```
 
 Regenerate links after adding/removing skills:

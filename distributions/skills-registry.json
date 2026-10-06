@@ -1,6 +1,6 @@
 {
   "version": "1.2",
-  "repository": "anthropic-agent-skills",
+  "repository": "4444J99/a-i--skills",
   "skills": [
     {
       "name": "accessibility-patterns",
@@ -359,7 +359,6 @@
       "complements": [
         "closeout",
         "cross-agent-handoff",
-        "consolidate-memory",
         "qa-audit",
         "ecosystem-autopsy"
       ],
@@ -1085,34 +1084,6 @@
       }
     },
     {
-      "name": "consolidate-memory",
-      "description": "\"Reflective pass over your memory files \u2014 merge duplicates, fix stale facts, prune the index.\"",
-      "category": "knowledge",
-      "collection": "example",
-      "path": "skills/knowledge/consolidate-memory",
-      "license": "MIT",
-      "complexity": null,
-      "time_to_learn": null,
-      "tier": null,
-      "governance_norm_group": null,
-      "governance_auto_activate": false,
-      "prerequisites": [],
-      "tags": [],
-      "inputs": [],
-      "outputs": [],
-      "side_effects": [],
-      "triggers": [],
-      "complements": [],
-      "includes": [],
-      "governance_phases": [],
-      "organ_affinity": [],
-      "resources": {
-        "scripts": [],
-        "references": [],
-        "assets": []
-      }
-    },
-    {
       "name": "content-distribution",
       "description": "Promote creative and technical work through strategic content distribution. Covers platform selection, audience building, content repurposing, and engagement strategies without becoming a full-time marketer. Triggers on promotion, audience building, social media strategy, or content marketing requests.",
       "category": "professional",
@@ -1264,7 +1235,7 @@
       "complements": [
         "essay-publishing-pipeline",
         "creative-writing-craft",
-        "doc-coauthoring"
+        "technical-analytical-writing"
       ],
       "includes": [],
       "governance_phases": [
@@ -1795,46 +1766,6 @@
       }
     },
     {
-      "name": "doc-coauthoring",
-      "description": "Guide users through a structured workflow for co-authoring documentation. Use when user wants to write documentation, proposals, technical specs, decision docs, or similar structured content. This workflow helps users efficiently transfer context, refine content through iteration, and verify the doc works for readers. Trigger when user mentions writing docs, creating proposals, drafting specs, or similar documentation tasks.",
-      "category": "documentation",
-      "collection": "example",
-      "path": "skills/documentation/doc-coauthoring",
-      "license": "MIT",
-      "complexity": null,
-      "time_to_learn": null,
-      "tier": null,
-      "governance_norm_group": "documentation-standard",
-      "governance_auto_activate": false,
-      "prerequisites": [],
-      "tags": [],
-      "inputs": [],
-      "outputs": [],
-      "side_effects": [],
-      "triggers": [
-        "user-asks-about-documentation",
-        "command:docs",
-        "context:documentation"
-      ],
-      "complements": [],
-      "includes": [],
-      "governance_phases": [
-        "shape",
-        "prove"
-      ],
-      "organ_affinity": [
-        "all"
-      ],
-      "resources": {
-        "scripts": [],
-        "references": [
-          "document-templates.md",
-          "reader-testing-prompts.md"
-        ],
-        "assets": []
-      }
-    },
-    {
       "name": "docker-containerization",
       "description": "Containerize applications with multi-stage Dockerfiles, Docker Compose orchestration, image optimization, and container security. Covers Python, Node.js, and multi-service architectures. Triggers on Docker, containerization, or container orchestration requests.",
       "category": "development",
@@ -1916,7 +1847,7 @@
       ],
       "complements": [
         "stranger-test-protocol",
-        "doc-coauthoring",
+        "technical-analytical-writing",
         "knowledge-architecture"
       ],
       "includes": [],
@@ -5906,54 +5837,6 @@
       }
     },
     {
-      "name": "schedule",
-      "description": "\"Create a scheduled task that can be run on demand or automatically on an interval. Distills the current session into a self-contained reusable prompt with cronExpression or fireAt, then calls the create_scheduled_task tool. Use when the user wants a recurring or one-time task scheduled \u2014 e.g. 'remind me every Friday', 'run this hourly', 'schedule a daily inbox check'.\"",
-      "category": "tools",
-      "collection": "example",
-      "path": "skills/tools/schedule",
-      "license": "MIT",
-      "complexity": "beginner",
-      "time_to_learn": "5min",
-      "tier": null,
-      "governance_norm_group": "quality-gate",
-      "governance_auto_activate": false,
-      "prerequisites": [],
-      "tags": [
-        "scheduling",
-        "automation",
-        "recurring-tasks",
-        "cron",
-        "one-time-tasks"
-      ],
-      "inputs": [],
-      "outputs": [],
-      "side_effects": [],
-      "triggers": [
-        "user-asks-schedule",
-        "user-asks-recurring-task",
-        "user-asks-cron",
-        "user-asks-remind-me",
-        "context:repeated-task"
-      ],
-      "complements": [
-        "agent-swarm-orchestrator",
-        "project-orchestration",
-        "cross-agent-handoff"
-      ],
-      "includes": [],
-      "governance_phases": [
-        "build"
-      ],
-      "organ_affinity": [
-        "organ-iv"
-      ],
-      "resources": {
-        "scripts": [],
-        "references": [],
-        "assets": []
-      }
-    },
-    {
       "name": "script-analysis-dramaturgical",
       "description": "Comprehensive dramaturgical analysis of screenplays and scripts. Use when asked to analyze, break down, map, or provide feedback on a script. Triggers on requests involving beat mapping, act structure analysis, scene-by-scene breakdown, first-reader reports, production notes, or any comprehensive script coverage. Claude assumes combined roles of aesthete, dramaturgist, narratologist, art historian, cinephile, rhetorician, producer, academic, and first-reader.",
       "category": "creative",
@@ -6278,34 +6161,6 @@
       "organ_affinity": [
         "all"
       ],
-      "resources": {
-        "scripts": [],
-        "references": [],
-        "assets": []
-      }
-    },
-    {
-      "name": "setup-cowork",
-      "description": "\"Guided Cowork setup \u2014 install role-matched plugins, connect your tools, try a skill.\"",
-      "category": "tools",
-      "collection": "example",
-      "path": "skills/tools/setup-cowork",
-      "license": "MIT",
-      "complexity": null,
-      "time_to_learn": null,
-      "tier": null,
-      "governance_norm_group": null,
-      "governance_auto_activate": false,
-      "prerequisites": [],
-      "tags": [],
-      "inputs": [],
-      "outputs": [],
-      "side_effects": [],
-      "triggers": [],
-      "complements": [],
-      "includes": [],
-      "governance_phases": [],
-      "organ_affinity": [],
       "resources": {
         "scripts": [],
         "references": [],
@@ -6995,7 +6850,7 @@
       ],
       "complements": [
         "github-repository-standards",
-        "doc-coauthoring",
+        "technical-analytical-writing",
         "repo-onboarding-flow"
       ],
       "includes": [],
@@ -7145,7 +7000,6 @@
         "context:decision-record"
       ],
       "complements": [
-        "doc-coauthoring",
         "stranger-test-protocol",
         "research-synthesis-workflow"
       ],
@@ -7399,8 +7253,7 @@
       "complements": [
         "closeout",
         "artifact-resurfacing",
-        "cross-agent-handoff",
-        "consolidate-memory"
+        "cross-agent-handoff"
       ],
       "includes": [],
       "governance_phases": [
@@ -7788,192 +7641,6 @@
           "example_asset.txt"
         ]
       }
-    },
-    {
-      "name": "docx",
-      "description": "\"Comprehensive document creation, editing, and analysis with support for tracked changes, comments, formatting preservation, and text extraction. When Claude needs to work with professional documents (.docx files) for: (1) Creating new documents, (2) Modifying or editing content, (3) Working with tracked changes, (4) Adding comments, or any other document tasks\"",
-      "category": "uncategorized",
-      "collection": "document",
-      "path": "document-skills/docx",
-      "license": "Proprietary. LICENSE.txt has complete terms",
-      "complexity": null,
-      "time_to_learn": null,
-      "tier": null,
-      "governance_norm_group": null,
-      "governance_auto_activate": false,
-      "prerequisites": [],
-      "tags": [],
-      "inputs": [],
-      "outputs": [],
-      "side_effects": [],
-      "triggers": [
-        "user-asks-about-docx",
-        "user-asks-about-word-document",
-        "file-type:*.docx"
-      ],
-      "complements": [],
-      "includes": [],
-      "governance_phases": [
-        "build"
-      ],
-      "organ_affinity": [
-        "all"
-      ],
-      "resources": {
-        "scripts": [
-          "__init__.py",
-          "accept_changes.py",
-          "comment.py",
-          "document.py",
-          "office",
-          "templates",
-          "utilities.py"
-        ],
-        "references": [
-          "common-use-cases.md",
-          "troubleshooting.md"
-        ],
-        "assets": []
-      }
-    },
-    {
-      "name": "pdf",
-      "description": "Comprehensive PDF manipulation toolkit for extracting text and tables, creating new PDFs, merging/splitting documents, and handling forms. When Claude needs to fill in a PDF form or programmatically process, generate, or analyze PDF documents at scale.",
-      "category": "uncategorized",
-      "collection": "document",
-      "path": "document-skills/pdf",
-      "license": "Proprietary. LICENSE.txt has complete terms",
-      "complexity": null,
-      "time_to_learn": null,
-      "tier": null,
-      "governance_norm_group": null,
-      "governance_auto_activate": false,
-      "prerequisites": [],
-      "tags": [],
-      "inputs": [],
-      "outputs": [],
-      "side_effects": [],
-      "triggers": [
-        "user-asks-about-pdf",
-        "file-type:*.pdf"
-      ],
-      "complements": [],
-      "includes": [],
-      "governance_phases": [
-        "build"
-      ],
-      "organ_affinity": [
-        "all"
-      ],
-      "resources": {
-        "scripts": [
-          "check_bounding_boxes.py",
-          "check_bounding_boxes_test.py",
-          "check_fillable_fields.py",
-          "convert_pdf_to_images.py",
-          "create_validation_image.py",
-          "extract_form_field_info.py",
-          "extract_form_structure.py",
-          "fill_fillable_fields.py",
-          "fill_pdf_form_with_annotations.py"
-        ],
-        "references": [
-          "common-use-cases.md",
-          "troubleshooting.md"
-        ],
-        "assets": []
-      }
-    },
-    {
-      "name": "pptx",
-      "description": "\"Presentation creation, editing, and analysis. When Claude needs to work with presentations (.pptx files) for: (1) Creating new presentations, (2) Modifying or editing content, (3) Working with layouts, (4) Adding comments or speaker notes, or any other presentation tasks\"",
-      "category": "uncategorized",
-      "collection": "document",
-      "path": "document-skills/pptx",
-      "license": "Proprietary. LICENSE.txt has complete terms",
-      "complexity": null,
-      "time_to_learn": null,
-      "tier": null,
-      "governance_norm_group": null,
-      "governance_auto_activate": false,
-      "prerequisites": [],
-      "tags": [],
-      "inputs": [],
-      "outputs": [],
-      "side_effects": [],
-      "triggers": [
-        "user-asks-about-presentation",
-        "user-asks-about-powerpoint",
-        "file-type:*.pptx"
-      ],
-      "complements": [],
-      "includes": [],
-      "governance_phases": [
-        "build"
-      ],
-      "organ_affinity": [
-        "all"
-      ],
-      "resources": {
-        "scripts": [
-          "__init__.py",
-          "add_slide.py",
-          "clean.py",
-          "html2pptx.js",
-          "inventory.py",
-          "office",
-          "rearrange.py",
-          "replace.py",
-          "thumbnail.py"
-        ],
-        "references": [
-          "common-use-cases.md",
-          "troubleshooting.md"
-        ],
-        "assets": []
-      }
-    },
-    {
-      "name": "xlsx",
-      "description": "\"Comprehensive spreadsheet creation, editing, and analysis with support for formulas, formatting, data analysis, and visualization. When Claude needs to work with spreadsheets (.xlsx, .xlsm, .csv, .tsv, etc) for: (1) Creating new spreadsheets with formulas and formatting, (2) Reading or analyzing data, (3) Modify existing spreadsheets while preserving formulas, (4) Data analysis and visualization in spreadsheets, or (5) Recalculating formulas\"",
-      "category": "uncategorized",
-      "collection": "document",
-      "path": "document-skills/xlsx",
-      "license": "Proprietary. LICENSE.txt has complete terms",
-      "complexity": null,
-      "time_to_learn": null,
-      "tier": null,
-      "governance_norm_group": null,
-      "governance_auto_activate": false,
-      "prerequisites": [],
-      "tags": [],
-      "inputs": [],
-      "outputs": [],
-      "side_effects": [],
-      "triggers": [
-        "user-asks-about-spreadsheet",
-        "user-asks-about-excel",
-        "file-type:*.xlsx"
-      ],
-      "complements": [],
-      "includes": [],
-      "governance_phases": [
-        "build"
-      ],
-      "organ_affinity": [
-        "all"
-      ],
-      "resources": {
-        "scripts": [
-          "office",
-          "recalc.py"
-        ],
-        "references": [
-          "common-use-cases.md",
-          "troubleshooting.md"
-        ],
-        "assets": []
-      }
     }
   ],
   "categories": {
@@ -8032,7 +7699,7 @@
       ]
     },
     "tools": {
-      "count": 23,
+      "count": 21,
       "skills": [
         "agent-development-pack",
         "agent-swarm-orchestrator",
@@ -8046,10 +7713,8 @@
         "portal-router",
         "prompt-engineering-patterns",
         "qa-audit",
-        "schedule",
         "session-governance-audit",
         "session-lifecycle-patterns",
-        "setup-cowork",
         "shell-history-hygiene",
         "skill-chain-prompts",
         "skill-creator",
@@ -8111,10 +7776,9 @@
       ]
     },
     "knowledge": {
-      "count": 10,
+      "count": 9,
       "skills": [
         "claude-project-manifest",
-        "consolidate-memory",
         "expansive-inquiry",
         "knowledge-architecture",
         "knowledge-graph-builder",
@@ -8172,9 +7836,8 @@
       ]
     },
     "documentation": {
-      "count": 7,
+      "count": 6,
       "skills": [
-        "doc-coauthoring",
         "document-audit-extraction",
         "github-profile-architect",
         "github-repo-curator",
@@ -8204,15 +7867,6 @@
         "evaluation-to-growth",
         "feedback-pedagogy",
         "socratic-tutor"
-      ]
-    },
-    "uncategorized": {
-      "count": 4,
-      "skills": [
-        "docx",
-        "pdf",
-        "pptx",
-        "xlsx"
       ]
     }
   },
