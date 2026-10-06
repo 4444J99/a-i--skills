@@ -199,7 +199,7 @@ chain:
 
 steps:
   - id: docs
-    skill: doc-coauthoring
+    skill: technical-analytical-writing
     description: Write project documentation
     outputs: [readme, guides, api-docs]
 
@@ -230,7 +230,7 @@ steps:
 | fullstack-feature | 6 | Multiple frontend + backend | Large |
 | mcp-development | 4 | mcp-builder, testing-patterns | Medium |
 | career-preparation | 4 | cv-resume-builder, interview-preparation | Medium |
-| documentation | 3 | doc-coauthoring, github-repository-standards | Small |
+| documentation | 3 | technical-analytical-writing, github-repository-standards | Small |
 
 ## Chain Selection Guide
 

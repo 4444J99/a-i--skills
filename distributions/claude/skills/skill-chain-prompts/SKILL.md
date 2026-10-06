@@ -83,7 +83,7 @@ cv-resume-builder → portfolio-presentation → interview-preparation → netwo
 
 **documentation** — Project documentation
 ```
-doc-coauthoring → github-repository-standards → github-profile-architect
+technical-analytical-writing → github-repository-standards → github-profile-architect
 ```
 
 ## Usage Examples
@@ -144,7 +144,7 @@ Claude: Creating custom chain...
             depends_on: [implement]
 
           - id: docs
-            skill: doc-coauthoring
+            skill: technical-analytical-writing
             depends_on: [implement]
             optional: true
 

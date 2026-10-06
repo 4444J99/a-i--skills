@@ -14,7 +14,7 @@ governance_phases: [shape, prove]
 governance_norm_group: documentation-standard
 organ_affinity: [organ-v]
 triggers: [user-asks-about-technical-writing, context:architecture-docs, context:adr, context:technical-analysis, context:decision-record]
-complements: [doc-coauthoring, stranger-test-protocol, research-synthesis-workflow]
+complements: [stranger-test-protocol, research-synthesis-workflow]
 ---
 
 # Technical Analytical Writing

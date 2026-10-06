@@ -15,7 +15,7 @@ governance_norm_group: documentation-standard
 governance_auto_activate: true
 organ_affinity: [all]
 triggers: [user-asks-about-doc-review, context:documentation-quality, context:onboarding-review, context:readme-review, context:stranger-test]
-complements: [github-repository-standards, doc-coauthoring, repo-onboarding-flow]
+complements: [github-repository-standards, technical-analytical-writing, repo-onboarding-flow]
 ---
 
 # Stranger Test Protocol

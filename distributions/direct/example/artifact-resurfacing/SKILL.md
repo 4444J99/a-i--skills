@@ -35,7 +35,6 @@ triggers:
 complements:
   - closeout
   - cross-agent-handoff
-  - consolidate-memory
   - qa-audit
   - ecosystem-autopsy
 governance_phases: [frame, shape]
@@ -52,7 +51,7 @@ Open the drift on the table. Surface the buried artifacts — stale citations, m
 This skill is **propose-not-apply** for any constitutional surface. It produces drift tables, edit diffs, and IRF row proposals. It does not commit edits to `CLAUDE.md`, `MEMORY.md`, `governance-rules.json`, `registry-v2.json`, or any `seed.yaml` without explicit conductor authorization in the same session.
 
 - **Closure for plans** — defer to [`closeout`](../closeout/SKILL.md). This skill does not assign DONE-NNN / IRF-XXX-NNN labels; it surfaces orphans for closeout's classifier.
-- **Memory operations** — defer to [`consolidate-memory`](../../knowledge/consolidate-memory/SKILL.md) for memory file mutations. This skill emits proposed memory diffs.
+- **Memory operations** — defer to your agent's memory-curation tool (for example, a built-in memory-consolidation skill, where the platform provides one) for memory file mutations. This skill emits proposed memory diffs.
 - **Cross-session continuity** — defer to [`cross-agent-handoff`](../cross-agent-handoff/SKILL.md). This skill writes the polish-log entry; handoff carries it forward.
 - **Verification of claimed transitions** — defer to [`qa-audit`](../qa-audit/SKILL.md).
 
@@ -242,7 +241,7 @@ Drift between memory claims, CLAUDE.md citations, and on-disk reality is the ent
 
 The genesis session (2026-05-17) found four classes of drift in one domain (the institutional-authority / SGO / praxis-perpetua surface). Closeout caught the four as "follow-ups"; this skill exists to give those follow-ups a protocol instead of an ad-hoc fix-or-defer decision.
 
-Pairs with `closeout` (which surfaces) and `consolidate-memory` (which prunes). Three skills, one entropy regime.
+Pairs with `closeout` (which surfaces) and a memory-consolidation pass (which prunes). Three motions, one entropy regime.
 
 ## Related
 
