@@ -11,7 +11,7 @@ The AI Skills repository hosts specialized instructions, scripts, and resources 
 - **Skill-First Architecture**: Every skill must have a `SKILL.md` file with valid YAML frontmatter
 - **Self-Contained Design**: Each skill directory is independent with its own resources
 - **Generated Artifacts**: Link directories and collections are committed and maintained by scripts
-- **Dual Collections**: Example skills (root) and document skills (document-skills/)
+- **Single Catalog**: All catalog skills live under `skills/<category>/`; Claude Code plugins live under `plugins/`
 
 ## Code Assistance Guidelines
 
@@ -53,8 +53,8 @@ python3 scripts/validate_skills.py --collection example --unique
 **Validate changes:**
 ```bash
 python3 scripts/validate_skills.py --collection example --unique
-python3 scripts/validate_skills.py --collection document --unique
 python3 scripts/validate_generated_dirs.py
+python3 -m pytest
 ```
 
 **Release workflow:**
@@ -66,7 +66,6 @@ python3 scripts/release.py VERSION --change "Description" --commit --tag --push
 
 - `skills/`, `.codex/skills`, `.claude/skills`, `extensions/gemini/*/skills` - Generated bundles
 - `collections/` - Auto-generated skill path lists
-- `document-skills/` - Reference implementations for complex file formats
 - `scripts/` - Maintenance and validation scripts
 
 ## Important Constraints
