@@ -490,7 +490,7 @@ The following are exceptions and should never be flagged:
 - `.archived--*` repositories (archived, no seeding required)
 
 ### Known Issues
-- `sovereign-systems--layer-above-hokage`: Pending spec creation
+- Client repos awaiting a spec: pending spec creation (names redacted)
 - Repos in CONTRIBUTING state may have incomplete fields
 
 ---

@@ -70,8 +70,8 @@ Three cross-flows fire simultaneously on every domain instantiation:
    - Each overlap = essay, video, or joint-product opportunity
 
 3. **Tool/audience cross-flow** — every engagement spawns reusable tools AND audiences:
-   - Tools amortize across portfolio nodes (the spiral renderer built for Maddie can re-skin for Rob's funnel-visualizer; the conversation-corpus pipeline for ChatGPT ingest serves every future capture)
-   - Audiences cross-pollinate (Sticks borrows Jessica's relationship audience; Hokage borrows BODI's fitness audience)
+   - Tools amortize across portfolio nodes (a visual-flow renderer built for one client can re-skin as another client's funnel visualizer; the conversation-corpus pipeline for ChatGPT ingest serves every future capture)
+   - Audiences cross-pollinate (an education project borrows a collaborator's relationship audience; a chess-coaching brand borrows a fitness brand's audience)
 
 **Output artifact:** `portfolio-resonance.md` (one per domain instantiation; lists the three cross-flows with concrete entries).
 
@@ -98,7 +98,7 @@ For every structure built, a meta-system appears around it to study it. Per Tene
 - What changed in the substrate skill as a result of building this instance
 
 **Recursion direction:**
-- Building chess instance → produces `chess/domain-meta-study.md`
+- Building a chess instance → produces `chess/domain-meta-study.md`
 - This study-of-build feeds back into the substrate skill's `references/` (rule changes propagate)
 - Substrate skill changes → next instantiation reflects the new rules
 

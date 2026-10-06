@@ -114,7 +114,7 @@ Sequential within a single instantiation; recursive across portfolio lifecycle.
 
 Run [`scripts/audit-portfolio.sh`](scripts/audit-portfolio.sh). Globs `~/Workspace/` for existing engines and classifies them into the 3-tier engine taxonomy (see [`references/engine-taxonomy.md`](references/engine-taxonomy.md)):
 
-- **Domain engines** — re-skinnable within similar domain (BODI 4-level funnel, spiral renderer, landing-engine)
+- **Domain engines** — re-skinnable within similar domain (a membership 4-level funnel, a visual-flow renderer, a landing-page engine)
 - **Meta-engines** — cross-domain pattern (cross-pollination diagnosis, 75-person Constellation, PDE skill, Bridge Content templates, Discord rituals)
 - **Consultant engines** — every engagement regardless of domain (knowledge base, application pipeline, plan-mode discipline, IRF/MEMORY/chezmoi protocols, conversation-corpus pipeline)
 
@@ -216,12 +216,9 @@ Distinct invocation modes the skill supports:
 
 Stress-tested fills under [`proof-instances/`](proof-instances/):
 
-- [`chess/`](proof-instances/chess/) — Hokage Chess (Rob Bonavoglia client) as study source
-- [`wellness/`](proof-instances/wellness/) — BODI fitness / Maddie Elevate Align as study source
-- [`education/`](proof-instances/education/) — Jessica stub (DIWS schema v2.2 reference)
 - [`voodoo/`](proof-instances/voodoo/) — outlier validator (loads layer 8 heavily; design-only)
 
-The chess and wellness instances are READ-ONLY studies of existing client work — they extract the substrate already running underneath those repos without modifying source repos. The education stub demonstrates how a pre-active flag is loaded. The voodoo outlier proves the schema generates across radically dissimilar domains.
+The voodoo outlier proves the schema generates across radically dissimilar domains. Earlier client-derived proof instances were removed from the public repository for privacy; when you run DIWS on your own engagements, keep client-specific instances in a private workspace and fill them from the `assets/*-template.*` files. A typical portfolio pairs a commercial domain (e.g. chess or fitness coaching), a pre-active stub (most fields UNKNOWN, to show how a flag is loaded before first engagement), and an ethically-floored outlier like voodoo.
 
 ## Out-of-Scope
 

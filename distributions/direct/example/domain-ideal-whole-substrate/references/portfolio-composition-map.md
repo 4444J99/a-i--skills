@@ -27,7 +27,7 @@ For 4 active instances {chess, wellness, education, design}, 6 pair combinations
 
 | Pair | Operator-1 yield | Operator-2 yield | Operator-3 yield | Operator-4 yield |
 |---|---|---|---|---|
-| chess × wellness | shared mind-body discipline pattern | merged refinery (chess archives + wellness primary research) | BODI funnel transplant to chess; Hokage premium-content transplant to BODI (PRT-045 already fired) | meta-study: "two-flag-pierce as one practitioner mode" |
+| chess × wellness | shared mind-body discipline pattern | merged refinery (chess archives + wellness primary research) | fitness membership-funnel transplant to chess; chess premium-content transplant to fitness | meta-study: "two-flag-pierce as one practitioner mode" |
 | chess × education | shared pedagogy depth (1-on-1 vs cohort) | merged refinery (chess theory journals + education research) | "pedagogy-as-content" cross-flow | meta-study: "teaching-as-game vs teaching-as-instruction" |
 | chess × design | shared visual-system / principle thinking | merged refinery (chess aesthetics + design language patterns) | "design-as-strategic-thinking" essay surface | meta-study: "principle-bound creativity" |
 | wellness × education | shared transformation-coaching pattern | merged refinery (clinical evidence + education research) | "transformation pedagogy" cross-flow surface | meta-study: "growth as taught vs growth as practiced" |
@@ -53,7 +53,7 @@ For 4 active instances, 4 triple combinations:
 
 ## Beyond C(N,4): higher-order combinations as portfolio grows
 
-When N=5 (Jessica's education vector becomes confirmed) or N=6+ (future flag-pierces), C(N,K) grows combinatorially. Strategy:
+When N=5 (a pre-active stub becomes confirmed) or N=6+ (future flag-pierces), C(N,K) grows combinatorially. Strategy:
 
 - **Cap reporting at K≤4** by default — beyond K=4 the marginal yield drops without methodological change
 - **Cap K=5,6,...** runs at *intentional* triggers (annual portfolio review, major positioning rewrite)
@@ -76,11 +76,11 @@ For each combination, the Portfolio Operator's push leg (cross-flow #3) yields:
 
 | Combination | Reusable tool surfaced | Cross-pollinatable audience |
 |---|---|---|
-| chess × wellness | Tier-progression UI (Genin/Chunin/Jonin pattern) | NYC chess scene ↔ BODI member circle |
+| chess × wellness | Tier-progression UI (named rank-ladder pattern) | local chess club scene ↔ fitness member circle |
 | chess × education | Lichess study system + cohort engine | YouTube chess audience ↔ classroom pilots |
 | chess × design | Visual notation system (annotation language) | chess content creators ↔ design Twitter |
-| wellness × education | Cohort + member-circle hybrid platform | Elevate Align newsletter ↔ educator network |
-| wellness × design | Visual brand system for practitioners | Elevate clients ↔ design portfolio audiences |
+| wellness × education | Cohort + member-circle hybrid platform | wellness practitioner newsletter ↔ educator network |
+| wellness × design | Visual brand system for practitioners | wellness practitioner clients ↔ design portfolio audiences |
 | education × design | Curriculum visual-language template | Educator forums ↔ design education |
 
 ## Heist + contribute round-trip at combination scale

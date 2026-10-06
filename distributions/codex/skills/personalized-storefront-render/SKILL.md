@@ -10,7 +10,7 @@ license: MIT
 
 ## When to invoke
 
-- User asks for "a client-facing version of X" / "translate this for Rob/Maddie/<client>" / "ELI5 / TLDR of <internal doc>".
+- User asks for "a client-facing version of X" / "translate this for <client>" / "ELI5 / TLDR of <internal doc>".
 - User wants every internal artifact (or a class of them) to project to a client storefront.
 - A new client is being onboarded and needs a personalized read-surface for ongoing work.
 - A specific artifact is tagged with `audiences:` frontmatter and the storefront has not been regenerated.
@@ -18,7 +18,7 @@ license: MIT
 ## When NOT to invoke
 
 - The artifact is governance/SOP/internal-only with no client surface (`audiences: [internal]` or unmtagged).
-- The work is bespoke creative direction for a specific deliverable (use the relevant domain skill — Hokage bridge content, Spiral lineage substrate, etc.).
+- The work is bespoke creative direction for a specific deliverable (use the relevant domain skill — e.g. a creator brand's bridge-content templates or a practitioner brand's lineage substrate).
 - The client surface already exists and is hand-curated outside this substrate (do not ingest after-the-fact; respect the existing artifact).
 
 ## Architecture (4 layers)
@@ -42,9 +42,9 @@ LAYER 2 — TRANSLATION ENGINE  (this skill)
    then:  docs/storefront/_curated/<artifact>.<persona>.client.md  (after human ratify)
 
 LAYER 3 — DEPLOY SURFACE  (per-repo, per-stack adapter)
-  Hokage:  /storefront/[...slug] via Next.js → rob.<domain> (link-gated)
-  Spiral:  /storefront/[...slug] via Astro → maddie.<domain> (link-gated)
-  Future:  static adapter ships plain HTML
+  Next.js repos:  /storefront/[...slug] → <client>.<domain> (link-gated)
+  Astro repos:    /storefront/[...slug] → <client>.<domain> (link-gated)
+  Future:         static adapter ships plain HTML
 ```
 
 ## Commands (CLI surface)
@@ -102,17 +102,17 @@ No daemons. No LaunchAgents. Pre-push git hook in opt-in repos may warn (exit 0)
 
 ## Phased rollout (substrate maturity)
 
-| Slice | Scope | Status (2026-04-25) |
-|---|---|---|
-| 1 — Rob storefront | Schema, Rob lexicon, hokage-chess config, frontmatter on 1+ canonical artifact, hand-curated drafts | scaffolded; route + deploy deferred (hokage Next.js has breaking changes per AGENTS.md) |
-| 2 — Maddie storefront | Astro adapter, Maddie lexicon, spiral config, frontmatter on 5 spiral artifacts | pending |
-| 3 — Full substrate | Auto-draft generator, pre-push hook, IRF wiring, mailto backfeed, static adapter, `audit --unmtagged` baseline | pending |
+| Slice | Scope |
+|---|---|
+| 1 — First client storefront (Next.js) | Schema, first persona lexicon, repo `storefront.config.yaml`, frontmatter on 1+ canonical artifact, hand-curated drafts |
+| 2 — Second client storefront (Astro) | Astro adapter, second persona lexicon, repo config, frontmatter on a handful of artifacts |
+| 3 — Full substrate | Auto-draft generator, pre-push hook, IRF wiring, mailto backfeed, static adapter, `audit --unmtagged` baseline |
 
 ## References
 
 - **Plan**: `~/.claude/plans/2026-04-25-personalized-client-storefront-substrate.md`
 - **Schema**: `~/Workspace/organvm/schema-definitions/schemas/storefront-v1.schema.json`
-- **Canonical example**: `~/Workspace/organvm/schema-definitions/examples/storefront-frontmatter-rob.yaml`
-- **First persona lexicon**: `~/Documents/personas/rob-bonavoglia.lexicon.yaml`
-- **First repo opt-in**: `~/Workspace/4444J99/hokage-chess/storefront.config.yaml`
+- **Canonical example**: `~/Workspace/organvm/schema-definitions/examples/storefront-frontmatter-<persona>.yaml`
+- **Persona lexicon**: `~/Documents/personas/<persona-id>.lexicon.yaml`
+- **Repo opt-in**: `<client-repo>/storefront.config.yaml`
 - **Sibling skills**: `product-domain-engine` (PDE Phase 4 invocation), `domain-ideal-whole-substrate` (8-strata gap-map), `voice-enforcement` (per-persona constitution checks)

@@ -6,13 +6,13 @@ Per v2.2: every engine in the portfolio sits in exactly one of three tiers. This
 
 **Scope:** re-skin within the same or adjacent domain. The engine's pattern is bound to a domain class.
 
-**Example portfolio engines (real):**
+**Example portfolio engines (illustrative):**
 
 | Engine | Origin | Domain class | Re-skin candidates |
 |---|---|---|---|
-| BODI 4-level funnel mechanism | Rob | Membership / progression-tier | Hokage Chess (already transplanted, PRT-044), wellness coaching memberships |
-| Spiral renderer (`spiral.ts`) | Maddie | Visual-flow brand / aesthetic-affect | Other visual-flow brands, meditation aids, generative art |
-| Landing-engine (Astro+SSG persona templates) | Spiral + Hokage shared | Persona-arch landing pages | All future client landing pages |
+| 4-level membership funnel mechanism | fitness engagement | Membership / progression-tier | Chess coaching tiers, wellness coaching memberships |
+| Visual-flow renderer (e.g. a spiral/flow SVG component) | wellness-brand engagement | Visual-flow brand / aesthetic-affect | Other visual-flow brands, meditation aids, generative art |
+| Landing-engine (Astro+SSG persona templates) | shared across engagements | Persona-arch landing pages | All future client landing pages |
 | 75-person Constellation file | PRT-046 | Peer-research foundation | Every domain (chess, wellness, education, design, voodoo) |
 
 **Re-skinning protocol:**
@@ -31,14 +31,14 @@ Per v2.2: every engine in the portfolio sits in exactly one of three tiers. This
 
 **Scope:** cross-domain pattern. The engine works regardless of domain class but works on *domain content* — it doesn't run independently of any domain.
 
-**Example portfolio engines (real):**
+**Example portfolio engines (illustrative):**
 
 | Engine | Origin | What it does | Cross-domain instances |
 |---|---|---|---|
-| Cross-pollination diagnosis | PRT-045 (Rob/Hokage/BODI) | Surfaces n-way mechanism asymmetries between 2+ domain instances | Active for chess ↔ wellness; potential for chess ↔ education, etc. |
+| Cross-pollination diagnosis | PRT-045 | Surfaces n-way mechanism asymmetries between 2+ domain instances | e.g. chess ↔ fitness; chess ↔ education, etc. |
 | Product Domain Engine (PDE) | a-i--skills (cf92479) | 5-phase × 4-mode formalization of product-tied-to-domain | Used across chess, wellness; pending for education, design |
-| Bridge Content templates | PRT-040 | Weekly Jutsu + monthly Boss Battle creator cadence | Hokage-specific currently; transplantable to any creator domain |
-| Discord rituals (Welcome Wed / Loot Drop Fri / Quest Log Sun) | PRT-041 | Tier-gated community engagement cadence | Hokage-specific currently; transplantable to all gated communities |
+| Bridge Content templates | PRT-040 | Weekly signature-technique + monthly rivalry-episode creator cadence | Originated in one creator engagement; transplantable to any creator domain |
+| Discord rituals (Welcome Wed / Loot Drop Fri / Quest Log Sun) | PRT-041 | Tier-gated community engagement cadence | Originated in one creator engagement; transplantable to all gated communities |
 | Portfolio-gap-audit (the stretching rack) | DIWS Phase 0.5 | Holes/fat diagnosis at portfolio scale | All multi-instance portfolios |
 
 **Promotion criteria (Tier 2 → Tier 3):**
@@ -62,7 +62,7 @@ Per v2.2: every engine in the portfolio sits in exactly one of three tiers. This
 | chatgpt_exporter_to_bundle converter | corpus engine | Bridges per-conv exports to bundle format | Personal capture infrastructure |
 | 5 organvm CLIs (sessions audit / subatomic decompose / memory triangulate / relay draft / atoms pipeline verify) | DIWS Stream Τ | Cross-session governance enforcement | Used by every session |
 
-**Identity:** Tier 3 engines get installed into client projects as *embedded deliverables* (rule 5: fix bases not outputs — install the engine, don't ship its output once). When Maddie hires the user, she gets the spiral renderer (Tier 1) AND inherits the conversation-corpus pipeline (Tier 3) running in her project.
+**Identity:** Tier 3 engines get installed into client projects as *embedded deliverables* (rule 5: fix bases not outputs — install the engine, don't ship its output once). When a client hires the user, they get the relevant domain engine (Tier 1, e.g. a visual-flow renderer) AND inherit the conversation-corpus pipeline (Tier 3) running in their project.
 
 ## Engine extraction (mode `engine-extract`)
 

@@ -111,9 +111,9 @@ META
 ├── organvm-organizational — Org tools
 
 SPECIAL
-├── sovereign-systems--elevate-align — Maddie/Spiral
+├── [client repo — redacted]
 ├── sovereign--ground — Ground
-├── sovereign-systems--layer-above-hokage — LAYER ABOVE HOKAGE
+├── [client repo — redacted]
 ├── stakeholder-portal — Stakeholder portal
 ├── studium-generale — General study
 
@@ -134,7 +134,7 @@ gemini-cli-blender-extension — Gemini Blender
 openai-agents-contrib — OpenAI agents
 post-flood — Post-flood archive
 python-sdk — Python SDK
-sovereign-systems--layer-above-hokage — *** WAITING FOR SPEC ***
+[client repo — redacted] — *** WAITING FOR SPEC ***
 system-system--system--monad — Monad system
 tmp_organvm-i-theoria.github.io — Temp github.io
 ... (10 more)
@@ -223,7 +223,7 @@ growth-auditor
 
 | Priority | Repo | Why |
 |---|---|---|
-| P0 | sovereign-systems--layer-above-hokage | Waiting for spec |
+| P0 | [client repo — redacted] | Waiting for spec |
 | P1 | agentkit | Active agent framework |
 | P1 | fastmcp | Fast MCP server |
 | P2 | python-sdk | SDK coverage |
@@ -246,8 +246,7 @@ organvm/
 ├── schema-definitions/  # Schemas
 ├── mesh/               # Reference mesh
 ├── tool-interaction-design/ # Tool design
-├── sovereign-systems--elevate-align/ # Maddie/Spiral
-├── sovereign-systems--layer-above-hokage/ # *** PRIORITY ***
+├── [client repos — redacted]
 └── [100+ more repos]
 ```
 

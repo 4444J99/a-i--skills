@@ -1,7 +1,7 @@
 # Domain Constellation — {{DOMAIN_NAME}}
 #
 # Stratum: 3 (Constellation)
-# Format: 75-person canonical file (PRT-046 chess instance is reference)
+# Format: 75-person canonical file (see assets/domain-constellation.yaml for the bare schema)
 # Authority: {{USER}}
 # Created: {{DATE}}
 #

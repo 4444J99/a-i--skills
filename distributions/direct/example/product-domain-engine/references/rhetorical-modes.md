@@ -62,11 +62,11 @@ Classical rhetoric distinguishes four modes of persuasion. Each names a *registe
 - Discord community → creates belonging
 - Email sequences → creates relationship
 - Brand voice and visual identity → creates recognition
-- Naming systems (Genin → Hokage) → creates identity
+- Naming systems (a named rank ladder) → creates identity
 - Physical objects (chess pieces, merch) → creates tangibility
 - Origin / underdog story → creates emotional investment
 
-**The principle:** "I'm 1350 and climbing" is a logos *fact* (Rob's actual rating) but its function for the audience is pathos. They are not auditing the rating. They are projecting themselves into the journey.
+**The principle:** "I'm 1350 and climbing" is a logos *fact* (a creator's actual rating) but its function for the audience is pathos. They are not auditing the rating. They are projecting themselves into the journey.
 
 **Audience:** customers, community members, followers — the human who encounters the product.
 
@@ -91,9 +91,9 @@ Classical rhetoric distinguishes four modes of persuasion. Each names a *registe
 
 **Domain examples:**
 
-- **hokage-chess**: chess content market is post-pandemic normalized; the "improvement journey" niche is rising; Rob's 322-video archive becomes more valuable over time; **kairos is OPEN now for community launch, gated for course products** (he needs to hit 1500 first to claim authority).
+- **chess-creator-brand** (anonymized): chess content market is post-pandemic normalized; the "improvement journey" niche is rising; an existing video archive becomes more valuable over time; **kairos is OPEN now for community launch, gated for course products** (the creator needs to reach a target rating first to claim authority).
 - **styx**: behavioral economics meets DeFi — both rising; peer accountability trending (BeReal, Strava); **kairos is OPEN**.
-- **elevate-align**: wellness practitioners over-served on websites, under-served on multi-domain topology; **kairos depends on Maddie's readiness**, not market.
+- **wellness-practitioner-brand** (anonymized): wellness practitioners over-served on websites, under-served on multi-domain topology; **kairos depends on the client's readiness**, not market.
 - **public-record-data-scrapper**: UCC search demand is steady (legal/compliance); **kairos is ALWAYS** for B2B utility — no wave to ride or miss.
 
 ## The Relationship Between Modes
@@ -109,7 +109,7 @@ LOGOS (internal skeleton)
   │
   └──→ PATHOS (narrative makes emotional connection)
         "I'm 1350 and climbing" = logos fact, pathos function
-        "322 documented games"  = logos fact, pathos function (commitment signal)
+        "300+ documented games" = logos fact, pathos function (commitment signal)
 ```
 
 Kairos sits orthogonal — it modulates *when* the logos→ethos and logos→pathos projections are released.

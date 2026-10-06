@@ -60,7 +60,7 @@ fi
 declare -a ENGINE_SIGNATURES=(
   # Tier 1 — Domain engines
   "spiral\.ts|1|spiral-renderer|visual-flow-brand,meditation-aid,generative-art"
-  "bodi.*funnel|hokage.*funnel|1|four-level-funnel|membership-progression-tier"
+  "membership.*funnel|tier.*funnel|1|four-level-funnel|membership-progression-tier"
   "landing-engine|persona-template|1|landing-engine|persona-arch-landing-pages"
 
   # Tier 2 — Meta-engines

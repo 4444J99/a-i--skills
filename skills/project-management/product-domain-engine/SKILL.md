@@ -11,7 +11,7 @@ complements: [systemic-product-analyst, market-gap-analysis]
 
 The meta-system. Every product tied to a domain is an instance of the same operation: formalize informal knowledge into computable structure, then express that structure through four independent rhetorical channels.
 
-This skill does not invent new patterns. It names a system that was already running across four products (`public-record-data-scrapper`, `styx`, `sovereign-systems--elevate-align`, `hokage-chess`) and was being re-derived every time. Naming it converts re-derivation into composition.
+This skill does not invent new patterns. It names a system that was already running across four products (`public-record-data-scrapper`, `styx`, and two client engagements anonymized here as `wellness-practitioner-brand` and `chess-creator-brand`) and was being re-derived every time. Naming it converts re-derivation into composition.
 
 ## What This Is
 
@@ -66,7 +66,7 @@ IDENTIFY → MAP → ENCODE → EXPRESS → DEPLOY → OBSERVE
         observation refines the formalization
 ```
 
-The OBSERVE step is implemented through analytics modules (e.g. hokage-chess `analytics.ts`, `growth.ts`). They are the observation instruments, not afterthoughts.
+The OBSERVE step is implemented through analytics modules (e.g. a product's `analytics.ts`, `growth.ts`). They are the observation instruments, not afterthoughts.
 
 ## The Four Rhetorical Modes
 
@@ -124,10 +124,10 @@ Universal build commands, ordered per domain stage. See `references/prompt-seque
 
 | Stage | Sequence |
 |-------|----------|
-| New domain (e.g. hokage-chess at session start) | 1 → 2 (light) → 3 → 4 → 5 |
+| New domain (e.g. chess-creator-brand at session start) | 1 → 2 (light) → 3 → 4 → 5 |
 | Theory-heavy (e.g. styx) | 1 → 2 (deep) → 3 → 4 → 5 |
 | Already-deployed (e.g. public-record-data-scrapper) | 3 → 4 → 5 (1 and 2 already done) |
-| Client-driven (e.g. elevate-align) | 1 → 4 → 3 → 5 (pathos first, architecture follows brand) |
+| Client-driven (e.g. wellness-practitioner-brand) | 1 → 4 → 3 → 5 (pathos first, architecture follows brand) |
 
 ## Organ Chain Traversal
 
@@ -147,8 +147,8 @@ Every domain selects which ORGANVM organs it must cross. Not every domain crosse
 
 - `public-record-data-scrapper`: I → III → IV → V (no II, VI, VII — density alone sufficed)
 - `styx-behavioral-economics-theory`: I → II → III (full theoretical→artistic→commercial chain)
-- `sovereign-systems--elevate-align`: I (light) → II → III (Maddie's brand and architecture)
-- `hokage-chess`: I (light) → II → III → VI → VII (theory-light, heavy on art + community + distribution)
+- `wellness-practitioner-brand`: I (light) → II → III (the practitioner's brand and architecture)
+- `chess-creator-brand`: I (light) → II → III → VI → VII (theory-light, heavy on art + community + distribution)
 
 The PDE scores each domain's needed organs at Phase 1 and re-evaluates at Phase 5.
 
@@ -156,10 +156,10 @@ The PDE scores each domain's needed organs at Phase 1 and re-evaluates at Phase 
 
 Patterns proven in one domain become available to all others. See `references/cross-fertilization.md` (registry living alongside this skill) for the full list. Examples:
 
-- hokage-chess's **Ki-Shō-Ten-Ketsu narrative framework** → applicable to how styx presents its thesis (setup → development → twist → resolution)
-- styx's **theorem-proving methodology** → applicable to how hokage-chess validates its title-scoring formula
+- chess-creator-brand's **Ki-Shō-Ten-Ketsu narrative framework** → applicable to how styx presents its thesis (setup → development → twist → resolution)
+- styx's **theorem-proving methodology** → applicable to how chess-creator-brand validates its title-scoring formula
 - public-record-data-scrapper's **density principle** → applicable to all domains
-- elevate-align's **hub-and-spoke topology** (3 domains from 1 practitioner) → applicable to hokage-chess's future multi-domain architecture (`hokagechess.com` / `thedojo.gg` / `hokagecourses.com`)
+- wellness-practitioner-brand's **hub-and-spoke topology** (several domains from one practitioner) → applicable to chess-creator-brand's future multi-domain architecture (separate community, course, and content sites)
 
 When a pattern is proven in a new domain, register it. Subsequent domains inherit.
 
@@ -226,8 +226,8 @@ Four products that already ran the engine, before it was named. See `references/
 |----------|:-----:|:-----:|:------:|:------:|:--------:|----------------|
 | public-record-data-scrapper | ■■■ | ■■■ | ■ | ■ | logos+ethos | Density creates gravity |
 | styx-behavioral-economics-theory | ■■■ | ■■ | ■ | ■■ | logos | Theory→Art→Commerce is real |
-| sovereign-systems--elevate-align | ■■ | ■ | ■■ | ■ | balanced | One practitioner → multi-domain topology |
-| hokage-chess | ■■ | ■ | ■■■ | ■■ | pathos | Full PDE in one session is feasible |
+| wellness-practitioner-brand | ■■ | ■ | ■■ | ■ | balanced | One practitioner → multi-domain topology |
+| chess-creator-brand | ■■ | ■ | ■■■ | ■■ | pathos | Full PDE in one session is feasible |
 
 Each instance leads with a different rhetorical mode. The engine does not prescribe which mode dominates — the domain's nature determines it. B2B utility leads with logos. Entertainment brand leads with pathos. Academic product leads with ethos. Time-sensitive product leads with kairos.
 
@@ -235,7 +235,7 @@ The engine ensures **all four modes are addressed**, regardless of which leads.
 
 ## Materia-Collider Graduation
 
-`hokage-chess` was dissolved into materia-collider during ORGAN-RESET, then graduated back to a formalized client repo in a single 2026-04-25 session. The PDE defines graduation criteria:
+`chess-creator-brand` was dissolved into materia-collider during ORGAN-RESET, then graduated back to a formalized client repo in a single session. The PDE defines graduation criteria:
 
 A domain graduates from materia-collider (incubation) to organ-residence (formalization) when:
 
@@ -288,7 +288,7 @@ product-domain-engine/
 │   ├── rhetorical-modes.md        # full treatment of logos / ethos / pathos / kairos
 │   ├── composition-matrix.md      # output × mode blend table with internal/external function
 │   ├── prompt-sequence.md         # universal build commands ordered by tier
-│   └── proof-instances.md         # public-record / styx / elevate-align / hokage cases
+│   └── proof-instances.md         # public-record / styx / two anonymized client cases
 └── assets/
     └── domain-template/
         └── seed.yaml              # ORGANVM contract template for a new domain

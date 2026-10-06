@@ -13,7 +13,7 @@ Formalize Natural Center as a computable object (not a concept)
 Constraint-domain pillars (what can break or limit the system in reality)
 ```
 
-**What "Natural Center" means:** the single sentence that, if true, makes everything else in the domain derivable. For hokage-chess: *"chess improvement at the amateur level is a hero's journey, not a technical curriculum."* For styx: *"loss aversion is a measurable force; the coefficient is 1.955."* For public-record-data-scrapper: *"every state's UCC filings are machine-readable if you build the right collection agent per jurisdiction."* For elevate-align: *"one practitioner's knowledge maps to multiple audience entry points through topology."*
+**What "Natural Center" means:** the single sentence that, if true, makes everything else in the domain derivable. For chess-creator-brand: *"chess improvement at the amateur level is a hero's journey, not a technical curriculum."* For styx: *"loss aversion is a measurable force; the coefficient is 1.955."* For public-record-data-scrapper: *"every state's UCC filings are machine-readable if you build the right collection agent per jurisdiction."* For wellness-practitioner-brand: *"one practitioner's knowledge maps to multiple audience entry points through topology."*
 
 **Output of Tier 1:** a one-sentence Natural Center, an agent census, a constraint-pillar list. This is the seed of everything downstream.
 
@@ -93,10 +93,10 @@ $PROC_NATURAL_CENTER_BOOTSTRAP
 
 | Stage | Sequence | Why |
 |-------|----------|-----|
-| **New domain** (e.g. hokage-chess at session start) | 1 → 2 (light) → 3 → 4 → 5 | Standard pipeline; light research, then build |
+| **New domain** (e.g. chess-creator-brand at session start) | 1 → 2 (light) → 3 → 4 → 5 | Standard pipeline; light research, then build |
 | **Theory-heavy** (e.g. styx) | 1 → 2 (deep) → 3 → 4 → 5 | Research depth IS the product; invest before architecture |
 | **Already-deployed** (e.g. public-record-data-scrapper) | 3 → 4 → 5 | Tiers 1–2 already done; iterate on architecture and expression |
-| **Client-driven** (e.g. elevate-align) | 1 → 4 → 3 → 5 | Pathos first (client wants brand); architecture follows brand |
+| **Client-driven** (e.g. wellness-practitioner-brand) | 1 → 4 → 3 → 5 | Pathos first (client wants brand); architecture follows brand |
 | **Re-launch / pivot** | 1 (refresh) → 4 → 5 | Re-state Natural Center; rebuild expression; re-ship |
 | **Materia → graduation** | 1 → 3 → 4 → 5 | Skip research depth on first graduation pass; ship the seed |
 
@@ -127,7 +127,7 @@ The PDE is the glue. The skills are the craft.
 
 ## Examples
 
-### hokage-chess (new domain, lean MVP, dissertation-light)
+### chess-creator-brand (new domain, lean MVP, dissertation-light; anonymized client engagement)
 
 ```
 Tier 1: $MODE=lean MVP, $DEPTH=operator-grade
@@ -137,11 +137,11 @@ Tier 1: $MODE=lean MVP, $DEPTH=operator-grade
 Tier 2: $RESEARCH_ATLAS (light) — top 15 sources per pillar
         Pillars: skill-acquisition, content-economics, community-building, narrative-structure
 
-Tier 3: $REPO_ARCHITECTURE_CME_FULL → Next.js + Tailwind, 9-section landing page
+Tier 3: $REPO_ARCHITECTURE_CME_FULL → Next.js + Tailwind, multi-section landing page
         Algorithms: title-scoring, narrative-framework, growth-model, analytics
 
-Tier 4: Sales one-pager (Rob-facing), landing page (audience-facing),
-        course catalog (offering), brand voice (Naruto identity),
+Tier 4: Sales one-pager (client-facing), landing page (audience-facing),
+        course catalog (offering), brand voice (rank-ladder identity),
         pitch deck (sponsor narrative)
 
 Tier 5: Vercel deploy, Cloudflare domain, Kit (ConvertKit) integration,
@@ -176,19 +176,19 @@ Tier 5: Subscription billing, GRADUATED status, organic gravity confirmed
 (Tiers 1 and 2 ran years ago; the engine continues forward from where it left.)
 ```
 
-### elevate-align (client-driven)
+### wellness-practitioner-brand (client-driven; anonymized client engagement)
 
 ```
-Tier 1: Natural Center: "one practitioner → multi-domain topology via spiral"
-        Agents: Maddie, client, peer, protocol, cycle, measurement
+Tier 1: Natural Center: "one practitioner → multi-domain topology via a navigable visual model"
+        Agents: practitioner, client, peer, protocol, cycle, measurement
 
-Tier 4 (first): brand voice, naming, visual identity, spiral renderer
-                (because Maddie wants to *see* it before architecture is locked)
+Tier 4 (first): brand voice, naming, visual identity, visual-model renderer
+                (because the client wants to *see* it before architecture is locked)
 
-Tier 3: hub-and-spoke architecture, Astro 5, Tailwind 4, Cloudflare Pages,
-        13-node spiral, hub.config.ts as single source of truth
+Tier 3: hub-and-spoke architecture, Astro, Tailwind, static hosting,
+        visual model driven by a single config file as source of truth
 
-Tier 5: Cloudflare deploy, Maddie's domain wiring, water funnel, affiliate flow
+Tier 5: deploy, domain wiring for hub and spokes, product funnel, affiliate flow
 ```
 
 The order *adapts* to the domain. The engine does not prescribe a fixed pipeline.
