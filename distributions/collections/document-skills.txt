@@ -1,4 +1,0 @@
-document-skills/docx
-document-skills/pdf
-document-skills/pptx
-document-skills/xlsx
