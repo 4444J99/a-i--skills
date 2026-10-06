@@ -28,7 +28,6 @@ from skill_lib import extract_frontmatter, parse_list_field
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILLS_DIR = ROOT / "skills"
-DOC_SKILLS_DIR = ROOT / "document-skills"
 BUILD_DIR = ROOT / "distributions"
 REGISTRY_PATH = BUILD_DIR / "skills-registry.json"
 
@@ -45,7 +44,7 @@ _cache_mtime: float = 0.0
 def _scan_skills() -> list[dict]:
     """Scan SKILL.md files to build skill list (fallback when no registry)."""
     skills: list[dict] = []
-    for base_dir, collection in [(SKILLS_DIR, "example"), (DOC_SKILLS_DIR, "document")]:
+    for base_dir, collection in [(SKILLS_DIR, "example")]:
         for skill_md in sorted(base_dir.rglob("SKILL.md")):
             skill_dir = skill_md.parent
             if skill_dir == base_dir:

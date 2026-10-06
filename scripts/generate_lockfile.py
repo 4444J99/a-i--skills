@@ -12,7 +12,6 @@ from skill_lib import find_skill_dirs
 ROOT = Path(__file__).resolve().parents[1]
 BUILD_DIR = ROOT / "distributions"
 SKILLS_DIR = ROOT / "skills"
-DOC_SKILLS_DIR = ROOT / "document-skills"
 LOCK_FILE = BUILD_DIR / "skills-lock.json"
 
 
@@ -39,7 +38,7 @@ def _sha256_tree(directory: Path) -> str:
 
 
 def main() -> int:
-    skill_dirs = find_skill_dirs(SKILLS_DIR) + find_skill_dirs(DOC_SKILLS_DIR)
+    skill_dirs = find_skill_dirs(SKILLS_DIR)
 
     if not skill_dirs:
         print("ERROR: no skills found", file=sys.stderr)

@@ -13,7 +13,6 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILLS_DIR = ROOT / "skills"
-DOC_SKILLS_DIR = ROOT / "document-skills"
 MAPPING_PATH = Path(__file__).resolve().parent / "governance_mapping.json"
 
 GOVERNANCE_FIELDS = (
@@ -26,7 +25,7 @@ LIST_MERGE_FIELDS = ("triggers", "complements")
 def _find_all_skills() -> dict[str, Path]:
     """Return {skill_name: skill_dir} for all skills."""
     skills: dict[str, Path] = {}
-    for base in (SKILLS_DIR, DOC_SKILLS_DIR):
+    for base in (SKILLS_DIR,):
         for skill_file in base.rglob("SKILL.md"):
             skill_dir = skill_file.parent
             if skill_dir != base:

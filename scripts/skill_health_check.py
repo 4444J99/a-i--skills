@@ -9,7 +9,6 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILLS_DIR = ROOT / "skills"
-DOC_SKILLS_DIR = ROOT / "document-skills"
 
 VALID_SHEBANGS = ("#!/usr/bin/env ", "#!/bin/")
 
@@ -159,7 +158,7 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    all_dirs = _find_skill_dirs(SKILLS_DIR) + _find_skill_dirs(DOC_SKILLS_DIR)
+    all_dirs = _find_skill_dirs(SKILLS_DIR)
 
     if args.skill:
         matching = [d for d in all_dirs if d.name == args.skill]

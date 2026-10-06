@@ -1,10 +1,10 @@
 {
   "name": "example-skills",
-  "description": "Collection of example skills demonstrating various capabilities including skill creation, MCP building, visual design, algorithmic art, internal communications, web testing, artifact building, Slack GIFs, and theme styling",
-  "version": "1.2.0",
+  "description": "The main skill catalog from 4444J99/a-i--skills: creative, data, development, documentation, education, integrations, knowledge, professional, project-management, security, specialized, and tools skills.",
+  "version": "2.0.0",
   "author": {
-    "name": "Keith Lazuka",
-    "email": "klazuka@anthropic.com"
+    "name": "Anthony Padavano (4444J99)",
+    "url": "https://github.com/4444J99"
   },
-  "license": "MIT"
+  "license": "Apache-2.0"
 }
