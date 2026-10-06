@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>a-i--skills · agent skill catalog by Anthony Padavano</title>
+  <meta name="description" content="An open catalog of agent skills (SKILL.md modules) for Claude Code, Codex, and Gemini CLI, maintained by Anthony Padavano (4444J99).">
+  <link rel="canonical" href="https://4444j99.github.io/a-i--skills/">
+  <style>
+    :root { color-scheme: light dark; --fg: #1d1d1f; --muted: #5b5b66; --bg: #fbfbfd; --card: #ffffff; --line: #e3e3e8; --accent: #0b6bcb; }
+    @media (prefers-color-scheme: dark) { :root { --fg: #ececf1; --muted: #a0a0ab; --bg: #111114; --card: #1a1a1f; --line: #2c2c33; --accent: #6cb2ff; } }
+    * { box-sizing: border-box; }
+    body { margin: 0; font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: var(--fg); background: var(--bg); }
+    main { max-width: 760px; margin: 0 auto; padding: 3rem 1.25rem 4rem; }
+    h1 { font-size: 2rem; margin: 0 0 .25rem; letter-spacing: -.01em; }
+    h2 { font-size: 1.15rem; margin: 2.25rem 0 .5rem; }
+    p.lede { color: var(--muted); margin-top: 0; font-size: 1.1rem; }
+    a { color: var(--accent); }
+    .cta { display: inline-block; margin: 1.25rem 0 .5rem; padding: .6rem 1rem; border-radius: 8px; background: var(--accent); color: #fff; text-decoration: none; font-weight: 600; }
+    pre { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: .9rem 1rem; overflow-x: auto; font-size: .9rem; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    ul { padding-left: 1.2rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: .6rem; margin: 1rem 0; }
+    .stat { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: .75rem .9rem; }
+    .stat b { display: block; font-size: 1.4rem; }
+    .stat span { color: var(--muted); font-size: .85rem; }
+    footer { margin-top: 3rem; color: var(--muted); font-size: .85rem; border-top: 1px solid var(--line); padding-top: 1rem; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>a-i--skills</h1>
+  <p class="lede">An open catalog of agent skills: self-contained <code>SKILL.md</code> modules that teach AI coding agents how to do specialized work in a repeatable way.</p>
+
+  <a class="cta" href="https://github.com/4444J99/a-i--skills">View the repository on GitHub →</a>
+
+  <div class="grid">
+    <div class="stat"><b>176</b><span>skills (165 catalog + 11 plugin)</span></div>
+    <div class="stat"><b>12</b><span>categories</span></div>
+    <div class="stat"><b>4</b><span>runtimes: Claude Code, Codex, Gemini CLI, Claude API</span></div>
+  </div>
+
+  <h2>What's inside</h2>
+  <ul>
+    <li><strong>Skill library</strong>: creative, data, development, documentation, education, integrations, knowledge, professional, project-management, security, specialized, and tools skills.</li>
+    <li><strong>Tooling</strong>: Python scripts that validate frontmatter and links, generate a machine-readable registry, build per-runtime bundles, and serve skills over MCP.</li>
+    <li><strong>Plugins</strong>: two Claude Code plugins, <code>coliseum-from-grain</code> and <code>pentaphase-structural-architect</code>.</li>
+  </ul>
+
+  <h2>Install in Claude Code</h2>
+  <pre><code>/plugin marketplace add 4444J99/a-i--skills
+/plugin install example-skills@a-i-skills</code></pre>
+  <p>For Codex, Gemini CLI, and direct use, see the <a href="https://github.com/4444J99/a-i--skills#installation-and-quick-start">installation guide</a> in the README.</p>
+
+  <h2>Provenance and licensing</h2>
+  <p>Most skills are original work by Anthony Padavano. A small set of third-party skills from Anthropic (Apache-2.0), SpecStory (Apache-2.0), GitHub's spec-kit (MIT), and everything-claude-code (MIT) are included with their licenses kept. Details are in the <a href="https://github.com/4444J99/a-i--skills#provenance-and-third-party-skills">README</a>. The repository is licensed under Apache-2.0.</p>
+
+  <footer>
+    Maintained by <a href="https://github.com/4444J99">Anthony Padavano (@4444J99)</a>. This page is the project's landing page only; the skills themselves live in the <a href="https://github.com/4444J99/a-i--skills">GitHub repository</a>.
+  </footer>
+</main>
+</body>
+</html>
