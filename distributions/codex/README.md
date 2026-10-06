@@ -1,6 +1,6 @@
 # Codex Skills
 
-Codex loads skills from `.codex/skills` (top-level) or `.codex/skills-document` (document set).
+Codex loads skills from `.codex/skills`; copy or link `distributions/codex/skills/` there.
 
 Regenerate links after adding/removing skills:
 

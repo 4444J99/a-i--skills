@@ -7,7 +7,7 @@ delivery:
 - platform: skill_library
   status: live
   priority: critical
-  notes: "173 skills across 12 categories, consumed by Claude Code sessions"
+  notes: "165 skills across 12 categories, consumed by Claude Code sessions"
   next_action: "Maintain skill quality and add new skills as needed"
 - platform: cli_tool
   status: planned

@@ -17,7 +17,6 @@ DOCS_DIR = ROOT / "docs"
 VERSION_FILES = [
     ROOT / ".claude-plugin" / "marketplace.json",
     BUILD_DIR / "extensions" / "gemini" / "example-skills" / "gemini-extension.json",
-    BUILD_DIR / "extensions" / "gemini" / "document-skills" / "gemini-extension.json",
 ]
 
 
@@ -123,7 +122,6 @@ def main() -> int:
         _run(["python3", "scripts/refresh_skill_collections.py"])
     if not args.skip_validate:
         _run(["python3", "scripts/validate_skills.py", "--collection", "example", "--unique"])
-        _run(["python3", "scripts/validate_skills.py", "--collection", "document", "--unique"])
         _run(["python3", "scripts/validate_generated_dirs.py"])
 
     tag_name = f"{args.tag_prefix}{args.version}"

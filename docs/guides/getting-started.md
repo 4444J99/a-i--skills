@@ -59,7 +59,7 @@ ai-skills/
 │   ├── professional/           # Business, career
 │   └── ...                     # Other categories
 │
-├── document-skills/             # Reference document skills (pdf, docx, xlsx, pptx)
+├── plugins/                     # Claude Code plugins
 │
 ├── agents/                      # AI agent definitions (skill-planner, etc.)
 ├── commands/                    # Slash commands (skill-health, plan-workflow, etc.)
@@ -145,7 +145,7 @@ The agent will follow the tdd-workflow skill to guide you through:
 
 **Creating content:**
 1. Use `creative-writing-craft` for storytelling
-2. Use `doc-coauthoring` for collaboration
+2. Use `technical-analytical-writing` for structured long-form docs
 3. Use `content-distribution` for publishing
 
 ## Tips & Best Practices

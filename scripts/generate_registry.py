@@ -10,7 +10,6 @@ from skill_lib import extract_frontmatter, find_skill_dirs, parse_list_field
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILLS_DIR = ROOT / "skills"
-DOC_SKILLS_DIR = ROOT / "document-skills"
 BUILD_DIR = ROOT / "distributions"
 OUTPUT_PATH = BUILD_DIR / "skills-registry.json"
 
@@ -101,21 +100,16 @@ def _build_bundles(skills: list[dict]) -> list[dict]:
 
 def main() -> int:
     example_dirs = find_skill_dirs(SKILLS_DIR)
-    document_dirs = find_skill_dirs(DOC_SKILLS_DIR)
 
     skills: list[dict] = []
     for d in example_dirs:
         entry = _build_skill_entry(d, SKILLS_DIR, "example")
         if entry:
             skills.append(entry)
-    for d in document_dirs:
-        entry = _build_skill_entry(d, DOC_SKILLS_DIR, "document")
-        if entry:
-            skills.append(entry)
 
     registry = {
         "version": "1.2",
-        "repository": "anthropic-agent-skills",
+        "repository": "4444J99/a-i--skills",
         "skills": skills,
         "categories": _build_categories(skills),
         "bundles": _build_bundles(skills),

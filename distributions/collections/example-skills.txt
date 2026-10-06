@@ -20,7 +20,6 @@ skills/development/code-review-checklist
 skills/development/coding-standards-enforcer
 skills/development/community-platform-patterns
 skills/development/configuration-management
-skills/knowledge/consolidate-memory
 skills/professional/content-distribution
 skills/development/continuous-learning-agent
 skills/security/contract-risk-analyzer
@@ -36,7 +35,6 @@ skills/data/data-storytelling-analyst
 skills/development/database-migration-patterns
 skills/specialized/defi-trading-systems
 skills/development/deployment-cicd
-skills/documentation/doc-coauthoring
 skills/development/docker-containerization
 skills/documentation/document-audit-extraction
 skills/project-management/domain-ideal-whole-substrate
@@ -125,7 +123,6 @@ skills/knowledge/research-synthesis-workflow
 skills/development/resilience-patterns
 skills/development/responsive-design-patterns
 skills/development/rust-systems-design
-skills/tools/schedule
 skills/creative/script-analysis-dramaturgical
 skills/knowledge/second-brain-librarian
 skills/security/security-essentials-pack
@@ -133,7 +130,6 @@ skills/security/security-implementation-guide
 skills/security/security-threat-modeler
 skills/tools/session-governance-audit
 skills/tools/session-lifecycle-patterns
-skills/tools/setup-cowork
 skills/tools/shell-history-hygiene
 skills/tools/skill-chain-prompts
 skills/tools/skill-creator

@@ -1,19 +1,16 @@
 [![ORGAN-IV: Taxis](https://img.shields.io/badge/ORGAN--IV-Taxis-e65100?style=flat-square)](https://github.com/a-organvm)
 [![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue?style=flat-square)](./LICENSE)
-[![Skills](https://img.shields.io/badge/Skills-101-4CAF50?style=flat-square)](./docs/CATEGORIES.md)
+[![Skills](https://img.shields.io/badge/Skills-176-4CAF50?style=flat-square)](./docs/CATEGORIES.md)
 
 # a-i--skills
 
-[![CI](https://github.com/a-organvm/a-i--skills/actions/workflows/ci.yml/badge.svg)](https://github.com/a-organvm/a-i--skills/actions/workflows/ci.yml)
-[![Coverage](https://img.shields.io/badge/coverage-pending-lightgrey)](https://github.com/a-organvm/a-i--skills)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/a-organvm/a-i--skills/blob/main/LICENSE)
-[![Organ IV](https://img.shields.io/badge/Organ-IV%20Taxis-10B981)](https://github.com/a-organvm)
-[![Status](https://img.shields.io/badge/status-active-brightgreen)](https://github.com/a-organvm/a-i--skills)
-[![Python](https://img.shields.io/badge/lang-Python-informational)](https://github.com/a-organvm/a-i--skills)
+[![Python CI](https://github.com/4444J99/a-i--skills/actions/workflows/ci.yml/badge.svg)](https://github.com/4444J99/a-i--skills/actions/workflows/ci.yml)
+[![Validate](https://github.com/4444J99/a-i--skills/actions/workflows/validate-skills.yml/badge.svg)](https://github.com/4444J99/a-i--skills/actions/workflows/validate-skills.yml)
+[![Status](https://img.shields.io/badge/status-active-brightgreen)](https://github.com/4444J99/a-i--skills)
 
 
-**A composable skill framework for AI agent orchestration** -- 101 production-ready skill modules spanning creative, technical, enterprise, and governance domains, organized into a federated registry with multi-agent runtime support.
+**A composable skill framework for AI agent orchestration** -- 176 skill modules (165 in the main catalog plus 11 plugin skills) spanning creative, technical, enterprise, and governance domains, organized into a federated registry with multi-agent runtime support.
 
 > Part of [ORGAN-IV: Taxis](https://github.com/a-organvm) -- the orchestration and governance layer of the [ORGAN system](https://github.com/meta-organvm).
 
@@ -40,27 +37,25 @@
 
 ## Product Overview
 
-`a-i--skills` is a structured repository of 101 AI agent skills -- self-contained instruction modules that teach large language models how to perform specialized tasks in a repeatable, composable way. Each skill is a directory containing a `SKILL.md` file with YAML frontmatter (metadata for discovery and activation) and Markdown content (the actual instructions an agent follows).
+`a-i--skills` is a structured repository of 176 AI agent skills -- self-contained instruction modules that teach large language models how to perform specialized tasks in a repeatable, composable way. Each skill is a directory containing a `SKILL.md` file with YAML frontmatter (metadata for discovery and activation) and Markdown content (the actual instructions an agent follows).
 
 The repository serves three distinct functions:
 
-1. **Skill Library** -- A browsable catalog of 173 skills across 12 categories, from algorithmic art generation to security threat modeling, each with standardized metadata, optional helper scripts, reference documentation, and asset templates.
+1. **Skill Library** -- A browsable catalog of 165 skills across 12 categories, from algorithmic art generation to security threat modeling, each with standardized metadata, optional helper scripts, reference documentation, and asset templates.
 
 2. **Orchestration Infrastructure** -- Python tooling for skill validation, registry generation, health checking, and multi-agent bundle distribution. A built-in MCP (Model Context Protocol) server enables runtime skill discovery and planning.
 
 3. **Federation Specification** -- A published protocol that allows third-party skill repositories to be discovered, validated, and consumed by any compatible agent, enabling a decentralized ecosystem of interoperable skill providers.
 
-The skills themselves range from beginner-level single-file instructions to advanced multi-file modules with executable scripts, OOXML schema references, and comprehensive troubleshooting guides. Four document-processing skills (DOCX, PDF, PPTX, XLSX) demonstrate production-grade complexity -- these are the same skills that power Claude's native document creation capabilities.
+The skills themselves range from beginner-level single-file instructions to advanced multi-file modules with executable scripts, reference documentation, and comprehensive troubleshooting guides. Most skills are original work by the author; a small number of clearly-licensed third-party skills are included with their licenses kept (see [Provenance and Third-Party Skills](#provenance-and-third-party-skills)).
 
 ### Key Metrics
 
 | Dimension | Value |
 |-----------|-------|
-| Total skills | 101 (97 example + 4 document) |
+| Total skills | 176 (165 in `skills/` + 11 in `plugins/`) |
 | Skill categories | 12 |
 | Multi-agent runtimes supported | 4 (Claude Code, Codex, Gemini CLI, Claude API) |
-| Total files | ~3,745 |
-| Repository size | ~5.2 MB |
 | Federation schema version | 1.1 (stable) |
 | Skill spec version | Current |
 
@@ -112,25 +107,23 @@ This is orchestration in its purest form: a single source of truth, multiple dis
 
 ```
 a-i--skills/
-├── skills/                           # 169 example skills, organized by category
+├── skills/                           # 165 example skills, organized by category
 │   ├── creative/                     # 17 skills (art, music, design, narrative)
 │   ├── data/                         # 10 skills (pipelines, ML, analytics)
 │   ├── development/                  # 49 skills (code quality, testing, infra)
-│   ├── documentation/                # 7 skills (READMEs, profiles, standards)
+│   ├── documentation/                # 6 skills (READMEs, profiles, standards)
 │   ├── education/                    # 4 skills (tutoring, curriculum, feedback)
 │   ├── integrations/                 # 14 skills (MCP, OAuth, webhooks, SpecStory)
-│   ├── knowledge/                    # 10 skills (graphs, architecture, research)
+│   ├── knowledge/                    # 9 skills (graphs, architecture, research)
 │   ├── professional/                 # 13 skills (branding, CVs, proposals)
 │   ├── project-management/           # 9 skills (roadmaps, requirements, orchestration)
 │   ├── security/                     # 7 skills (threat modeling, compliance, incident response)
 │   ├── specialized/                  # 6 skills (blockchain, gaming, AR, fine-tuning)
-│   └── tools/                        # 23 skills (agent swarms, skill creation, meta-tools)
+│   └── tools/                        # 21 skills (agent swarms, skill creation, meta-tools)
 │
-├── document-skills/                  # 4 production-grade document skills
-│   ├── docx/                         # Word document creation and editing
-│   ├── pdf/                          # PDF manipulation and form handling
-│   ├── pptx/                         # PowerPoint presentation generation
-│   └── xlsx/                         # Excel spreadsheet processing
+├── plugins/                          # Claude Code plugins (11 skills)
+│   ├── coliseum-from-grain/
+│   └── pentaphase-structural-architect/
 │
 ├── scripts/                          # Python tooling
 │   ├── validate_skills.py            # Frontmatter and naming validation
@@ -162,10 +155,11 @@ a-i--skills/
 │   └── skills-registry.json          # Machine-readable skill manifest
 │
 ├── .claude-plugin/                   # Claude Code plugin marketplace metadata
-│   └── marketplace.json              # Plugin definitions (2 collections)
+│   └── marketplace.json              # Marketplace "a-i-skills" (main catalog + 2 plugins)
 │
 └── .github/                          # CI/CD and templates
-    ├── workflows/validate.yml        # Skill validation on PR
+    ├── workflows/ci.yml              # Python CI: pytest suite for the tooling in scripts/
+    ├── workflows/validate-skills.yml # Skill validation, bundle sync, secret scan
     ├── ISSUE_TEMPLATE/               # Bug report, feature request, new skill
     └── PULL_REQUEST_TEMPLATE.md      # PR template
 ```
@@ -238,23 +232,26 @@ The server exposes tools for searching skills by keyword, browsing by category, 
 ### Claude Code (Plugin Marketplace)
 
 ```bash
-# Register the marketplace
-/plugin marketplace add anthropics/skills
+# Register this repository as a marketplace
+/plugin marketplace add 4444J99/a-i--skills
 
-# Install example skills
-/plugin install example-skills@anthropic-agent-skills
+# Install the main skill catalog
+/plugin install example-skills@a-i-skills
 
-# Install document skills
-/plugin install document-skills@anthropic-agent-skills
+# Optional: install the plugins
+/plugin install coliseum-from-grain@a-i-skills
+/plugin install pentaphase-structural-architect@a-i-skills
 ```
 
-After installation, reference skills naturally in conversation: "Use the PDF skill to extract form fields from invoice.pdf."
+After installation, reference skills naturally in conversation: "Use the api-design-patterns skill to review this endpoint."
+
+This repository does not include Anthropic's document skills (docx, pdf, pptx, xlsx). For those, use Anthropic's own marketplace (`/plugin marketplace add anthropics/skills`).
 
 ### Codex (OpenAI)
 
 ```bash
 # Clone the repository
-git clone https://github.com/a-organvm/a-i--skills.git
+git clone https://github.com/4444J99/a-i--skills.git
 cd a-i--skills
 
 # Regenerate bundles
@@ -266,11 +263,8 @@ python3 scripts/refresh_skill_collections.py
 ### Gemini CLI
 
 ```bash
-# Install example skills extension
+# Install the skill catalog extension
 gemini extensions install ./distributions/extensions/gemini/example-skills
-
-# Install document skills extension
-gemini extensions install ./distributions/extensions/gemini/document-skills
 ```
 
 ### Claude API
@@ -281,12 +275,14 @@ Skills can be uploaded and managed via the [Skills API](https://docs.claude.com/
 
 ```bash
 # Clone
-git clone https://github.com/a-organvm/a-i--skills.git
+git clone https://github.com/4444J99/a-i--skills.git
 cd a-i--skills
 
 # Validate all skills
 python3 scripts/validate_skills.py --collection example --unique
-python3 scripts/validate_skills.py --collection document --unique
+
+# Run the tooling test suite
+python3 -m pytest
 
 # Generate registry
 python3 scripts/generate_registry.py
@@ -305,9 +301,9 @@ python3 scripts/skill_health_check.py
 
 ## Skill Catalog
 
-The 173 skills are organized into 12 categories. Each category below lists skill count and representative examples.
+The 165 skills are organized into 12 categories. Each category below lists skill count and representative examples.
 
-### Creative and Content (13 skills)
+### Creative and Content (17 skills)
 
 Generative art, music composition, narrative design, and visual media.
 
@@ -321,7 +317,7 @@ Generative art, music composition, narrative design, and visual media.
 | `interactive-theatre-designer` | Interactive theatrical experience design |
 | `movement-notation-systems` | Dance and movement notation systems |
 
-### Development (26 skills)
+### Development (49 skills)
 
 Code quality, testing, infrastructure, frontend, backend, and tooling.
 
@@ -335,7 +331,7 @@ Code quality, testing, infrastructure, frontend, backend, and tooling.
 | `webapp-testing` | Web application testing with Playwright |
 | `verification-loop` | Comprehensive QA verification workflows |
 
-### Data (6 skills)
+### Data (10 skills)
 
 Pipelines, machine learning, analytics, and time-series analysis.
 
@@ -346,7 +342,7 @@ Pipelines, machine learning, analytics, and time-series analysis.
 | `sql-query-optimizer` | SQL query optimization and performance tuning |
 | `time-series-analyst` | Time-series data analysis and forecasting |
 
-### Security (6 skills)
+### Security (7 skills)
 
 Threat modeling, compliance, incident response, and contract analysis.
 
@@ -357,7 +353,7 @@ Threat modeling, compliance, incident response, and contract analysis.
 | `incident-response-commander` | Incident response coordination and playbooks |
 | `contract-risk-analyzer` | Legal contract risk analysis |
 
-### Professional (11 skills)
+### Professional (13 skills)
 
 Career development, branding, proposals, and business communication.
 
@@ -368,7 +364,7 @@ Career development, branding, proposals, and business communication.
 | `grant-proposal-writer` | Grant and proposal writing assistance |
 | `portfolio-presentation` | Portfolio design and presentation creation |
 
-### Knowledge (6 skills)
+### Knowledge (9 skills)
 
 Knowledge graphs, research synthesis, and second-brain architecture.
 
@@ -379,7 +375,7 @@ Knowledge graphs, research synthesis, and second-brain architecture.
 | `research-synthesis-workflow` | Research synthesis and literature review |
 | `second-brain-librarian` | Personal knowledge management systems |
 
-### Project Management (4 skills)
+### Project Management (9 skills)
 
 Roadmap strategy, requirements design, and orchestration workflows.
 
@@ -393,11 +389,11 @@ Roadmap strategy, requirements design, and orchestration workflows.
 
 Curriculum design, Socratic tutoring, and feedback pedagogy.
 
-### Integrations (9 skills)
+### Integrations (14 skills)
 
 MCP patterns, OAuth flows, webhooks, and SpecStory tooling.
 
-### Documentation (4 skills)
+### Documentation (6 skills)
 
 GitHub profiles, repository curation, and standards enforcement.
 
@@ -405,7 +401,7 @@ GitHub profiles, repository curation, and standards enforcement.
 
 Blockchain, DeFi, game mechanics, AR experiences, and local LLM fine-tuning.
 
-### Tools (6 skills)
+### Tools (21 skills)
 
 Agent swarm orchestration, skill creation, and ontological renaming.
 
@@ -475,12 +471,15 @@ All tooling lives in `scripts/` and uses only the Python standard library plus t
 
 ### CI/CD Pipeline
 
-The `.github/workflows/validate.yml` workflow runs on every pull request:
+Two workflows run on every pull request and on pushes to `main`:
 
-1. Validates all skill frontmatter against the schema.
-2. Checks for broken internal links and missing references.
-3. Verifies generated bundle directories are in sync.
-4. Ensures unique skill names across both collections.
+- **Validate** (`.github/workflows/validate-skills.yml`)
+  1. Validates all skill frontmatter against the schema.
+  2. Checks for broken internal links and missing references.
+  3. Verifies generated bundle directories are in sync.
+  4. Ensures unique skill names.
+  5. Scans changed files for committed secrets.
+- **Python CI** (`.github/workflows/ci.yml`) -- runs the `tests/` pytest suite, which exercises the tooling in `scripts/` (frontmatter parsing, validation rules, registry generation, marketplace manifest) against the real repository.
 
 ---
 
@@ -512,6 +511,7 @@ Following the ORGAN dependency invariant, ORGAN-IV infrastructure is consumed by
 
 ## Related Work
 
+- [anthropics/skills](https://github.com/anthropics/skills) -- Anthropic's public skills repository. This repository began as a copy of it in October 2025; Anthropic's document skills have since been removed from this repository.
 - [Anthropic Agent Skills Blog Post](https://anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills) -- Engineering rationale for the skills framework.
 - [Claude Skills Documentation](https://support.claude.com/en/articles/12512176-what-are-skills) -- Official user documentation.
 - [Model Context Protocol](https://modelcontextprotocol.io/) -- The protocol used by the MCP skill server.
@@ -543,9 +543,22 @@ Skill names must be lowercase kebab-case (`^[a-z0-9-]+$`), descriptions must be 
 
 This repository is licensed under the [Apache License 2.0](./LICENSE).
 
-Individual skills may carry their own license declarations in the `license` frontmatter field or a `LICENSE.txt` file within their directory.
+Individual skills may carry their own license declarations in the `license` frontmatter field or a `LICENSE.txt` file within their directory. Where a skill folder contains its own `LICENSE.txt`, that file governs the skill.
 
-The document skills in `document-skills/` are source-available reference implementations, not open source. They are provided for educational and development reference purposes.
+### Provenance and Third-Party Skills
+
+Most skills in this repository are original work by Anthony Padavano (many written with AI assistance). The following are third-party or derived, and keep their original licenses:
+
+| Source | License | Skills |
+|--------|---------|--------|
+| [anthropics/skills](https://github.com/anthropics/skills) (Anthropic, PBC) | Apache-2.0 (`LICENSE.txt` in each folder) | `algorithmic-art`, `canvas-design`, `theme-factory`, `artifacts-builder`, `web-artifacts-builder`, `mcp-builder`, `webapp-testing`, `brand-guidelines`, `internal-comms`, `slack-gif-creator`, `skill-creator` (with additional reference files by the author) |
+| [specstoryai/agent-skills](https://github.com/specstoryai/agent-skills) (SpecStory, Inc.) | Apache-2.0 (`LICENSE.txt` in each folder) | `specstory-guard`, `specstory-link-trail`, `specstory-organize`, `specstory-project-stats`, `specstory-session-summary`, `specstory-yak` |
+| [github/spec-kit](https://github.com/github/spec-kit) (GitHub, Inc.) | MIT | `speckit` (methodology and templates derived from spec-kit) |
+| [affaan-m/everything-claude-code](https://github.com/affaan-m/everything-claude-code) (Affaan Mustafa) | MIT | `continuous-learning-agent`, `iterative-code-exploration`, `postgres-advanced-patterns`, `tdd-workflow`, `verification-loop` (adaptations) |
+
+Attribution notices are collected in [`docs/THIRD_PARTY_NOTICES.md`](./docs/THIRD_PARTY_NOTICES.md).
+
+Anthropic's all-rights-reserved document skills (`docx`, `pdf`, `pptx`, `xlsx`) and four Anthropic skills that had been mislabeled as MIT (`doc-coauthoring`, `consolidate-memory`, `setup-cowork`, `schedule`) were removed from this repository in October 2026. They remain in earlier git history and in forks created before the removal.
 
 ---
 

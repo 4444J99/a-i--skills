@@ -1,6 +1,6 @@
 # Claude Code Skills
 
-Claude Code can load skills from `.claude/skills` (top-level) or `.claude/skills-document` (document set).
+Claude Code can load skills from `.claude/skills`; copy or link `distributions/claude/skills/` there.
 
 Regenerate links after adding/removing skills:
 

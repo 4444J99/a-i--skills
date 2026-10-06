@@ -4,11 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-This is the Anthropic AI Skills repository—a collection of example skills that extend Claude's capabilities. Each skill is a self-contained folder with a `SKILL.md` file containing YAML frontmatter and instructions.
+This is Anthony Padavano's (4444J99) agent skills repository—a catalog of skills that extend AI coding agents' capabilities. Each skill is a self-contained folder with a `SKILL.md` file containing YAML frontmatter and instructions.
 
-Two skill collections exist:
-- **Example skills**: Located in `skills/` directory, organized by category (e.g., `skills/creative/algorithmic-art/`, `skills/development/mcp-builder/`). 142 skills across 12 categories.
-- **Document skills**: Reference implementations in `document-skills/` (docx, pdf, pptx, xlsx)
+Skill locations:
+- **Catalog skills**: Located in `skills/` directory, organized by category (e.g., `skills/creative/algorithmic-art/`, `skills/development/mcp-builder/`). 165 skills across 12 categories.
+- **Plugin skills**: Claude Code plugins under `plugins/` (11 skills).
 
 ## Repository Structure
 
@@ -29,7 +29,7 @@ ai-skills/
 │   ├── security/          # Security and compliance (6 skills, incl. bundle)
 │   ├── specialized/       # Niche domains (6 skills)
 │   └── tools/             # Meta-skills and orchestration (11 skills)
-├── document-skills/       # Reference document skills (4)
+├── plugins/               # Claude Code plugins (11 skills)
 ├── docs/                  # Documentation files
 │   ├── CHANGELOG.md
 │   ├── CONTRIBUTING.md
@@ -61,9 +61,11 @@ ai-skills/
 python3 scripts/refresh_skill_collections.py
 python3 scripts/refresh_skill_collections.py --mode symlink  # Use symlinks instead of copies
 
-# Validate skill frontmatter (run both for full validation)
-python3 scripts/validate_skills.py --collection example --unique
-python3 scripts/validate_skills.py --collection document --unique
+# Validate skill frontmatter
+python3 scripts/validate_skills.py --collection example --unique --check-links
+
+# Run the tooling test suite
+python3 -m pytest
 
 # Verify generated bundles, registry, and lockfile are in sync
 python3 scripts/validate_generated_dirs.py
@@ -115,11 +117,11 @@ tier: core                          # Quality tier: core or community
 ```
 
 ### Generated Directories (in distributions/, managed by refresh script)
-- `distributions/collections/example-skills.txt` / `document-skills.txt` — skill path lists
+- `distributions/collections/example-skills.txt` — skill path list
 - `distributions/collections/core-skills.txt` / `community-skills.txt` — tier lists
 - `distributions/skills-registry.json` — machine-readable skill metadata (all frontmatter + resources)
 - `distributions/skills-lock.json` — lockfile with SHA-256 hashes per skill
-- `distributions/direct/example/` / `document/` — direct link directories
+- `distributions/direct/example/` — direct link directory
 - `distributions/codex/skills` / `distributions/claude/skills` — agent-specific bundles
 - `distributions/extensions/gemini/*/skills` — Gemini CLI extensions
 
@@ -128,15 +130,14 @@ These are committed artifacts; include refreshed outputs in PRs that change skil
 ### Version Files (updated during releases)
 - `.claude-plugin/marketplace.json` (metadata.version)
 - `distributions/extensions/gemini/example-skills/gemini-extension.json`
-- `distributions/extensions/gemini/document-skills/gemini-extension.json`
 
 ## Key Guidelines
 
 - Skill `name` in frontmatter must exactly match the directory name
 - All skills must have a `license` field (MIT for open skills)
 - Skills are organized into category subdirectories; new skills must go in the appropriate category
-- Document skills (docx, pdf, pptx, xlsx) are only in `document-skills/`, not in `skills/`
-- No repo-wide test suite; run per-skill tests when they exist (e.g., `python3 document-skills/pdf/scripts/check_bounding_boxes_test.py`)
+- Only redistributable (open-licensed) skills belong here; Anthropic's document skills (docx, pdf, pptx, xlsx) are all-rights-reserved and must not be re-added
+- Repo-wide tests live in `tests/` (`python3 -m pytest`); CI runs them
 - Update `docs/THIRD_PARTY_NOTICES.md` when adding external assets
 - CI includes secret detection for patterns like `sk-`, `ghp_`, `AKIA` in new files
 

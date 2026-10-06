@@ -12,7 +12,7 @@
 # Outputs holes-fat-report.md to CWD (or --output path).
 #
 # Usage:
-#   bash portfolio-gap-audit.sh --instances chess,wellness,education,voodoo
+#   bash portfolio-gap-audit.sh --instances voodoo,<your-instance>
 #   bash portfolio-gap-audit.sh --instances-dir ./proof-instances/
 #   bash portfolio-gap-audit.sh --output /path/to/report.md
 #

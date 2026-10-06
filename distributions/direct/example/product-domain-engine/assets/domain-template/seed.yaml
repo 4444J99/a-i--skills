@@ -5,7 +5,7 @@
 # Schema mirrors the canonical pattern used across ~145 ORGANVM repos.
 
 # ─── Identity ──────────────────────────────────────────────────
-name: [domain-slug]                  # e.g. hokage-chess, public-record-data-scrapper
+name: [domain-slug]                  # e.g. chess-creator-brand, public-record-data-scrapper
 organ: [PERSONAL|ORGAN-I|ORGAN-II|ORGAN-III|ORGAN-IV|ORGAN-V|ORGAN-VI|ORGAN-VII|META]
 org: [github-org-slug]               # e.g. 4444j99, organvm-iii-ergon, ivviiviivvi
 tier: [flagship|standard|infrastructure]
@@ -57,7 +57,7 @@ organ_chain:
 inherited_patterns: []
   # e.g. - from: public-record-data-scrapper
   #        pattern: density-principle
-  # e.g. - from: hokage-chess
+  # e.g. - from: chess-creator-brand
   #        pattern: ki-sho-ten-ketsu-narrative
 
 # Patterns this domain contributes to the registry

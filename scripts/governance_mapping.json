@@ -265,12 +265,6 @@
     "triggers": ["user-asks-about-e2e-testing", "user-asks-about-playwright", "context:testing"]
   },
 
-  "doc-coauthoring": {
-    "governance_phases": ["shape", "prove"],
-    "governance_norm_group": "documentation-standard",
-    "organ_affinity": ["all"],
-    "triggers": ["user-asks-about-documentation", "command:docs", "context:documentation"]
-  },
   "github-profile-architect": {
     "governance_phases": ["ship"],
     "governance_norm_group": "documentation-standard",
@@ -588,26 +582,5 @@
     "governance_phases": ["frame", "shape"],
     "organ_affinity": ["organ-iv"],
     "triggers": ["user-asks-about-specifications", "command:speckit", "context:specification"]
-  },
-
-  "docx": {
-    "governance_phases": ["build"],
-    "organ_affinity": ["all"],
-    "triggers": ["user-asks-about-docx", "user-asks-about-word-document", "file-type:*.docx"]
-  },
-  "pdf": {
-    "governance_phases": ["build"],
-    "organ_affinity": ["all"],
-    "triggers": ["user-asks-about-pdf", "file-type:*.pdf"]
-  },
-  "pptx": {
-    "governance_phases": ["build"],
-    "organ_affinity": ["all"],
-    "triggers": ["user-asks-about-presentation", "user-asks-about-powerpoint", "file-type:*.pptx"]
-  },
-  "xlsx": {
-    "governance_phases": ["build"],
-    "organ_affinity": ["all"],
-    "triggers": ["user-asks-about-spreadsheet", "user-asks-about-excel", "file-type:*.xlsx"]
   }
 }

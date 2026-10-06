@@ -13,7 +13,6 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILLS_DIR = ROOT / "skills"
-DOC_SKILLS_DIR = ROOT / "document-skills"
 PLUGINS_DIR = ROOT / "plugins"
 BUILD_DIR = ROOT / "distributions"
 ECOSYSTEM_YAML = ROOT / "ecosystem.yaml"
@@ -248,22 +247,19 @@ def _update_readme(
     return True
 
 
-def _update_marketplace(example_paths: list[str], document_paths: list[str]) -> None:
+def _update_marketplace(example_paths: list[str]) -> None:
     marketplace_path = ROOT / ".claude-plugin" / "marketplace.json"
     if not marketplace_path.exists():
         return
 
     data = json.loads(marketplace_path.read_text(encoding="utf-8"))
     plugins = data.get("plugins", [])
-    updated = {"example-skills": False, "document-skills": False}
+    updated = {"example-skills": False}
 
     for plugin in plugins:
         name = plugin.get("name")
         if name == "example-skills":
             plugin["skills"] = [f"./{p}" for p in example_paths]
-            updated[name] = True
-        elif name == "document-skills":
-            plugin["skills"] = [f"./{p}" for p in document_paths]
             updated[name] = True
 
     if not all(updated.values()):
@@ -289,16 +285,16 @@ def _update_marketplace(example_paths: list[str], document_paths: list[str]) -> 
                 f"Plugin manifest at {plugin_manifest_path} missing 'name' or 'description'"
             )
 
-        plugin_skill_dirs = _find_skill_dirs(plugin_dir / "skills") if (plugin_dir / "skills").exists() else []
-        plugin_skill_paths = [f"./{p.relative_to(ROOT)}" for p in plugin_skill_dirs]
         relative_source = f"./{plugin_dir.relative_to(ROOT)}"
 
+        # The plugin ships its own plugin.json and keeps its skills in the
+        # default skills/ directory, so the entry declares no component fields
+        # (declaring them alongside plugin.json with strict=false is a manifest
+        # conflict that prevents the plugin from loading).
         entry = {
             "name": plugin_name,
             "description": plugin_description,
             "source": relative_source,
-            "strict": False,
-            "skills": plugin_skill_paths,
         }
 
         # Upsert: replace existing entry of same name, else append.
@@ -345,23 +341,20 @@ def main() -> int:
     args = parser.parse_args()
 
     example_skill_dirs = _find_skill_dirs(SKILLS_DIR)
-    document_skill_dirs = _find_skill_dirs(DOC_SKILLS_DIR)
 
     collections_dir = BUILD_DIR / "collections"
     collections_dir.mkdir(parents=True, exist_ok=True)
 
     _write_list(collections_dir / "example-skills.txt", example_skill_dirs)
-    _write_list(collections_dir / "document-skills.txt", document_skill_dirs)
-    _write_tier_lists(collections_dir, example_skill_dirs + document_skill_dirs)
-    _write_governance_lists(collections_dir, example_skill_dirs + document_skill_dirs)
+    _write_tier_lists(collections_dir, example_skill_dirs)
+    _write_governance_lists(collections_dir, example_skill_dirs)
 
     if not args.skip_marketplace:
         _update_marketplace(
             [str(p.relative_to(ROOT)) for p in example_skill_dirs],
-            [str(p.relative_to(ROOT)) for p in document_skill_dirs],
         )
 
-    total_skill_count = len(example_skill_dirs) + len(document_skill_dirs)
+    total_skill_count = len(example_skill_dirs)
     categories = sorted({
         d.relative_to(SKILLS_DIR).parts[0]
         for d in example_skill_dirs
@@ -393,22 +386,14 @@ def main() -> int:
 
     # Generated link directories in .build/
     _sync_links(BUILD_DIR / "direct" / "example", example_skill_dirs, args.mode)
-    _sync_links(BUILD_DIR / "direct" / "document", document_skill_dirs, args.mode)
 
     _sync_links(BUILD_DIR / "codex" / "skills", example_skill_dirs, args.mode)
-    _sync_links(BUILD_DIR / "codex" / "skills-document", document_skill_dirs, args.mode)
 
     _sync_links(BUILD_DIR / "claude" / "skills", example_skill_dirs, args.mode)
-    _sync_links(BUILD_DIR / "claude" / "skills-document", document_skill_dirs, args.mode)
 
     _sync_links(
         BUILD_DIR / "extensions" / "gemini" / "example-skills" / "skills",
         example_skill_dirs,
-        args.mode,
-    )
-    _sync_links(
-        BUILD_DIR / "extensions" / "gemini" / "document-skills" / "skills",
-        document_skill_dirs,
         args.mode,
     )
 

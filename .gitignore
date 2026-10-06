@@ -7,3 +7,9 @@ __pycache__/
 
 # raw local Claude Code session logs (timestamped root .txt dumps) — never track (PII: home paths)
 **/20[0-9][0-9]-[0-9][0-9]-[0-9][0-9]-[0-9][0-9][0-9][0-9][0-9][0-9]-*.txt
+
+# test/coverage artifacts
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/

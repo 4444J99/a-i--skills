@@ -30,9 +30,6 @@ Creates symlinks instead of copies for faster iteration.
 # Validate example skills
 python3 scripts/validate_skills.py --collection example --unique
 
-# Validate document skills
-python3 scripts/validate_skills.py --collection document --unique
-
 # Verify generated directories are in sync
 python3 scripts/validate_generated_dirs.py
 ```
@@ -42,7 +39,6 @@ python3 scripts/validate_generated_dirs.py
 ```bash
 python3 scripts/refresh_skill_collections.py && \
 python3 scripts/validate_skills.py --collection example --unique && \
-python3 scripts/validate_skills.py --collection document --unique && \
 python3 scripts/validate_generated_dirs.py
 ```
 
@@ -51,8 +47,8 @@ python3 scripts/validate_generated_dirs.py
 Run skill-specific tests when they exist:
 
 ```bash
-# Example: PDF skill tests
-python3 document-skills/pdf/scripts/check_bounding_boxes_test.py
+# Repository tooling tests
+python3 -m pytest
 
 # Install skill-specific dependencies as needed
 pip install -r mcp-builder/scripts/requirements.txt

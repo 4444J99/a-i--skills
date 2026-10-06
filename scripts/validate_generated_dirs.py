@@ -18,15 +18,6 @@ BUNDLES = {
             BUILD_DIR / "extensions" / "gemini" / "example-skills" / "skills",
         ],
     },
-    "document": {
-        "list": BUILD_DIR / "collections" / "document-skills.txt",
-        "targets": [
-            BUILD_DIR / "direct" / "document",
-            BUILD_DIR / "codex" / "skills-document",
-            BUILD_DIR / "claude" / "skills-document",
-            BUILD_DIR / "extensions" / "gemini" / "document-skills" / "skills",
-        ],
-    },
 }
 
 
@@ -114,7 +105,7 @@ def _check_lockfile(errors: list[str]) -> None:
     lock_skills = data.get("skills", [])
     # Cross-check count against combined collection lists
     total_expected = 0
-    for collection in ("example-skills.txt", "document-skills.txt"):
+    for collection in ("example-skills.txt",):
         list_path = BUILD_DIR / "collections" / collection
         if list_path.exists():
             total_expected += len(_load_list(list_path))

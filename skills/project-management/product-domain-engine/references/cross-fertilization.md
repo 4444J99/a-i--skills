@@ -12,5 +12,5 @@ This file tracks how knowledge transfers between domains in the Ideal-Whole Subs
 ## Known Transfer Patterns
 
 - Chess ↔ Fitness: Similar load profiles (strategy + measurement)
-- Chess → BODI: Opening patterns to workout programming
+- Chess → Fitness programs: Opening patterns to workout programming
 - Any domain → Community: Layer 8 contribution patterns

@@ -18,7 +18,6 @@ from skill_lib import extract_frontmatter_strict, parse_list_field
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILLS_DIR = ROOT / "skills"
-DOC_SKILLS_DIR = ROOT / "document-skills"
 NAME_RE = re.compile(r"^[a-z0-9-]+$")
 
 # Valid values for optional fields (mirrors validate_skills.py)
@@ -56,11 +55,6 @@ def _affected_skill_dirs(changed: list[str]) -> list[Path]:
         # skills/<category>/<skill-name>/... -> 3+ parts
         if len(parts) >= 3 and parts[0] == "skills":
             skill_dir = ROOT / parts[0] / parts[1] / parts[2]
-            if (skill_dir / "SKILL.md").exists():
-                seen.add(skill_dir)
-        # document-skills/<skill-name>/... -> 2+ parts
-        elif len(parts) >= 2 and parts[0] == "document-skills":
-            skill_dir = ROOT / parts[0] / parts[1]
             if (skill_dir / "SKILL.md").exists():
                 seen.add(skill_dir)
     return sorted(seen, key=lambda p: p.name)

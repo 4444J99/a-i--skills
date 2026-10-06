@@ -6,13 +6,11 @@ This repository hosts a collection of "skills" for AI agents (specifically Claud
 
 The repository includes:
 *   **Example Skills:** A wide variety of general-purpose skills in the root directory.
-*   **Document Skills:** A specialized set of skills for handling complex file formats (PDF, DOCX, PPTX, XLSX) located in `document-skills/`.
 *   **Integration Support:** generated directories and configuration files to support loading these skills into Claude Code, Codex, and Gemini CLI.
 
 ## Directory Structure
 
 *   `skills/`: Generated directory containing symlinks or copies of all active example skills.
-*   `document-skills/`: Contains the source for document handling skills (`docx`, `pdf`, `pptx`, `xlsx`).
 *   `collections/`: Text files listing the paths to all skills in each collection.
 *   `scripts/`: Python scripts for repository maintenance (validation, refreshing lists, releasing).
 *   `extensions/gemini/`: Gemini CLI extension configurations.
@@ -28,15 +26,11 @@ To install the example skills collection:
 ```bash
 gemini extensions install ./extensions/gemini/example-skills
 ```
-To install the document skills collection:
-```bash
-gemini extensions install ./extensions/gemini/document-skills
-```
 
 **For Claude Code:**
 ```bash
-/plugin marketplace add anthropics/skills
-/plugin install example-skills@anthropic-agent-skills
+/plugin marketplace add 4444J99/a-i--skills
+/plugin install example-skills@a-i-skills
 ```
 
 ### 2. Creating a New Skill
@@ -74,9 +68,6 @@ Checks that skills follow the required format (valid YAML frontmatter, naming co
 ```bash
 # Validate example skills
 python3 scripts/validate_skills.py --collection example --unique
-
-# Validate document skills
-python3 scripts/validate_skills.py --collection document --unique
 ```
 
 **Validate Generated Directories:**

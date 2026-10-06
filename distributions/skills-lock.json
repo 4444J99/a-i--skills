@@ -34,7 +34,7 @@
     {
       "name": "artifact-resurfacing",
       "path": "skills/tools/artifact-resurfacing",
-      "sha256": "6964a9459bd96bbaafee723780365df8e1f1426382989d9bd350ea74e4f8ba75"
+      "sha256": "5281b82397935bfdd8d3d64ef983915c53c15342dd637b8b43a87be71db68524"
     },
     {
       "name": "artifacts-builder",
@@ -112,11 +112,6 @@
       "sha256": "ed168711a8bb63258bc970fddc76d8bc838b96f8545d7ddfea5c29c2d3c9630a"
     },
     {
-      "name": "consolidate-memory",
-      "path": "skills/knowledge/consolidate-memory",
-      "sha256": "9e41141ae4ee84ac30e83fa4ef0b2901010a56f0f6484dcdf8a16353f56c7977"
-    },
-    {
       "name": "content-distribution",
       "path": "skills/professional/content-distribution",
       "sha256": "00ae287ab55e68c5979714908278c6c3bbf2bac344f2c1da940a21f5370da042"
@@ -134,7 +129,7 @@
     {
       "name": "conversation-content-pipeline",
       "path": "skills/integrations/conversation-content-pipeline",
-      "sha256": "3b684b25fd26acdb04c6586c52297c8dab4466d94f94300d4e5142cbc1c025f8"
+      "sha256": "39e9a4f9afc51017ba781eef80315606c9922dc54337a05256a40e289ceb8ec4"
     },
     {
       "name": "corpus-persona-extraction",
@@ -192,11 +187,6 @@
       "sha256": "4eefa94005d0c9952f8d566611ced341338f26bd68e8087e73ede5890ecb4a3c"
     },
     {
-      "name": "doc-coauthoring",
-      "path": "skills/documentation/doc-coauthoring",
-      "sha256": "600869e442ab32bb8964afe176cb990241428244beafc0a63f39d1586f1d60fd"
-    },
-    {
       "name": "docker-containerization",
       "path": "skills/development/docker-containerization",
       "sha256": "2cd50cfe82171eccfa0915f641a4e7c1b8f163e8979d1ef9bee0f13a50991166"
@@ -204,12 +194,12 @@
     {
       "name": "document-audit-extraction",
       "path": "skills/documentation/document-audit-extraction",
-      "sha256": "9986b0bc079c9ddbf33ffb3abdd5d1b1dec449d9350541e9276cba8b8c93074d"
+      "sha256": "f80856fac77f6f7e791c96873ca6f255e1cd84c6c55465c78c1ba125b800e6a8"
     },
     {
       "name": "domain-ideal-whole-substrate",
       "path": "skills/project-management/domain-ideal-whole-substrate",
-      "sha256": "f8cb52d7f58311829eeed99ecc4ccb7a08610f1ba45177da32224208bf9b992e"
+      "sha256": "30d3bf3468f0f3cba91e8cb7e80794acf50f5029024b6ac2a2fd1350ac4b6132"
     },
     {
       "name": "dotfile-systems-architect",
@@ -499,7 +489,7 @@
     {
       "name": "personalized-storefront-render",
       "path": "skills/project-management/personalized-storefront-render",
-      "sha256": "24da9ce5e8384316c59217e949def4ba98334916832cafedbf0f3388d7ba1db7"
+      "sha256": "9a8949575f75869e957afde6203b5ea86f373a967a47a2b1cbbaed32e4db8e36"
     },
     {
       "name": "pitch-deck-patterns",
@@ -534,7 +524,7 @@
     {
       "name": "product-domain-engine",
       "path": "skills/project-management/product-domain-engine",
-      "sha256": "a9d37f6d42448d82eb46a9d833e1463d93b1aab8f2cdee7ca7b6536ab2a9ea3c"
+      "sha256": "bab35a7745fec062488871f9ece3c7312b27780d96f5b47f6a15394119d031cd"
     },
     {
       "name": "product-requirements-designer",
@@ -637,11 +627,6 @@
       "sha256": "73bb6cd9ef7fdd8b2e3d93d5fa31ef889ee203b2eccb030396f94292f0d46b8e"
     },
     {
-      "name": "schedule",
-      "path": "skills/tools/schedule",
-      "sha256": "5dba99f053715b2dc6a5a0c77281297c85c147cd688d0a3341c36c2e340f009d"
-    },
-    {
       "name": "script-analysis-dramaturgical",
       "path": "skills/creative/script-analysis-dramaturgical",
       "sha256": "4dd328247514f90553573267f83649fa0b60a2633439f92fe0bce78a27b13cf0"
@@ -677,11 +662,6 @@
       "sha256": "98159cef0f06b5d5a3e571c1d90d9542fb3f1fc4e5d490fc521b4553e7b198e2"
     },
     {
-      "name": "setup-cowork",
-      "path": "skills/tools/setup-cowork",
-      "sha256": "d3c5a7ce15f9792d76d3fda599b36c468da49e2441249234c1b7c2641bb6cae5"
-    },
-    {
       "name": "shell-history-hygiene",
       "path": "skills/tools/shell-history-hygiene",
       "sha256": "c2ea5296d11e103c435b28212593d589273d0d60581bf9b6eeaf3af280aef5ff"
@@ -689,7 +669,7 @@
     {
       "name": "skill-chain-prompts",
       "path": "skills/tools/skill-chain-prompts",
-      "sha256": "efc57b84e4ef2cca17cd49542cb9427c6b956dd8e0a5660ddb7df7d39d844bc0"
+      "sha256": "8935ad8e7ad5202f4eb6eab9ed2072fa4dd7ed76531a324e9360094838f10369"
     },
     {
       "name": "skill-creator",
@@ -759,7 +739,7 @@
     {
       "name": "stranger-test-protocol",
       "path": "skills/documentation/stranger-test-protocol",
-      "sha256": "3a39ade5acbf8b86513030f1762c5d2bf274225baa395ffca4850862c7f4a6eb"
+      "sha256": "c731dbedc5ce94af4b8880826f433012b696c0a09e7e31aba46c058896ad380a"
     },
     {
       "name": "systemic-product-analyst",
@@ -774,7 +754,7 @@
     {
       "name": "technical-analytical-writing",
       "path": "skills/documentation/technical-analytical-writing",
-      "sha256": "1f2523e12ee341b9a905fb0d59d2a8aee39ad8cbfd3d699b8987255713e02bd6"
+      "sha256": "47259a2c05910f3992c47488387835455b185ec97f5878dad0f456f29b8ebd82"
     },
     {
       "name": "testing-patterns",
@@ -799,7 +779,7 @@
     {
       "name": "transcript-promotion",
       "path": "skills/tools/transcript-promotion",
-      "sha256": "8099afa8a673dbc984f1fa5b15ca0638edca4618b579757b0b778694eb394f7e"
+      "sha256": "6b1bd6ca227ef905cff6dd92cab0cf95c1b2b5d45685e81209bd5e660b6e9ca5"
     },
     {
       "name": "turnstile-spin",
@@ -845,26 +825,6 @@
       "name": "workspace-autopsy-governance",
       "path": "skills/tools/workspace-autopsy-governance",
       "sha256": "4bead5822399cbf1504ca61956a0a13eda0b213a217071e30992da842022351c"
-    },
-    {
-      "name": "docx",
-      "path": "document-skills/docx",
-      "sha256": "0b863aa9245e985eae1fa94f27a21b8feabab925b3970cead7109f6d9ddd44e0"
-    },
-    {
-      "name": "pdf",
-      "path": "document-skills/pdf",
-      "sha256": "40179a11b6311e966ffa1320b684d0a471140460376a6d353a1a65b2d8eb0681"
-    },
-    {
-      "name": "pptx",
-      "path": "document-skills/pptx",
-      "sha256": "6131cc5eb72c06ffbb2cdd5806ae49fc932008a12257ec6cb56971716c06fdd1"
-    },
-    {
-      "name": "xlsx",
-      "path": "document-skills/xlsx",
-      "sha256": "8ba3651ece50f8fb6fd63df0754c6523163d69d82c6ac76bc5ea2c68170a65ca"
     }
   ]
 }

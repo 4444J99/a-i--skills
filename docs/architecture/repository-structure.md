@@ -37,7 +37,6 @@ ai-skills/
 │
 ├── collections/                     # Generated and categorized collections
 │   ├── example-skills.txt           # All example skills
-│   ├── document-skills.txt          # Document format skills
 │   ├── by-category/                 # Skills by category
 │   │   ├── creative.txt
 │   │   ├── professional.txt
@@ -75,10 +74,8 @@ ai-skills/
 │   └── marketplace.json             # Plugin marketplace config
 ├── extensions/                      # Generated: Gemini extensions
 │   └── gemini/
-│       ├── example-skills/
-│       └── document-skills/
-├── skills/                          # Generated: links to example skills
-└── skills-document/                 # Generated: links to document skills
+│       └── example-skills/
+└── skills/                          # Generated: links to example skills
 ```
 
 ## Generated vs Source Files
@@ -96,7 +93,6 @@ These are created by `scripts/refresh_skill_collections.py`:
 - `.codex/skills/*` - Codex agent skill links
 - `extensions/gemini/*/skills/*` - Gemini extension skills
 - `skills/*` - Example skill links
-- `skills-document/*` - Document skill links
 - `collections/*.txt` - Collection files
 
 **Important**: Always run `python3 scripts/refresh_skill_collections.py` after modifying skills!

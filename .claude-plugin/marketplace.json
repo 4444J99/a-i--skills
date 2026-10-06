@@ -1,31 +1,19 @@
 {
-  "name": "anthropic-agent-skills",
+  "name": "a-i-skills",
   "owner": {
-    "name": "Keith Lazuka",
-    "email": "klazuka@anthropic.com"
+    "name": "Anthony Padavano (4444J99)",
+    "url": "https://github.com/4444J99"
   },
   "metadata": {
-    "description": "Anthropic example skills",
-    "version": "1.2.0"
+    "description": "Anthony Padavano's agent skill catalog (4444J99/a-i--skills): original skills plus a small set of clearly-licensed third-party skills (Apache-2.0 / MIT, licenses kept in each skill folder).",
+    "version": "2.0.0"
   },
   "plugins": [
     {
-      "name": "document-skills",
-      "description": "Collection of document processing suite including Excel, Word, PowerPoint, and PDF capabilities",
-      "source": "./",
-      "strict": false,
-      "skills": [
-        "./document-skills/docx",
-        "./document-skills/pdf",
-        "./document-skills/pptx",
-        "./document-skills/xlsx"
-      ]
-    },
-    {
       "name": "example-skills",
-      "description": "Collection of example skills demonstrating various capabilities including skill creation, MCP building, visual design, algorithmic art, internal communications, web testing, artifact building, Slack GIFs, and theme styling",
+      "description": "The main skill catalog: creative, data, development, documentation, education, integrations, knowledge, professional, project-management, security, specialized, and tools skills.",
       "source": "./",
-      "strict": false,
+      "strict": true,
       "skills": [
         "./skills/development/accessibility-patterns",
         "./skills/tools/agent-development-pack",
@@ -49,7 +37,6 @@
         "./skills/development/coding-standards-enforcer",
         "./skills/development/community-platform-patterns",
         "./skills/development/configuration-management",
-        "./skills/knowledge/consolidate-memory",
         "./skills/professional/content-distribution",
         "./skills/development/continuous-learning-agent",
         "./skills/security/contract-risk-analyzer",
@@ -65,7 +52,6 @@
         "./skills/development/database-migration-patterns",
         "./skills/specialized/defi-trading-systems",
         "./skills/development/deployment-cicd",
-        "./skills/documentation/doc-coauthoring",
         "./skills/development/docker-containerization",
         "./skills/documentation/document-audit-extraction",
         "./skills/project-management/domain-ideal-whole-substrate",
@@ -154,7 +140,6 @@
         "./skills/development/resilience-patterns",
         "./skills/development/responsive-design-patterns",
         "./skills/development/rust-systems-design",
-        "./skills/tools/schedule",
         "./skills/creative/script-analysis-dramaturgical",
         "./skills/knowledge/second-brain-librarian",
         "./skills/security/security-essentials-pack",
@@ -162,7 +147,6 @@
         "./skills/security/security-threat-modeler",
         "./skills/tools/session-governance-audit",
         "./skills/tools/session-lifecycle-patterns",
-        "./skills/tools/setup-cowork",
         "./skills/tools/shell-history-hygiene",
         "./skills/tools/skill-chain-prompts",
         "./skills/tools/skill-creator",
@@ -201,29 +185,12 @@
     {
       "name": "coliseum-from-grain",
       "description": "Encodes the autonomous-work-assignment primitive \u2014 a unit of work that is not task, series, stream, load, or cycle, but a scoped-and-parameterized assignment carrying its own context. Given a grain of sand (a dense prompt), surface its parallel dimensions, compose each as a self-contained 9-section handoff envelope, dispatch in parallel, and reconcile the returns into a composed whole. Phase 0 reads the grain autonomously (no front-gate intake). A pre-Phase-1 gate declines the protocol when the grain is not fan-out shaped. The pingpong-detector ships with annotated risk rather than stalling (recompose cap of 2). Phase 4 enforces composition mechanically (compression ratio \u226450%, minimum 1 PENDING-DECISION). Subagent routing is advisory \u2014 no guaranteed expertise delta.",
-      "source": "./plugins/coliseum-from-grain",
-      "strict": false,
-      "skills": [
-        "./plugins/coliseum-from-grain/skills/assignment-composition",
-        "./plugins/coliseum-from-grain/skills/coliseum-dispatch",
-        "./plugins/coliseum-from-grain/skills/coliseum-orchestrator",
-        "./plugins/coliseum-from-grain/skills/coliseum-reconciliation",
-        "./plugins/coliseum-from-grain/skills/dimension-surfacing"
-      ]
+      "source": "./plugins/coliseum-from-grain"
     },
     {
       "name": "pentaphase-structural-architect",
       "description": "Substrate-agnostic methodology for guiding any structural overhaul through five gated phases \u2014 landscape discovery, taxonomy design, environment configuration, systemic ingestion, governance evolution. Each phase produces a named artifact; an integrity auditor enforces gate criteria between phases.",
-      "source": "./plugins/pentaphase-structural-architect",
-      "strict": false,
-      "skills": [
-        "./plugins/pentaphase-structural-architect/skills/governance-evolution-protocol",
-        "./plugins/pentaphase-structural-architect/skills/landscape-discovery-audit",
-        "./plugins/pentaphase-structural-architect/skills/pentaphase-orchestrator",
-        "./plugins/pentaphase-structural-architect/skills/system-environment-configuration",
-        "./plugins/pentaphase-structural-architect/skills/systemic-ingestion-normalization",
-        "./plugins/pentaphase-structural-architect/skills/taxonomy-modeling-design"
-      ]
+      "source": "./plugins/pentaphase-structural-architect"
     }
   ]
 }

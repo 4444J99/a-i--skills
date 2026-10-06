@@ -14,7 +14,7 @@ governance_phases: [shape, prove]
 governance_norm_group: documentation-standard
 organ_affinity: [all]
 triggers: [user-asks-about-document-audit, context:content-inventory, context:doc-quality, context:document-review]
-complements: [stranger-test-protocol, doc-coauthoring, knowledge-architecture]
+complements: [stranger-test-protocol, technical-analytical-writing, knowledge-architecture]
 ---
 
 # Document Audit & Feature Extraction

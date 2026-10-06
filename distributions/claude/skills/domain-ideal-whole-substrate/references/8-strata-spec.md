@@ -66,7 +66,7 @@ Each stratum has: canonical question, output artifact, fill protocol, validation
 
 **Load distribution:** This is the heaviest layer for community-driven domains (chess, fitness, education). Voodoo's constellation is smaller globally (≤30 named scholar-practitioners) but proportionally denser per-name.
 
-**Reuse:** PRT-046 is the chess instance. Format is canonical across domains.
+**Reuse:** Format is canonical across domains (see `assets/domain-constellation-template.yaml`).
 
 ## Stratum 4 — Gap-map
 
@@ -198,7 +198,7 @@ Plus domain-specific roles (e.g. for chess: opening-book-curator, endgame-tableb
 
 ## Stratum-by-domain load reference (calibration)
 
-| Layer | Chess | Fitness/BODI | Education | Design | Voodoo |
+| Layer | Chess | Fitness | Education | Design | Voodoo |
 |---|---|---|---|---|---|
 | 1 Ontology | M | M-H | M-H | M | H |
 | 2 Lineage | M | M | H | M | H |

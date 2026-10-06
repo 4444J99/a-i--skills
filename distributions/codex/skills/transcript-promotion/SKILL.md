@@ -37,7 +37,6 @@ complements:
   - closeout
   - artifact-resurfacing
   - cross-agent-handoff
-  - consolidate-memory
 governance_phases: [prove, ship]
 governance_norm_group: repo-hygiene
 organ_affinity: [all]
@@ -243,7 +242,7 @@ If promotion exposes a new silent-failure class (e.g., a new way auto-sync gets 
 | `artifact-resurfacing` | inverse motion | when promoted content's *citation* later goes stale and needs reconciliation |
 | `cross-agent-handoff` | carries the register | promotion register travels in the handoff to the next session |
 | `qa-audit` | verifies promotion success | after promotion, audits whether all candidates actually landed on disk + remote |
-| `consolidate-memory` | indexes new artifacts | promoted plan files referenced from memory via `[[name]]` links get curated here |
+| memory consolidation (platform tool, if available) | indexes new artifacts | promoted plan files referenced from memory via `[[name]]` links get curated here |
 
 ## Why "ongoing unfurling expansion"
 

@@ -106,12 +106,9 @@ This repository contains 101 AI agent skills organized into the following catego
 
 **Purpose**: Technical writing, documentation, and content management.
 
-- `doc-coauthoring` - Collaborative documentation
 - `github-profile-architect` - GitHub profile optimization
 - `github-repo-curator` - Repository maintenance
 - `github-repository-standards` - Repository best practices
-
-> See also: `document-skills/` for document format handling (docx, pdf, pptx, xlsx)
 
 ## 🎓 Education (4 skills)
 

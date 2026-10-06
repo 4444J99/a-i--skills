@@ -13,7 +13,7 @@ tags:
 governance_phases: [build]
 organ_affinity: [all]
 triggers: [user-asks-about-conversation-content, context:transcript-to-content, context:chat-to-doc, context:session-to-article]
-complements: [essay-publishing-pipeline, creative-writing-craft, doc-coauthoring]
+complements: [essay-publishing-pipeline, creative-writing-craft, technical-analytical-writing]
 ---
 
 # Conversation-to-Content Pipeline
