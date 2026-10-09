@@ -190,7 +190,9 @@ def validate_release(release: Path, *, semantic: bool = True) -> dict:
 def build_release(source: Path, output: Path) -> dict:
     source = source.resolve(strict=True)
     output = output.absolute()
-    for canonical in ("skills", "plugins", "scripts", "config", ".claude-plugin"):
+    for canonical in (
+        "skills", "plugins", "scripts", "config", ".claude-plugin", "agents", "commands"
+    ):
         if output.resolve().is_relative_to(source / canonical):
             raise InstallError(
                 "Build output must be outside canonical source directories"
