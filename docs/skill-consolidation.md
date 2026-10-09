@@ -89,7 +89,7 @@ The runtime audit used these pinned sources:
 |---|---|
 | `_agent` | `21d62c13bab0f7b82bfa3f6cb3c9a1ee89ad1a2f` |
 | `_agent-ontology` | `ffbdb42a7a751e1304db5da4746abec111df2cb8` |
-| `domus-genoma` | `0d93f029a8200b986f95c4dfd173a0f1aaf357` |
+| `domus-genoma` | `0d93f029a8200b98686f95c4dfd173a0f1aaf357` |
 
 Against the PR #41 baseline, 132 of 161 exported `_agent` skill folders and 115
 of 160 `_agent-ontology` skill folders have identical Git tree hashes to the
@@ -115,15 +115,15 @@ repository contains additional work and is not synonymous with this snapshot.
 `distributions/` accounts for 76.75% of baseline tracked file bytes. Removing it
 now would break committed consumers:
 
-- The [Claude skills symlink](https://github.com/4444J99/domus-genoma/blob/0d93f029a8200b986f95c4dfd173a0f1aaf357/private_dot_claude/symlink_skills.tmpl)
+- The [Claude skills symlink](https://github.com/4444J99/domus-genoma/blob/0d93f029a8200b98686f95c4dfd173a0f1aaf357/private_dot_claude/symlink_skills.tmpl)
   points into `distributions/claude/skills`.
-- [Cowork synchronization](https://github.com/4444J99/domus-genoma/blob/0d93f029a8200b986f95c4dfd173a0f1aaf357/dot_local/bin/executable_cowork-skills-sync)
+- [Cowork synchronization](https://github.com/4444J99/domus-genoma/blob/0d93f029a8200b98686f95c4dfd173a0f1aaf357/dot_local/bin/executable_cowork-skills-sync)
   copies from that directory and uses `rsync --delete`.
 - The `composer` command and skill-planning commands read the generated registry.
-- The [Gemini installer](https://github.com/4444J99/domus-genoma/blob/0d93f029a8200b986f95c4dfd173a0f1aaf357/.chezmoiscripts/run_onchange_after_install-gemini-extensions.sh.tmpl)
+- The [Gemini installer](https://github.com/4444J99/domus-genoma/blob/0d93f029a8200b98686f95c4dfd173a0f1aaf357/.chezmoiscripts/run_onchange_after_install-gemini-extensions.sh.tmpl)
   uses distribution descriptors and still declares the removed document extension.
 
-The [Domus sync hook](https://github.com/4444J99/domus-genoma/blob/0d93f029a8200b986f95c4dfd173a0f1aaf357/.chezmoiscripts/run_onchange_after_sync-skills.sh.tmpl)
+The [Domus sync hook](https://github.com/4444J99/domus-genoma/blob/0d93f029a8200b98686f95c4dfd173a0f1aaf357/.chezmoiscripts/run_onchange_after_sync-skills.sh.tmpl)
 clones or updates the repository but does not build it. The current refresh
 script also does not reconstruct every tracked descriptor from nothing, and it
 prints registry/lockfile subprocess failures as warnings. A simple added refresh
@@ -138,7 +138,7 @@ and change CI's expectation of committed generated files in the same migration.
 ## Portal implementation material has no verified deployment here
 
 Domus retains `_portal/skills/_arms` files, but its
-[current ignore configuration](https://github.com/4444J99/domus-genoma/blob/0d93f029a8200b986f95c4dfd173a0f1aaf357/.chezmoiignore)
+[current ignore configuration](https://github.com/4444J99/domus-genoma/blob/0d93f029a8200b98686f95c4dfd173a0f1aaf357/.chezmoiignore)
 excludes `_portal/**` and describes `_portal` as independently owned. The retained
 resolver also has an old root-path assumption. These files are useful source
 material; they do not prove an operating multi-runtime portal. Locate its current
