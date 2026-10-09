@@ -1,8 +1,8 @@
 # Skill Categories
 
-This repository contains 101 AI agent skills organized into the following categories.
+This guide lists selected skills by category. The [generated registry](../distributions/skills-registry.json) enumerates the complete current catalog; plugin skills are listed in the [repository overview](../README.md).
 
-## 📝 Creative & Content (13 skills)
+## 📝 Creative & Content
 
 **Purpose**: Generate and manipulate creative content, art, and media.
 
@@ -20,7 +20,7 @@ This repository contains 101 AI agent skills organized into the following catego
 - `interactive-theatre-designer` - Interactive theatrical experiences
 - `movement-notation-systems` - Dance and movement notation
 
-## 💼 Professional & Business (11 skills)
+## 💼 Professional & Business
 
 **Purpose**: Career development, business communication, and professional growth.
 
@@ -36,42 +36,42 @@ This repository contains 101 AI agent skills organized into the following catego
 - `workshop-presentation-design` - Workshop and presentation creation
 - `slack-gif-creator` - Create GIFs for Slack communication
 
-## 💻 Development (26 skills)
+## 💻 Development
 
-### Code Quality (3 skills)
+### Code Quality
 - `code-refactoring-patterns` - Systematic code refactoring
 - `coding-standards-enforcer` - Automated code quality enforcement
 - `verification-loop` - Comprehensive QA verification workflow
 
-### Workflows (4 skills)
+### Workflows
 - `continuous-learning-agent` - Agent self-improvement patterns
 - `feature-workflow-orchestrator` - End-to-end feature delivery
 - `iterative-code-exploration` - Progressive context retrieval for unfamiliar codebases
 - `tdd-workflow` - Test-driven development process
 
-### Backend (4 skills)
+### Backend
 - `api-design-patterns` - RESTful API design patterns
 - `backend-implementation-patterns` - Production API implementation
 - `nextjs-fullstack-patterns` - Next.js fullstack development
 - `postgres-advanced-patterns` - Advanced PostgreSQL optimization
 
-### Frontend (3 skills)
+### Frontend
 - `accessibility-patterns` - Web accessibility (WCAG/ARIA)
 - `frontend-design-systems` - Component design systems
 - `responsive-design-patterns` - Mobile-first responsive design
 
-### Testing (2 skills)
+### Testing
 - `testing-patterns` - Test design patterns
 - `webapp-testing` - Web application testing
 
-### Infrastructure (5 skills)
+### Infrastructure
 - `deployment-cicd` - CI/CD and deployment pipelines
 - `dotfile-systems-architect` - Dotfile configuration management
 - `gcp-resource-optimizer` - Google Cloud Platform optimization
 - `mobile-platform-architect` - Mobile platform architecture
 - `rust-systems-design` - Rust systems programming
 
-### Tools (4 skills)
+### Tools
 - `artifacts-builder` - Build artifact systems
 - `mcp-builder` - Model Context Protocol builder
 - `mcp-server-orchestrator` - MCP server management
@@ -80,7 +80,7 @@ This repository contains 101 AI agent skills organized into the following catego
 ### Bundles (1 skill)
 - `fullstack-starter-pack` - Curated bundle of essential fullstack development skills
 
-## 📊 Data & Analysis (6 skills)
+## 📊 Data & Analysis
 
 **Purpose**: Data analysis, visualization, SQL optimization, and ML workflows.
 
@@ -91,7 +91,7 @@ This repository contains 101 AI agent skills organized into the following catego
 - `ml-experiment-tracker` - Machine learning experiment tracking
 - `time-series-analyst` - Time series analysis and forecasting
 
-## 🔒 Security & Compliance (6 skills)
+## 🔒 Security & Compliance
 
 **Purpose**: Security implementation, threat modeling, and compliance.
 
@@ -102,7 +102,7 @@ This repository contains 101 AI agent skills organized into the following catego
 - `security-implementation-guide` - Security best practices
 - `security-threat-modeler` - Threat modeling and analysis
 
-## 📚 Documentation (4 skills)
+## 📚 Documentation
 
 **Purpose**: Technical writing, documentation, and content management.
 
@@ -110,16 +110,18 @@ This repository contains 101 AI agent skills organized into the following catego
 - `github-repo-curator` - Repository maintenance
 - `github-repository-standards` - Repository best practices
 
-## 🎓 Education (4 skills)
+## 🎓 Education
 
 **Purpose**: Teaching, learning, and educational content creation.
 
+- [`d2l-discussion-responder`](../skills/education/d2l-discussion-responder/SKILL.md) - Verified instructor replies for D2L/Brightspace discussions
 - `enc1101-curriculum-designer` - English composition curriculum
 - `evaluation-to-growth` - Assessment and feedback systems
 - `feedback-pedagogy` - Pedagogical feedback techniques
+- [`recommendation-letter`](../skills/education/recommendation-letter/SKILL.md) - Evidence-based reference letters with optional PDF rendering
 - `socratic-tutor` - Socratic teaching method
 
-## 🧠 Knowledge Management (6 skills)
+## 🧠 Knowledge Management
 
 **Purpose**: Personal knowledge systems, information architecture, and research synthesis.
 
@@ -130,7 +132,7 @@ This repository contains 101 AI agent skills organized into the following catego
 - `recursive-systems-architect` - Design self-referential systems
 - `research-synthesis-workflow` - Research literature synthesis
 
-## 📋 Project Management (4 skills)
+## 📋 Project Management
 
 **Purpose**: Project planning, organization, and delivery.
 
@@ -139,7 +141,7 @@ This repository contains 101 AI agent skills organized into the following catego
 - `project-alchemy-orchestrator` - Complex project orchestration
 - `project-orchestration` - Project workflow management
 
-## 🎯 Specialized & Domain-Specific (6 skills)
+## 🎯 Specialized & Domain-Specific
 
 **Purpose**: Niche domains and specialized use cases.
 
@@ -150,11 +152,11 @@ This repository contains 101 AI agent skills organized into the following catego
 - `defi-trading-systems` - DeFi trading strategy development
 - `location-ar-experience` - Location-based AR experiences
 
-## 🔌 Integrations (9 skills)
+## 🔌 Integrations
 
 **Purpose**: Third-party integrations and API patterns.
 
-### SpecStory Integration (6 skills)
+### SpecStory Integration
 Tools for working with SpecStory AI coding session histories:
 - `specstory-guard` - Pre-commit secret scanning
 - `specstory-link-trail` - URL tracking in sessions
@@ -163,12 +165,12 @@ Tools for working with SpecStory AI coding session histories:
 - `specstory-session-summary` - Session summaries
 - `specstory-yak` - Yak shaving analysis
 
-### API & Protocol Patterns (3 skills)
+### API & Protocol Patterns
 - `mcp-integration-patterns` - MCP server integration patterns
 - `oauth-flow-architect` - OAuth authentication flows
 - `webhook-integration-patterns` - Webhook design and handling
 
-## 🛠️ Utilities & Tools (6 skills)
+## 🛠️ Utilities & Tools
 
 **Purpose**: Skill development, agent orchestration, and repository maintenance.
 
@@ -218,6 +220,6 @@ Tools for working with SpecStory AI coding session histories:
 
 ---
 
-**Total**: 101 skills across 12 major categories
+**Complete catalog**: [generated skill registry](../distributions/skills-registry.json).
 
 For detailed information about any skill, see its `SKILL.md` file in the skill directory.

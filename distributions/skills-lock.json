@@ -152,6 +152,11 @@
       "sha256": "712c8c1438cf2031a28435c378fa00d8f7891f6c23320fca06361d2c439dc631"
     },
     {
+      "name": "d2l-discussion-responder",
+      "path": "skills/education/d2l-discussion-responder",
+      "sha256": "c77c6046ea26976d473cac7ba425b5b836a80c39bc00d81ff9b76d1d9ea6f90c"
+    },
+    {
       "name": "data-backup-patterns",
       "path": "skills/development/data-backup-patterns",
       "sha256": "95a3af003ab02233ba39360e6783f20afc6fec03947dcc7820d3ca1bb8e6b0ef"
@@ -587,6 +592,11 @@
       "sha256": "23b266ce2596c03afa7de36fd0a244683a5f4fd6fc224adafe581aaaa981d877"
     },
     {
+      "name": "recommendation-letter",
+      "path": "skills/education/recommendation-letter",
+      "sha256": "7cd7470535cbd710095453c6cf21e6205616ef32ef4a7a12c4b415bed3cd9c3d"
+    },
+    {
       "name": "recursive-boil-down",
       "path": "skills/knowledge/recursive-boil-down",
       "sha256": "34d7999a093e2330f29ea727e0101688c5e553519635aaeb291044eb4aaa9775"
@@ -724,7 +734,7 @@
     {
       "name": "specstory-session-summary",
       "path": "skills/integrations/specstory-session-summary",
-      "sha256": "a5f608071a0f8e0a6f808f55e213fa1b08af19e11bfa6a0a5fe8e81300cb348e"
+      "sha256": "b5a2e9906bde838dbb491482abb7e23ca3c4ed4cc8339016da22c425f1e5f6e9"
     },
     {
       "name": "specstory-yak",
