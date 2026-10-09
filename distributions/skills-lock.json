@@ -154,7 +154,7 @@
     {
       "name": "d2l-discussion-responder",
       "path": "skills/education/d2l-discussion-responder",
-      "sha256": "b6f2f073d2a9a97020633d2bd3948000649b13a22a407a2e569787447542b56e"
+      "sha256": "c77c6046ea26976d473cac7ba425b5b836a80c39bc00d81ff9b76d1d9ea6f90c"
     },
     {
       "name": "data-backup-patterns",
@@ -594,7 +594,7 @@
     {
       "name": "recommendation-letter",
       "path": "skills/education/recommendation-letter",
-      "sha256": "fea3172d5568e7bef6b70cf0a5bcca9becabba0e0900068835c94ce125a859c6"
+      "sha256": "7cd7470535cbd710095453c6cf21e6205616ef32ef4a7a12c4b415bed3cd9c3d"
     },
     {
       "name": "recursive-boil-down",

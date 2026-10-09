@@ -2,6 +2,7 @@
 name: d2l-discussion-responder
 description: Review D2L/Brightspace discussion threads as an instructor, identify unanswered questions, verify course facts, and draft concise replies in the instructor's voice. Use when asked to respond to student discussions or catch up on an LMS forum; post only within the user's explicit authorization and verify each submitted reply.
 license: MIT
+side_effects: [network-access]
 governance_phases: [shape, build, prove]
 organ_affinity: [organ-vi]
 triggers: [user-asks-to-answer-student-discussions, user-asks-about-d2l, user-asks-about-brightspace, context:education]

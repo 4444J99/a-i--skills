@@ -2,6 +2,7 @@
 name: recommendation-letter
 description: Draft, revise, or polish an evidence-based letter of recommendation for a scholarship, employment, or graduate study. Produce useful editable Markdown from facts supplied by the recommender, with optional PDF output when requested and a renderer is available. Use when asked for a recommendation, reference letter, or revision of an existing letter; establish the relationship, use concrete evidence, and preserve honest limits without inventing facts.
 license: MIT
+side_effects: [creates-files]
 governance_phases: [shape, build]
 organ_affinity: [organ-vi]
 triggers: [user-asks-to-write-recommendation-letter, user-asks-for-reference-letter, user-asks-to-polish-a-recommendation]

@@ -1464,7 +1464,9 @@
       "tags": [],
       "inputs": [],
       "outputs": [],
-      "side_effects": [],
+      "side_effects": [
+        "network-access"
+      ],
       "triggers": [
         "user-asks-to-answer-student-discussions",
         "user-asks-about-d2l",
@@ -5519,7 +5521,9 @@
       "tags": [],
       "inputs": [],
       "outputs": [],
-      "side_effects": [],
+      "side_effects": [
+        "creates-files"
+      ],
       "triggers": [
         "user-asks-to-write-recommendation-letter",
         "user-asks-for-reference-letter",
