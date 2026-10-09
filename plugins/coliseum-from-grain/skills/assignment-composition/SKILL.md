@@ -160,5 +160,5 @@ The most common failure of this phase is **assuming the recipient shares your co
 
 ## Reference material
 
-- `references/handoff-envelope-spec.md` — full envelope spec with examples
-- `references/assignment-anatomy.md` — anatomy of the primitive being composed
+- [handoff-envelope-spec.md](../../references/handoff-envelope-spec.md) — full envelope spec with examples
+- [assignment-anatomy.md](../../references/assignment-anatomy.md) — anatomy of the primitive being composed

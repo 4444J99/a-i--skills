@@ -2,7 +2,7 @@
 """MCP server for skill discovery and management.
 
 Provides tools for searching, browsing, and planning with skills.
-Loads from skills-registry.json when available, falls back to scanning SKILL.md files.
+Loads only from a verified installed release; custom skill overrides remain opt-in.
 
 Requires: pip install mcp
 """
@@ -13,7 +13,6 @@ import os
 import re
 import sys
 from pathlib import Path
-from typing import Any
 
 try:
     from mcp.server.fastmcp import FastMCP
@@ -25,11 +24,9 @@ except ImportError:
 # Ensure scripts/ is importable
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from skill_lib import extract_frontmatter, parse_list_field
+from skills_install import MANIFEST, active_release, default_prefix, validate_release
 
 ROOT = Path(__file__).resolve().parents[1]
-SKILLS_DIR = ROOT / "skills"
-BUILD_DIR = ROOT / "distributions"
-REGISTRY_PATH = BUILD_DIR / "skills-registry.json"
 
 mcp = FastMCP("ai-skills")
 
@@ -38,81 +35,35 @@ mcp = FastMCP("ai-skills")
 # ---------------------------------------------------------------------------
 
 _skills_cache: list[dict] | None = None
-_cache_mtime: float = 0.0
-
-
-def _scan_skills() -> list[dict]:
-    """Scan SKILL.md files to build skill list (fallback when no registry)."""
-    skills: list[dict] = []
-    for base_dir, collection in [(SKILLS_DIR, "example")]:
-        for skill_md in sorted(base_dir.rglob("SKILL.md")):
-            skill_dir = skill_md.parent
-            if skill_dir == base_dir:
-                continue
-            try:
-                text = skill_md.read_text(encoding="utf-8")
-            except OSError:
-                continue
-            fm = extract_frontmatter(text)
-            name = fm.get("name")
-            if not name or name != skill_dir.name:
-                continue
-            # Derive category
-            try:
-                rel = skill_dir.relative_to(base_dir)
-                category = rel.parts[0] if len(rel.parts) >= 2 else "uncategorized"
-            except ValueError:
-                category = "uncategorized"
-
-            skills.append({
-                "name": name,
-                "description": fm.get("description", ""),
-                "category": category,
-                "collection": collection,
-                "path": str(skill_dir.relative_to(ROOT)),
-                "tags": parse_list_field(fm.get("tags", "")),
-                "triggers": parse_list_field(fm.get("triggers", "")),
-                "complements": parse_list_field(fm.get("complements", "")),
-                "includes": parse_list_field(fm.get("includes", "")),
-                "inputs": parse_list_field(fm.get("inputs", "")),
-                "outputs": parse_list_field(fm.get("outputs", "")),
-                "side_effects": parse_list_field(fm.get("side_effects", "")),
-                "tier": fm.get("tier"),
-                "complexity": fm.get("complexity"),
-                "source": "repo",
-            })
-    return skills
+_cache_key: tuple | None = None
 
 
 def _load_skills() -> list[dict]:
-    """Load skills from registry JSON or by scanning. Supports custom directory."""
-    global _skills_cache, _cache_mtime
+    """Read one immutable release; a moved current pointer invalidates the cache."""
+    global _skills_cache, _cache_key
 
-    # Invalidate cache if registry file has changed
-    if _skills_cache is not None:
-        try:
-            current_mtime = REGISTRY_PATH.stat().st_mtime
-        except OSError:
-            current_mtime = 0.0
-        if current_mtime != _cache_mtime:
-            _skills_cache = None
-
-    if _skills_cache is not None:
+    prefix = default_prefix()
+    if os.environ.get("DOMUS_SKILLS_HOME") or (prefix / "current").is_symlink():
+        release = active_release(prefix)
+    elif (ROOT / MANIFEST).is_file():
+        # A prebuilt release can run without the original checkout or an XDG install.
+        release = ROOT
+    else:
+        release = active_release(prefix)  # Clear install-required error; no stale fallback.
+    registry_path = release / "distributions/skills-registry.json"
+    registry_stat = registry_path.stat()
+    manifest_stat = (release / MANIFEST).stat()
+    key = (str(release), registry_stat.st_mtime_ns, registry_stat.st_size,
+           manifest_stat.st_mtime_ns, manifest_stat.st_size)
+    if _skills_cache is not None and key == _cache_key:
         return _skills_cache
 
-    skills: list[dict] = []
-
-    # Load from registry if available
-    if REGISTRY_PATH.exists():
-        try:
-            data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
-            skills = data.get("skills", [])
-            for s in skills:
-                s["source"] = "repo"
-        except (json.JSONDecodeError, OSError):
-            skills = _scan_skills()
-    else:
-        skills = _scan_skills()
+    validate_release(release, semantic=False)
+    data = json.loads(registry_path.read_text(encoding="utf-8"))
+    skills = data["skills"]
+    for skill in skills:
+        skill["source"] = "repo"
+        skill["path"] = str(release / skill["path"])
 
     # Load custom skills directory (Oh My Zsh pattern)
     custom_dir = os.environ.get("SKILLS_CUSTOM_DIR")
@@ -156,11 +107,7 @@ def _load_skills() -> list[dict]:
                     skills = [s for s in skills if s["name"] != name]
                 skills.append(custom_skill)
 
-    # Record mtime for cache invalidation
-    try:
-        _cache_mtime = REGISTRY_PATH.stat().st_mtime
-    except OSError:
-        _cache_mtime = 0.0
+    _cache_key = key
 
     _skills_cache = skills
     return skills

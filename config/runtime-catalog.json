@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "repository": "4444J99/a-i--skills",
+  "marketplace": {
+    "name": "a-i-skills",
+    "description": "Anthony Padavano's agent skill catalog (4444J99/a-i--skills): original skills plus clearly licensed third-party skills, with provenance and per-skill license declarations."
+  },
+  "gemini": {
+    "label": "Example Skills",
+    "context_file": "GEMINI.md"
+  },
+  "purpose_collections": {
+    "backend-development": [
+      "api-design-patterns",
+      "backend-implementation-patterns",
+      "nextjs-fullstack-patterns",
+      "postgres-advanced-patterns"
+    ],
+    "code-quality": [
+      "code-refactoring-patterns",
+      "coding-standards-enforcer",
+      "testing-patterns",
+      "verification-loop",
+      "webapp-testing"
+    ],
+    "frontend-development": [
+      "accessibility-patterns",
+      "canvas-design",
+      "frontend-design-systems",
+      "responsive-design-patterns",
+      "three-js-interactive-builder"
+    ],
+    "security": [
+      "gdpr-compliance-check",
+      "incident-response-commander",
+      "security-implementation-guide",
+      "security-threat-modeler"
+    ],
+    "testing": [
+      "tdd-workflow",
+      "testing-patterns",
+      "verification-loop",
+      "webapp-testing"
+    ],
+    "workflows": [
+      "continuous-learning-agent",
+      "deployment-cicd",
+      "feature-workflow-orchestrator",
+      "tdd-workflow",
+      "verification-loop"
+    ]
+  }
+}

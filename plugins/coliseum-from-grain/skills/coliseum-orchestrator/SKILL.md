@@ -121,9 +121,9 @@ coliseum-runs/<grain-slug>-YYYY-MM-DD/
 
 For deeper specification of each piece:
 
-- `references/assignment-anatomy.md` — full anatomy of the assignment primitive
-- `references/why-not-task-series-stream.md` — what distinguishes assignment from neighboring units
-- `references/parallel-dimensions.md` — how to read multi-axis structure in a grain
-- `references/handoff-envelope-spec.md` — the chunk-self-containment standard
+- [assignment-anatomy.md](../../references/assignment-anatomy.md) — full anatomy of the assignment primitive
+- [why-not-task-series-stream.md](../../references/why-not-task-series-stream.md) — what distinguishes assignment from neighboring units
+- [parallel-dimensions.md](../../references/parallel-dimensions.md) — how to read multi-axis structure in a grain
+- [handoff-envelope-spec.md](../../references/handoff-envelope-spec.md) — the chunk-self-containment standard
 
 Always read these when uncertain about envelope sufficiency or dimensional independence.

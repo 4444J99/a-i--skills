@@ -1,5 +1,7 @@
 contract-risk-analyzer
 gdpr-compliance-check
 incident-response-commander
+security-essentials-pack
 security-implementation-guide
 security-threat-modeler
+turnstile-spin

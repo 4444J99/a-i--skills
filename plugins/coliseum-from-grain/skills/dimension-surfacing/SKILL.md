@@ -116,5 +116,5 @@ The most common failure of this phase is **dimension-as-task-breakdown** — spl
 
 ## Reference material
 
-- `references/parallel-dimensions.md` — multi-axis reading of prompts
-- `references/assignment-anatomy.md` — anatomy of what each dimension will become
+- [parallel-dimensions.md](../../references/parallel-dimensions.md) — multi-axis reading of prompts
+- [assignment-anatomy.md](../../references/assignment-anatomy.md) — anatomy of what each dimension will become
