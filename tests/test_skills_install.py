@@ -191,6 +191,60 @@ def test_installer_preserves_unmanaged_current_directory(source, tmp_path):
     assert (current / "personal.txt").read_text() == "Preserve this file"
 
 
+@pytest.mark.parametrize("kind", ["symlink", "file"])
+def test_installer_refuses_unmanaged_releases_root(source, tmp_path, kind):
+    prefix = tmp_path / "installation"
+    prefix.mkdir()
+    releases = prefix / "releases"
+    external = tmp_path / "external"
+    external.mkdir()
+    personal = external / "personal.txt"
+    personal.write_text("Keep this directory outside installation management.\n")
+    if kind == "symlink":
+        releases.symlink_to(external, target_is_directory=True)
+    else:
+        releases.write_text("An unmanaged file must be preserved.\n")
+
+    with pytest.raises(installer.InstallError, match="releases"):
+        installer.install_release(prefix, source=source)
+
+    assert sorted(path.name for path in external.iterdir()) == ["personal.txt"]
+    assert personal.read_text() == "Keep this directory outside installation management.\n"
+    assert not (prefix / "current").exists()
+    assert not (prefix / "previous").exists()
+    if kind == "symlink":
+        assert releases.is_symlink() and releases.resolve() == external
+    else:
+        assert releases.read_text() == "An unmanaged file must be preserved.\n"
+
+
+@pytest.mark.parametrize("kind", ["symlink", "dangling-symlink", "file"])
+def test_installer_preserves_unmanaged_release_destination(source, tmp_path, kind):
+    payload = tmp_path / "payload"
+    manifest = installer.build_release(source, payload)
+    prefix = tmp_path / "installation"
+    releases = prefix / "releases"
+    releases.mkdir(parents=True)
+    destination = releases / manifest["build_id"]
+    target = payload if kind == "symlink" else tmp_path / "absent"
+    if kind == "file":
+        destination.write_text("Preserve the existing destination.\n")
+    else:
+        destination.symlink_to(target, target_is_directory=True)
+    before_modes = (payload.stat().st_mode, (payload / "LICENSE").stat().st_mode)
+
+    with pytest.raises(installer.InstallError, match="release"):
+        installer.install_release(prefix, release=payload)
+
+    assert (payload.stat().st_mode, (payload / "LICENSE").stat().st_mode) == before_modes
+    assert not (prefix / "current").exists()
+    assert not (prefix / "previous").exists()
+    if kind == "file":
+        assert destination.read_text() == "Preserve the existing destination.\n"
+    else:
+        assert destination.is_symlink() and destination.readlink() == target
+
+
 @pytest.mark.parametrize(
     "damage", ["bundle", "lock", "descriptor", "executable", "unmanifested-cache"]
 )
@@ -254,6 +308,38 @@ def test_rollback_is_guarded_and_idempotent_install_preserves_history(source, tm
     )
 
 
+@pytest.mark.parametrize("failed_pointer", ["current", "previous"])
+def test_rollback_pointer_error_preserves_both_pointers(
+    source, tmp_path, monkeypatch, failed_pointer
+):
+    prefix = tmp_path / "installation"
+    installer.install_release(prefix, source=source)
+    first = installer.active_release(prefix)
+    _new_skill(source)
+    installer.install_release(prefix, source=source)
+    second = installer.active_release(prefix)
+    original = installer._replace_pointer
+    failed = False
+
+    def fail_once(prefix, name, target):
+        nonlocal failed
+        if name == failed_pointer and not failed:
+            failed = True
+            raise OSError("simulated rollback pointer failure")
+        return original(prefix, name, target)
+
+    monkeypatch.setattr(installer, "_replace_pointer", fail_once)
+    with pytest.raises(OSError, match="simulated rollback"):
+        installer.rollback(prefix, second)
+
+    assert installer.active_release(prefix) == second
+    assert (prefix / "previous").resolve() == first
+    # A failed rollback remains retryable with the same expected-current guard.
+    installer.rollback(prefix, second)
+    assert installer.active_release(prefix) == first
+    assert (prefix / "previous").resolve() == second
+
+
 def test_activation_error_preserves_current_and_previous(source, tmp_path, monkeypatch):
     prefix = tmp_path / "installation"
     installer.install_release(prefix, source=source)
@@ -313,6 +399,20 @@ def test_build_refuses_lowercase_entrypoints_and_source_symlinks(source, tmp_pat
     entry.with_name("external-file").symlink_to(tmp_path / "outside")
     with pytest.raises(installer.InstallError, match="Unsupported link"):
         installer.build_release(source, tmp_path / "symlink")
+
+
+def test_build_refuses_symlinked_catalog_root(source, tmp_path):
+    external = tmp_path / "external-skills"
+    (source / "skills").rename(external)
+    (source / "skills").symlink_to(external, target_is_directory=True)
+    output = tmp_path / "release"
+
+    with pytest.raises(installer.InstallError, match="canonical"):
+        installer.build_release(source, output)
+
+    assert not output.exists()
+    assert (source / "skills").is_symlink()
+    assert (external / "education/recommendation-letter/SKILL.md").is_file()
 
 
 def test_pack_refuses_output_inside_its_input_release(source, tmp_path):

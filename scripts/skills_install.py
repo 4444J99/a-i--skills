@@ -193,6 +193,10 @@ def build_release(source: Path, output: Path) -> dict:
     for canonical in (
         "skills", "plugins", "scripts", "config", ".claude-plugin", "agents", "commands"
     ):
+        if (source / canonical).is_symlink():
+            raise InstallError(
+                f"Unsupported canonical source directory link: {source / canonical}"
+            )
         if output.resolve().is_relative_to(source / canonical):
             raise InstallError(
                 "Build output must be outside canonical source directories"
@@ -266,14 +270,27 @@ def default_prefix() -> Path:
     )
 
 
+def _check_release_directory(path: Path) -> None:
+    """An existing managed directory must never alias or replace another path."""
+    try:
+        mode = path.lstat().st_mode
+    except FileNotFoundError:
+        return
+    if not stat.S_ISDIR(mode):
+        raise InstallError(f"Refusing an unmanaged release directory: {path}")
+
+
 def _pointer(prefix: Path, name: str) -> Path | None:
+    releases = prefix / "releases"
+    _check_release_directory(releases)
     path = prefix / name
     if not path.is_symlink():
         if path.exists():
             raise InstallError(f"Refusing to replace an unmanaged path: {path}")
         return None
+    _check_release_directory(path.parent / path.readlink())
     target = path.resolve(strict=True)
-    if target.parent != (prefix / "releases").resolve():
+    if target.parent != releases:
         raise InstallError(
             f"Managed {name} points outside this installation's releases"
         )
@@ -349,6 +366,7 @@ def install_release(
                     _make_writable(candidate)
                     manifest = validate_release(candidate)
                 destination = releases / manifest["build_id"]
+                _check_release_directory(destination)
                 if destination.exists():
                     if validate_release(destination) != manifest:
                         raise InstallError(
@@ -387,8 +405,13 @@ def rollback(prefix: Path, expected_current: Path) -> dict:
         previous = _pointer(prefix, "previous")
         if previous:
             validate_release(previous)
-        _replace_pointer(prefix, "current", previous)
-        _replace_pointer(prefix, "previous", current if previous else None)
+        try:
+            _replace_pointer(prefix, "previous", current if previous else None)
+            # Activate last, so a failed pointer write can retain the old state.
+            _replace_pointer(prefix, "current", previous)
+        except BaseException:
+            _replace_pointer(prefix, "previous", previous)
+            raise
         return {
             "release": str(previous) if previous else None,
             "rolled_back": str(current),

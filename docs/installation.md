@@ -102,6 +102,8 @@ four catalog bundles, registry, lockfile, and Gemini descriptors, and validates
 their exact membership, contents, metadata, and executable bits. Missing or
 failed generators fail the build. A lowercase entrypoint in admitted source is
 an error; it cannot silently disappear from the catalog.
+Canonical input directories must be real directories. A symlink at an admitted
+input root is rejected before the builder creates any staging parent.
 
 A complete file manifest records the release's source commit when available,
 its canonical-input digest, version, definition counts, every payload file's
@@ -117,6 +119,11 @@ not garbage-collect them. A failed generation or validation leaves both
 installation pointers unchanged. Disk use therefore grows with distinct
 retained releases; remove old releases only after confirming no consumer needs
 them.
+
+The `releases` directory and each stored release must also be real directories.
+To relocate an installation, select its location with `--prefix`; links inside
+the managed release store are refused so release identity and rollback history
+remain consistent.
 
 An explicit rollback requires the release you intend to undo:
 
