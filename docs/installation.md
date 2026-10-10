@@ -73,6 +73,19 @@ The optional MCP server still requires the separate `mcp` package. Run
 active release, refreshes its registry cache when `current` changes, and reports
 installed absolute paths. `SKILLS_CUSTOM_DIR` remains an explicit local override.
 
+## External skill managers
+
+External directories and installers can discover this catalog. Their install
+result can differ from the complete verified release: a generic installer may
+copy an individual plugin skill without its enclosing package's shared files.
+The October 10 [marketplace evaluation](marketplace-evaluation.md) records an
+isolated probe of Vercel discovery and installation APIs in which a standalone
+skill kept its supporting files, while all four of a plugin skill's links to
+shared references failed to resolve despite a successful installation result.
+Keep complete plugins registered through the verified local marketplace.
+Verify a selected standalone skill's dependencies before
+using another manager, and keep that manager outside the Domus-managed roots.
+
 ## Update and recover
 
 Update a clean source checkout, then install again:
