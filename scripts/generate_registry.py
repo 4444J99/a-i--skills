@@ -3,17 +3,15 @@
 from __future__ import annotations
 
 import json
-import re
 from pathlib import Path
 
-from skill_lib import extract_frontmatter, find_skill_dirs, parse_list_field
+from skill_lib import extract_frontmatter_strict, parse_list_field, skill_collections
+from validate_skills import _validate_skill
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILLS_DIR = ROOT / "skills"
 BUILD_DIR = ROOT / "distributions"
 OUTPUT_PATH = BUILD_DIR / "skills-registry.json"
-
-NAME_RE = re.compile(r"^[a-z0-9-]+$")
 
 # Fields that are stored as lists in the registry
 LIST_FIELDS = (
@@ -35,24 +33,24 @@ def _category_from_path(skill_dir: Path, base_dir: Path) -> str:
     return "uncategorized"
 
 
-def _build_skill_entry(skill_dir: Path, base_dir: Path, collection: str) -> dict | None:
+def _build_skill_entry(
+    skill_dir: Path, base_dir: Path, collection: str, *, root: Path | None = None,
+) -> dict:
     skill_file = skill_dir / "SKILL.md"
-    try:
-        text = skill_file.read_text(encoding="utf-8")
-    except OSError:
-        return None
-
-    fm = extract_frontmatter(text)
-    name = fm.get("name")
-    if not name or name != skill_dir.name:
-        return None
+    errors = _validate_skill(skill_dir, check_links=True)
+    if errors:
+        raise ValueError("\n".join(errors))
+    text = skill_file.read_text(encoding="utf-8")
+    fm = extract_frontmatter_strict(text)
+    name = fm["name"]
+    source_root = ROOT if root is None else root
 
     entry: dict = {
         "name": name,
         "description": fm.get("description", ""),
         "category": _category_from_path(skill_dir, base_dir),
         "collection": collection,
-        "path": str(skill_dir.relative_to(ROOT)),
+        "path": skill_dir.relative_to(source_root).as_posix(),
         "license": fm.get("license"),
         "complexity": fm.get("complexity"),
         "time_to_learn": fm.get("time_to_learn"),
@@ -60,6 +58,8 @@ def _build_skill_entry(skill_dir: Path, base_dir: Path, collection: str) -> dict
         "governance_norm_group": fm.get("governance_norm_group"),
         "governance_auto_activate": fm.get("governance_auto_activate") == "true",
     }
+    if collection == "plugins":
+        entry["plugin"] = skill_dir.relative_to(source_root / "plugins").parts[0]
 
     # Parse list fields
     for field in LIST_FIELDS:
@@ -98,29 +98,48 @@ def _build_bundles(skills: list[dict]) -> list[dict]:
     return bundles
 
 
-def main() -> int:
-    example_dirs = find_skill_dirs(SKILLS_DIR)
-
+def build_registry(root: Path | None = None) -> dict:
+    """Return the complete semantic registry, rejecting omitted/invalid sources."""
+    root = ROOT if root is None else root
+    collections = skill_collections(root)
     skills: list[dict] = []
-    for d in example_dirs:
-        entry = _build_skill_entry(d, SKILLS_DIR, "example")
-        if entry:
-            skills.append(entry)
+    for collection, directories in collections.items():
+        base = root / ("skills" if collection == "example" else "plugins")
+        for directory in directories:
+            skills.append(_build_skill_entry(directory, base, collection, root=root))
+    if not skills:
+        raise ValueError("No canonical skills found")
+    skills.sort(key=lambda item: item["name"])
+    names = {entry["name"] for entry in skills}
+    for entry in skills:
+        for field in ("includes", "complements"):
+            missing = set(entry[field]) - names
+            if missing:
+                raise ValueError(f"{entry['name']}: {field} references unknown skills: {sorted(missing)}")
 
-    registry = {
-        "version": "1.2",
-        "repository": "4444J99/a-i--skills",
+    config = json.loads((root / "config" / "runtime-catalog.json").read_text(encoding="utf-8"))
+    repository = config.get("repository")
+    if not isinstance(repository, str) or not repository:
+        raise ValueError("runtime-catalog.json must declare repository")
+
+    return {
+        "version": "2.0",
+        "repository": repository,
         "skills": skills,
         "categories": _build_categories(skills),
         "bundles": _build_bundles(skills),
     }
 
+
+def main() -> int:
+    registry = build_registry()
     BUILD_DIR.mkdir(parents=True, exist_ok=True)
     OUTPUT_PATH.write_text(
         json.dumps(registry, indent=2, sort_keys=False) + "\n",
         encoding="utf-8",
     )
-    print(f"Registry generated: {len(skills)} skills -> {OUTPUT_PATH}")
+    OUTPUT_PATH.chmod(0o644)
+    print(f"Registry generated: {len(registry['skills'])} skills -> {OUTPUT_PATH}")
     return 0
 
 

@@ -5,11 +5,61 @@ from pathlib import Path
 
 
 def find_skill_dirs(base_dir: Path) -> list[Path]:
-    """Return sorted list of directories containing a SKILL.md file."""
+    """Discover admitted entrypoints without silently dropping case mistakes.
+
+    Canonical source must be portable, self-contained files. Reject symlinks and
+    noncanonical spellings such as ``skill.md`` before they can disappear from
+    a generated catalog.
+    """
+    if base_dir.is_symlink():
+        raise ValueError(f"Canonical source must not be a symlink: {base_dir}")
+    for path in base_dir.rglob("*"):
+        if path.is_symlink():
+            raise ValueError(f"Canonical source contains a symlink: {path}")
+        if path.is_file() and path.name.casefold() == "skill.md" and path.name != "SKILL.md":
+            raise ValueError(f"Noncanonical skill entrypoint (rename to SKILL.md): {path}")
     return sorted(
         [p.parent for p in base_dir.rglob("SKILL.md") if p.parent != base_dir],
-        key=lambda p: p.name,
+        key=lambda p: (p.name, str(p)),
     )
+
+
+def find_plugin_dirs(plugins_dir: Path) -> list[Path]:
+    """Return every plugin, requiring its source descriptor to be present."""
+    if not plugins_dir.exists():
+        return []
+    result = []
+    for path in sorted(plugins_dir.iterdir()):
+        if path.is_symlink():
+            raise ValueError(f"Canonical plugin must not be a symlink: {path}")
+        if not path.is_dir():
+            continue
+        manifest = path / ".claude-plugin" / "plugin.json"
+        if not manifest.is_file() or manifest.is_symlink():
+            raise ValueError(f"Missing canonical plugin descriptor: {manifest}")
+        result.append(path)
+    return result
+
+
+def skill_collections(root: Path) -> dict[str, list[Path]]:
+    """Discover all admitted catalog and plugin skills and require unique names."""
+    if not (root / "skills").is_dir():
+        raise ValueError(f"Missing canonical skills directory: {root / 'skills'}")
+    result = {"example": find_skill_dirs(root / "skills"), "plugins": []}
+    # Discover the entire plugin tree as well, so misplaced/lowercase entrypoints
+    # cannot fall outside a manifest's default skills/ directory unnoticed.
+    all_plugin_skills = find_skill_dirs(root / "plugins")
+    for plugin in find_plugin_dirs(root / "plugins"):
+        result["plugins"].extend(find_skill_dirs(plugin / "skills"))
+    if set(all_plugin_skills) != set(result["plugins"]):
+        raise ValueError("Plugin entrypoints must live under plugins/<name>/skills/")
+    names: set[str] = set()
+    for skill in result["example"] + result["plugins"]:
+        if skill.name in names:
+            raise ValueError(f"Duplicate canonical skill name: {skill.name}")
+        names.add(skill.name)
+    result["plugins"].sort(key=lambda path: path.name)
+    return result
 
 
 def extract_frontmatter(text: str) -> dict[str, str]:
@@ -33,7 +83,7 @@ def extract_frontmatter(text: str) -> dict[str, str]:
     for raw in lines[1:end]:
         if not raw.strip() or raw.lstrip().startswith("#"):
             continue
-        if raw.startswith(" ") or raw.startswith("\t"):
+        if raw.startswith((" ", "\t")):
             if current_key:
                 data[current_key] = f"{data[current_key]}\n{raw.lstrip()}"
             continue
@@ -67,7 +117,7 @@ def extract_frontmatter_strict(text: str) -> dict[str, str]:
     for raw in lines[1:end]:
         if not raw.strip() or raw.lstrip().startswith("#"):
             continue
-        if raw.startswith(" ") or raw.startswith("\t"):
+        if raw.startswith((" ", "\t")):
             if current_key:
                 data[current_key] = f"{data[current_key]}\n{raw.lstrip()}"
             continue

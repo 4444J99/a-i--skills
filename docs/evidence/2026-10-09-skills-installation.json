@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-10-09T22:54:31.323498+00:00",
+  "status": "candidate-tested-not-merged",
+  "acceptance_issue": "https://github.com/4444J99/a-i--skills/issues/23",
+  "prepared_on_pr42_head": "69b2d6fc9142952f1ff9b924a76231052e9be40b",
+  "catalog": {
+    "catalog_definitions": 167,
+    "plugin_definitions": 11,
+    "total": 178,
+    "flat_runtime_bundles": 4,
+    "complete_plugin_packages": 2
+  },
+  "suite": {
+    "command": "python -m pytest -q --cov=scripts --cov-report=term",
+    "python": "3.12.14",
+    "passed": 56,
+    "failed": 0,
+    "elapsed_seconds": 139.0,
+    "installation_cases": 16,
+    "tooling_cases": 40
+  },
+  "acceptance": [
+    {
+      "step": 1,
+      "result": "passed",
+      "evidence": "An isolated copy of real canonical sources has no distributions/ or generated marketplace before build; source output paths remain absent after install."
+    },
+    {
+      "step": 2,
+      "result": "passed",
+      "evidence": "167 catalog definitions and 11 plugin definitions validate; all four catalog bundles match exactly; MCP registry paths resolve inside the installed release."
+    },
+    {
+      "step": 3,
+      "result": "passed",
+      "evidence": "Canonical recommendation-letter edit and temporary skill addition propagate to installed bundles and a reloaded MCP registry; previous release remains unchanged."
+    },
+    {
+      "step": 4,
+      "result": "passed",
+      "evidence": "Removing the temporary canonical skill removes its installed source, all four runtime copies, registry row, lockfile entry, and cached MCP result."
+    },
+    {
+      "step": 5,
+      "result": "passed",
+      "evidence": "A registry generator exiting 73 leaves current, previous, and installed manifest unchanged; retained release validates after the source copy is removed."
+    }
+  ],
+  "additional_checks": [
+    "Missing generator never publishes partial output",
+    "Unmanaged current path preserved",
+    "Modified bundle, missing lock/descriptor, changed executable bit, and unexpected cache file rejected",
+    "Semantic generated-output validator rejects corruption even after the manifest is resealed",
+    "Idempotent reinstall retains history; rollback rejects a stale expected release",
+    "Activation failure retains prior pointers",
+    "Deterministic archive round trip installs without source checkout",
+    "Concurrent pack calls cannot mismatch archive and checksum",
+    "Packing inside the input release is rejected before mutation",
+    "Canonical version update needs no generated descriptor"
+  ],
+  "native_runtime_checks": {
+    "provenance": {
+      "description": "Intermediate working-tree candidate used for native CLI checks; this local base is not asserted to be a published commit. The manifest and canonical-input digest identify the tested payload. Final committed tree is additionally exercised by CI.",
+      "local_base_commit": "79b39fa6845b4ff4b86b8b1f437d75e362b7a250",
+      "build_id": "a1464cea65bd7d27c6e66effc476db2fec0f30ba32431cce612689fd1e75127c",
+      "canonical_input_sha256": "ff3006ca7e24a212bf8406963c99600c6781143b6b224660c65ea5fa42883ee5"
+    },
+    "claude_code": {
+      "version": "2.1.296",
+      "marketplace_validation": "passed",
+      "marketplace_add": "passed",
+      "plugins_installed": [
+        "example-skills@a-i-skills",
+        "coliseum-from-grain@a-i-skills",
+        "pentaphase-structural-architect@a-i-skills"
+      ],
+      "catalog_skill_paths": 167,
+      "plugin_skill_paths": 11,
+      "isolated_config": true
+    },
+    "gemini_cli": {
+      "version": "0.63.0",
+      "native_link": "passed",
+      "discovered_catalog_skills": 167,
+      "registration_source": "<prefix>/current/distributions/extensions/gemini/example-skills",
+      "domus_GeminiUpdate_apply": "passed",
+      "domus_GeminiUpdate_undo": "passed",
+      "isolated_config": true
+    },
+    "model_invocation": false,
+    "cowork_application_session": false
+  },
+  "tested_implementation_sha256": {
+    "scripts/apply_governance_metadata.py": "73c3d603bb81013ca9585a39fc254caacbe476536e059e141ba1174d79198112",
+    "scripts/generate_lockfile.py": "39f1e5647046a80e95484efe2684c61fa602a94e12a9168ed193f56be05c3e5d",
+    "scripts/generate_registry.py": "5029738c00d08faa9a21469f1b4bd9d15256648398b29ad42b66e1053671bfde",
+    "scripts/mcp-skill-server.py": "1b63098d6ca6bf4f535be4d0e317550da6a1fb916872d7bf4d8e1780a01a6bb6",
+    "scripts/pr_validation_report.py": "b1dff5e54862aa782e18758fcb9ab84bd60102f4a6f36a7de9a3d55c17c3c86c",
+    "scripts/refresh_skill_collections.py": "0a51d80cb76a1db780969bcb2e7af19e5be0c3d17af99bfa94e004a36b1336cc",
+    "scripts/release.py": "273dd256aa0e4f6b506c44308484311582c63d62938d8dffcd8c23453254e21d",
+    "scripts/skill_health_check.py": "ae884de4fbe9229b524ce3ef9bbb43e564655142054c146012e72b6b5660de67",
+    "scripts/skill_lib.py": "e866b454f56a362a360b8c16502d01dd41117a3e524c83b8626705838f85e9a7",
+    "scripts/skills_install.py": "b91e3246b73514f4066e082b08e18ef8830f123df5b182800c5bcc01adfa73f3",
+    "scripts/validate_generated_dirs.py": "31b5f5ef7d2367593ef1fd7e9a2f0e665a39e77867312823d8b312c4639f404a",
+    "scripts/validate_skills.py": "bdab5b4a2adf1bea7efc3792578b67db3e46b3d1534c2220258ff174031774c9",
+    "config/runtime-catalog.json": "2d322e1aae5f77cc396e06db4ab0919a00bb7955371c3b7fb7fd989a41a56e5f",
+    "tests/test_skill_tooling.py": "927592f422ec66552bc83b49320c28019dc8c40df5abc802e940b6f4a147f20d",
+    "tests/test_skills_install.py": "ae8e621d9a58021dff2f9fadd9b2399ca1320eaa3ec262b45440bb99a85b7574",
+    ".github/workflows/skills-install.yml": "e9d5ef74cb3f4fedaba2916f55bf215fbe4af0a2f88d02c79150ef94ce56ad2f"
+  },
+  "limits": [
+    "PR #42 still needs an eligible independent approving review; main CI and Pages for its merge are not yet available.",
+    "This receipt does not promote issue #23 or claim a published semantic release.",
+    "Native CLI installation and discovery do not establish a signed-in model invocation or running Cowork application reload.",
+    "Tracked distributions and snapshots remain until coordinated acceptance and scanner/consumer replacement."
+  ]
+}

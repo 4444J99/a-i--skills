@@ -1,3 +1,10 @@
+corpus-persona-extraction
+data-ingestion-pipeline
+data-pipeline-architect
 data-storytelling-analyst
+market-gap-analysis
+ml-experiment-tracker
+prompt-atom-formalization
 sql-query-optimizer
 systemic-product-analyst
+time-series-analyst

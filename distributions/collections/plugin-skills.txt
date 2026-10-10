@@ -1,0 +1,11 @@
+plugins/coliseum-from-grain/skills/assignment-composition
+plugins/coliseum-from-grain/skills/coliseum-dispatch
+plugins/coliseum-from-grain/skills/coliseum-orchestrator
+plugins/coliseum-from-grain/skills/coliseum-reconciliation
+plugins/coliseum-from-grain/skills/dimension-surfacing
+plugins/pentaphase-structural-architect/skills/governance-evolution-protocol
+plugins/pentaphase-structural-architect/skills/landscape-discovery-audit
+plugins/pentaphase-structural-architect/skills/pentaphase-orchestrator
+plugins/pentaphase-structural-architect/skills/system-environment-configuration
+plugins/pentaphase-structural-architect/skills/systemic-ingestion-normalization
+plugins/pentaphase-structural-architect/skills/taxonomy-modeling-design

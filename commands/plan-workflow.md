@@ -15,7 +15,7 @@ Example: `/plan-workflow Build a secure REST API with tests and deployment`
 
 ## Process
 
-1. Read `distributions/skills-registry.json` to load all skill metadata
+1. Resolve and validate the installed release with `python3 scripts/skills_install.py path` (honors `DOMUS_SKILLS_HOME` or XDG defaults). Read `distributions/skills-registry.json` beneath that exact returned directory to load all skill metadata. If no installation exists, run the documented installer first. Do not read a checkout copy as a fallback.
 2. Match the goal against skill descriptions, tags, and triggers
 3. Build a dependency chain based on input/output compatibility
 4. Include complementary skills that enhance the workflow

@@ -1,4 +1,6 @@
+d2l-discussion-responder
 enc1101-curriculum-designer
 evaluation-to-growth
 feedback-pedagogy
+recommendation-letter
 socratic-tutor

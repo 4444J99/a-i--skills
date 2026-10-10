@@ -1,5 +1,5 @@
 {
-  "version": "1.2",
+  "version": "2.0",
   "repository": "4444J99/a-i--skills",
   "skills": [
     {
@@ -423,6 +423,35 @@
         "references": [
           "component-guide.md"
         ],
+        "assets": []
+      }
+    },
+    {
+      "name": "assignment-composition",
+      "description": "Wraps each surfaced dimension as a self-contained 9-section autonomous-work-assignment envelope \u2014 scope, context, success criteria, allowed tools, return format, handoff \u2014 all the recipient subagent needs to execute without coming back. Use when invoked by coliseum-orchestrator as Phase 2; when dimensions are named and the next step is to make each independently dispatchable; or when the user asks \"compose this as an assignment.\" The no-pingpong gate validates each envelope before dispatch.",
+      "category": "coliseum-from-grain",
+      "collection": "plugins",
+      "path": "plugins/coliseum-from-grain/skills/assignment-composition",
+      "license": "MIT",
+      "complexity": null,
+      "time_to_learn": null,
+      "tier": null,
+      "governance_norm_group": null,
+      "governance_auto_activate": false,
+      "plugin": "coliseum-from-grain",
+      "prerequisites": [],
+      "tags": [],
+      "inputs": [],
+      "outputs": [],
+      "side_effects": [],
+      "triggers": [],
+      "complements": [],
+      "includes": [],
+      "governance_phases": [],
+      "organ_affinity": [],
+      "resources": {
+        "scripts": [],
+        "references": [],
         "assets": []
       }
     },
@@ -984,6 +1013,93 @@
         "references": [
           "style-guide-template.md"
         ],
+        "assets": []
+      }
+    },
+    {
+      "name": "coliseum-dispatch",
+      "description": "Dispatches a composed set of assignment envelopes to domain-expert subagents in parallel, in a single message with multiple Agent tool calls. Enforces the no-pingpong gate via the pingpong-detector agent before any dispatch fires. Use when invoked by the coliseum-orchestrator as Phase 3; when envelopes are already composed and the next step is parallel execution; or when the user asks to \"fan out\" or \"dispatch in parallel.\" Produces a dispatch log capturing what was sent, when, and where returns land.",
+      "category": "coliseum-from-grain",
+      "collection": "plugins",
+      "path": "plugins/coliseum-from-grain/skills/coliseum-dispatch",
+      "license": "MIT",
+      "complexity": null,
+      "time_to_learn": null,
+      "tier": null,
+      "governance_norm_group": null,
+      "governance_auto_activate": false,
+      "plugin": "coliseum-from-grain",
+      "prerequisites": [],
+      "tags": [],
+      "inputs": [],
+      "outputs": [],
+      "side_effects": [],
+      "triggers": [],
+      "complements": [],
+      "includes": [],
+      "governance_phases": [],
+      "organ_affinity": [],
+      "resources": {
+        "scripts": [],
+        "references": [],
+        "assets": []
+      }
+    },
+    {
+      "name": "coliseum-orchestrator",
+      "description": "Threads the four-phase grain-to-coliseum transformation \u2014 given a dense prompt (the \"grain\"), autonomously surfaces parallel dimensions, composes self-contained 9-section handoff envelopes, dispatches in parallel, and reconciles returns into a composed whole under a mechanical compression gate. Use when a small-surface prompt plainly implies large scope; when the user invokes \"grain \u2192 coliseum,\" \"autonomous work assignment,\" \"no ping-pong,\" or \"chunk and hand off.\" Declines protocol when the grain is not fan-out shaped (\u22653 independent dimensions).",
+      "category": "coliseum-from-grain",
+      "collection": "plugins",
+      "path": "plugins/coliseum-from-grain/skills/coliseum-orchestrator",
+      "license": "MIT",
+      "complexity": null,
+      "time_to_learn": null,
+      "tier": null,
+      "governance_norm_group": null,
+      "governance_auto_activate": false,
+      "plugin": "coliseum-from-grain",
+      "prerequisites": [],
+      "tags": [],
+      "inputs": [],
+      "outputs": [],
+      "side_effects": [],
+      "triggers": [],
+      "complements": [],
+      "includes": [],
+      "governance_phases": [],
+      "organ_affinity": [],
+      "resources": {
+        "scripts": [],
+        "references": [],
+        "assets": []
+      }
+    },
+    {
+      "name": "coliseum-reconciliation",
+      "description": "Merges the parallel returns from a dispatched coliseum into a single composed whole \u2014 alchemy, not concatenation. Resolves tensions between returns explicitly, surfaces any BLOCKED records as named gaps, ensures no return is silently discarded. Use when invoked by the coliseum-orchestrator as Phase 4; when all (or recorded) returns from a Phase-3 dispatch are in and the next step is composition; or when the user asks to \"reconcile,\" \"compose the returns,\" or \"merge into a whole.\" Produces the final artifact \u2014 phase-4-composed-whole.md \u2014 that closes the grain-to-coliseum loop.",
+      "category": "coliseum-from-grain",
+      "collection": "plugins",
+      "path": "plugins/coliseum-from-grain/skills/coliseum-reconciliation",
+      "license": "MIT",
+      "complexity": null,
+      "time_to_learn": null,
+      "tier": null,
+      "governance_norm_group": null,
+      "governance_auto_activate": false,
+      "plugin": "coliseum-from-grain",
+      "prerequisites": [],
+      "tags": [],
+      "inputs": [],
+      "outputs": [],
+      "side_effects": [],
+      "triggers": [],
+      "complements": [],
+      "includes": [],
+      "governance_phases": [],
+      "organ_affinity": [],
+      "resources": {
+        "scripts": [],
+        "references": [],
         "assets": []
       }
     },
@@ -1809,6 +1925,35 @@
           "monitoring-setup.md",
           "pipeline-templates.md"
         ],
+        "assets": []
+      }
+    },
+    {
+      "name": "dimension-surfacing",
+      "description": "Surfaces the parallel domain dimensions implicit in a dense or minimal prompt. Use when a user prompt is small on the surface but plainly implies multiple independent domains needing different expertise; when explicitly invoked by the coliseum-orchestrator skill as Phase 1; or when the user asks \"what dimensions does this prompt encode\" or \"what axes does this break into.\" Produces a named dimension set where each dimension is independently executable and not a paraphrase of another.",
+      "category": "coliseum-from-grain",
+      "collection": "plugins",
+      "path": "plugins/coliseum-from-grain/skills/dimension-surfacing",
+      "license": "MIT",
+      "complexity": null,
+      "time_to_learn": null,
+      "tier": null,
+      "governance_norm_group": null,
+      "governance_auto_activate": false,
+      "plugin": "coliseum-from-grain",
+      "prerequisites": [],
+      "tags": [],
+      "inputs": [],
+      "outputs": [],
+      "side_effects": [],
+      "triggers": [],
+      "complements": [],
+      "includes": [],
+      "governance_phases": [],
+      "organ_affinity": [],
+      "resources": {
+        "scripts": [],
+        "references": [],
         "assets": []
       }
     },
@@ -3116,6 +3261,37 @@
       }
     },
     {
+      "name": "governance-evolution-protocol",
+      "description": "Phase 5 of the pentaphase structural-overhaul protocol. Codifies operational protocols, onboards the ecosystem of participants, programs behavior monitoring, and establishes an iteration cadence so the substrate evolves rather than calcifies. Use when the user invokes phase 5 of an overhaul, asks to \"establish governance\" or \"lock in the protocols\", or has completed ingestion and is ready to declare the substrate operational. Consumes phase-4-ingestion-report.md; produces phase-5-governance-charter.md, which closes the protocol.",
+      "category": "pentaphase-structural-architect",
+      "collection": "plugins",
+      "path": "plugins/pentaphase-structural-architect/skills/governance-evolution-protocol",
+      "license": "MIT",
+      "complexity": null,
+      "time_to_learn": null,
+      "tier": null,
+      "governance_norm_group": null,
+      "governance_auto_activate": false,
+      "plugin": "pentaphase-structural-architect",
+      "prerequisites": [],
+      "tags": [],
+      "inputs": [],
+      "outputs": [],
+      "side_effects": [],
+      "triggers": [],
+      "complements": [],
+      "includes": [],
+      "governance_phases": [],
+      "organ_affinity": [],
+      "resources": {
+        "scripts": [],
+        "references": [
+          "iteration-cadence-patterns.md"
+        ],
+        "assets": []
+      }
+    },
+    {
       "name": "grant-proposal-writer",
       "description": "Write compelling grant proposals for academic research, creative projects, and nonprofit initiatives. Covers federal (NSF, NEA, NEH), foundation, and institutional grants with attention to narrative, budget justification, and review criteria. Triggers on grant writing, funding proposals, research funding, or fellowship applications.",
       "category": "professional",
@@ -3601,6 +3777,39 @@
           "graph-algorithms.md",
           "graph-modeling.md",
           "workflow-integration.md"
+        ],
+        "assets": []
+      }
+    },
+    {
+      "name": "landscape-discovery-audit",
+      "description": "Phase 1 of the pentaphase structural-overhaul protocol. Inventories assets, maps current flow, identifies friction, and defines value metrics for any substrate. Use when the user invokes phase 1 of an overhaul, requests a baseline audit, asks to \"discover the landscape\" of a system, or wants to understand current state before redesigning. Produces phase-1-landscape-report.md.",
+      "category": "pentaphase-structural-architect",
+      "collection": "plugins",
+      "path": "plugins/pentaphase-structural-architect/skills/landscape-discovery-audit",
+      "license": "MIT",
+      "complexity": null,
+      "time_to_learn": null,
+      "tier": null,
+      "governance_norm_group": null,
+      "governance_auto_activate": false,
+      "plugin": "pentaphase-structural-architect",
+      "prerequisites": [],
+      "tags": [],
+      "inputs": [],
+      "outputs": [],
+      "side_effects": [],
+      "triggers": [],
+      "complements": [],
+      "includes": [],
+      "governance_phases": [],
+      "organ_affinity": [],
+      "resources": {
+        "scripts": [],
+        "references": [
+          "friction-patterns.md",
+          "inventory-templates.md",
+          "value-metrics-frameworks.md"
         ],
         "assets": []
       }
@@ -4597,6 +4806,35 @@
           "citation-independence.md",
           "transformation-patterns.md"
         ],
+        "assets": []
+      }
+    },
+    {
+      "name": "pentaphase-orchestrator",
+      "description": "Threads the full five-phase structural-overhaul protocol \u2014 landscape discovery, taxonomy design, environment configuration, systemic ingestion, governance evolution \u2014 for any substrate the user names. Use when the user requests a structural overhaul, system redesign, or end-to-end restructuring of a documentation system, asset registry, code monorepo, knowledge base, or operational workflow; or when they explicitly invoke the pentaphase methodology. Coordinates handoffs between phase-skills and seats validation gates between phases.",
+      "category": "pentaphase-structural-architect",
+      "collection": "plugins",
+      "path": "plugins/pentaphase-structural-architect/skills/pentaphase-orchestrator",
+      "license": "MIT",
+      "complexity": null,
+      "time_to_learn": null,
+      "tier": null,
+      "governance_norm_group": null,
+      "governance_auto_activate": false,
+      "plugin": "pentaphase-structural-architect",
+      "prerequisites": [],
+      "tags": [],
+      "inputs": [],
+      "outputs": [],
+      "side_effects": [],
+      "triggers": [],
+      "complements": [],
+      "includes": [],
+      "governance_phases": [],
+      "organ_affinity": [],
+      "resources": {
+        "scripts": [],
+        "references": [],
         "assets": []
       }
     },
@@ -6955,6 +7193,70 @@
       }
     },
     {
+      "name": "system-environment-configuration",
+      "description": "Phase 3 of the pentaphase structural-overhaul protocol. Translates the taxonomy model into objective technical criteria, evaluates candidate mechanisms or frameworks, instantiates the chosen architecture, and programs validation rules. Use when the user invokes phase 3 of an overhaul, asks to \"select a system\" or \"configure the environment\", or has a taxonomy model and is ready to choose technology. Consumes phase-2-taxonomy-model.md; produces phase-3-environment-spec.md.",
+      "category": "pentaphase-structural-architect",
+      "collection": "plugins",
+      "path": "plugins/pentaphase-structural-architect/skills/system-environment-configuration",
+      "license": "MIT",
+      "complexity": null,
+      "time_to_learn": null,
+      "tier": null,
+      "governance_norm_group": null,
+      "governance_auto_activate": false,
+      "plugin": "pentaphase-structural-architect",
+      "prerequisites": [],
+      "tags": [],
+      "inputs": [],
+      "outputs": [],
+      "side_effects": [],
+      "triggers": [],
+      "complements": [],
+      "includes": [],
+      "governance_phases": [],
+      "organ_affinity": [],
+      "resources": {
+        "scripts": [],
+        "references": [
+          "selection-criteria.md",
+          "validation-rules.md"
+        ],
+        "assets": []
+      }
+    },
+    {
+      "name": "systemic-ingestion-normalization",
+      "description": "Phase 4 of the pentaphase structural-overhaul protocol. Purges redundancies, enriches and aligns legacy entities to the new schema, executes phased ingestion into the new environment, and audits integrity. Use when the user invokes phase 4 of an overhaul, asks to \"migrate the data\" or \"ingest into the new system\", or has a configured environment ready to accept legacy entities. Consumes phase-3-environment-spec.md; produces phase-4-ingestion-report.md.",
+      "category": "pentaphase-structural-architect",
+      "collection": "plugins",
+      "path": "plugins/pentaphase-structural-architect/skills/systemic-ingestion-normalization",
+      "license": "MIT",
+      "complexity": null,
+      "time_to_learn": null,
+      "tier": null,
+      "governance_norm_group": null,
+      "governance_auto_activate": false,
+      "plugin": "pentaphase-structural-architect",
+      "prerequisites": [],
+      "tags": [],
+      "inputs": [],
+      "outputs": [],
+      "side_effects": [],
+      "triggers": [],
+      "complements": [],
+      "includes": [],
+      "governance_phases": [],
+      "organ_affinity": [],
+      "resources": {
+        "scripts": [],
+        "references": [
+          "deduplication-strategies.md",
+          "integrity-audits.md"
+        ],
+        "assets": []
+      }
+    },
+    {
       "name": "systemic-product-analyst",
       "description": "A rigorous protocol for auditing projects (\"The Thing\") and their market fit (\"The World\"). Uses parallel analysis lanes, friction mapping, and outcome testing to create actionable 30/60/90 day plans.",
       "category": "data",
@@ -6990,6 +7292,38 @@
         "references": [
           "audit-templates.md",
           "workflow-integration.md"
+        ],
+        "assets": []
+      }
+    },
+    {
+      "name": "taxonomy-modeling-design",
+      "description": "Phase 2 of the pentaphase structural-overhaul protocol. Classifies entities, standardizes attributes, establishes relationships, and designs the access framework. Use when the user invokes phase 2 of an overhaul, asks to \"design the taxonomy\" or \"model the structure\", or has completed a landscape audit and is ready to redesign. Consumes phase-1-landscape-report.md; produces phase-2-taxonomy-model.md.",
+      "category": "pentaphase-structural-architect",
+      "collection": "plugins",
+      "path": "plugins/pentaphase-structural-architect/skills/taxonomy-modeling-design",
+      "license": "MIT",
+      "complexity": null,
+      "time_to_learn": null,
+      "tier": null,
+      "governance_norm_group": null,
+      "governance_auto_activate": false,
+      "plugin": "pentaphase-structural-architect",
+      "prerequisites": [],
+      "tags": [],
+      "inputs": [],
+      "outputs": [],
+      "side_effects": [],
+      "triggers": [],
+      "complements": [],
+      "includes": [],
+      "governance_phases": [],
+      "organ_affinity": [],
+      "resources": {
+        "scripts": [],
+        "references": [
+          "access-frameworks.md",
+          "classification-strategies.md"
         ],
         "assets": []
       }
@@ -7834,6 +8168,16 @@
         "three-js-interactive-builder"
       ]
     },
+    "coliseum-from-grain": {
+      "count": 5,
+      "skills": [
+        "assignment-composition",
+        "coliseum-dispatch",
+        "coliseum-orchestrator",
+        "coliseum-reconciliation",
+        "dimension-surfacing"
+      ]
+    },
     "specialized": {
       "count": 6,
       "skills": [
@@ -7957,6 +8301,17 @@
         "project-alchemy-orchestrator",
         "project-orchestration",
         "promotion-readiness-checklist"
+      ]
+    },
+    "pentaphase-structural-architect": {
+      "count": 6,
+      "skills": [
+        "governance-evolution-protocol",
+        "landscape-discovery-audit",
+        "pentaphase-orchestrator",
+        "system-environment-configuration",
+        "systemic-ingestion-normalization",
+        "taxonomy-modeling-design"
       ]
     }
   },

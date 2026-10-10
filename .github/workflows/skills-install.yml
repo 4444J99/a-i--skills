@@ -1,0 +1,67 @@
+name: Skills installation
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-install:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+      - name: Install test dependencies
+        run: python -m pip install -r requirements-dev.txt
+      - name: Demonstrate clean installation, update, stale removal and failure recovery
+        run: python -m pytest -v
+      - name: Build and verify a complete release from canonical inputs
+        run: |
+          python3 scripts/skills_install.py build --output "$RUNNER_TEMP/skills-release"
+          python3 scripts/skills_install.py validate --release "$RUNNER_TEMP/skills-release"
+          python3 scripts/skills_install.py install --release "$RUNNER_TEMP/skills-release" --prefix "$RUNNER_TEMP/skills-home"
+          python3 scripts/skills_install.py pack --release "$RUNNER_TEMP/skills-release" --output "$RUNNER_TEMP/skills-package/ai-skills.tar.gz"
+          git diff --exit-code
+      - name: Verify release tag and canonical version agree
+        if: github.event_name == 'release'
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          manifest = json.loads((Path(os.environ['RUNNER_TEMP']) / 'skills-release/build-manifest.json').read_text())
+          assert os.environ['RELEASE_TAG'] == 'v' + manifest['version'], 'Release tag differs from canonical version'
+          PY
+      - uses: actions/upload-artifact@v7
+        with:
+          name: ai-skills-${{ github.sha }}
+          path: ${{ runner.temp }}/skills-package/*
+          if-no-files-found: error
+          retention-days: 30
+  publish-assets:
+    if: github.event_name == 'release'
+    needs: build-install
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: ai-skills-${{ github.sha }}
+          path: package
+      - name: Attach validated assets to the published release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: gh release upload "$RELEASE_TAG" package/ai-skills.tar.gz package/ai-skills.tar.gz.sha256

@@ -1,7 +1,7 @@
 {
   "name": "example-skills",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "label": "Example Skills",
-  "description": "Top-level example skills from this repository.",
+  "description": "The main skill catalog from 4444J99/a-i--skills: creative, data, development, documentation, education, integrations, knowledge, professional, project-management, security, specialized, and tools skills.",
   "contextFileName": "GEMINI.md"
 }

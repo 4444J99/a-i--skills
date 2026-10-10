@@ -43,7 +43,8 @@ ai-skills/
 │   └── skill-health.md   # /skill-health - run health checks
 ├── scripts/               # Build and validation tools
 ├── staging/               # Skills in development
-├── distributions/         # Committed canonical outputs
+├── config/                # Authored runtime catalog configuration
+├── distributions/         # Generated copies retained during installer migration
 │   ├── collections/       # Skill path lists + tier lists
 │   ├── skills-registry.json  # Machine-readable skill metadata
 │   ├── skills-lock.json   # Lockfile with SHA-256 hashes
@@ -57,6 +58,10 @@ ai-skills/
 ## Common Commands
 
 ```bash
+# Build from canonical source and activate a complete verified release
+python3 scripts/skills_install.py install
+python3 scripts/skills_install.py path
+
 # Refresh collections, registry, lockfile, and generated link directories
 python3 scripts/refresh_skill_collections.py
 python3 scripts/refresh_skill_collections.py --mode symlink  # Use symlinks instead of copies
@@ -125,11 +130,11 @@ tier: core                          # Quality tier: core or community
 - `distributions/codex/skills` / `distributions/claude/skills` — agent-specific bundles
 - `distributions/extensions/gemini/*/skills` — Gemini CLI extensions
 
-These are committed artifacts; include refreshed outputs in PRs that change skills. CI validates that generated files are up-to-date (no git diff allowed).
+These generated artifacts remain tracked until the coordinated installation migration is accepted; include refreshed outputs in PRs that change skills. CI validates that generated files are up-to-date. They are not build inputs: `scripts/skills_install.py` generates and validates a complete staging directory from canonical source, then atomically activates the verified release. The installer supports clean checkouts, failed-update preservation, guarded rollback, and standalone release archives. See [docs/installation.md](docs/installation.md).
 
-### Version Files (updated during releases)
-- `.claude-plugin/marketplace.json` (metadata.version)
-- `distributions/extensions/gemini/example-skills/gemini-extension.json`
+### Release Version
+
+`.claude-plugin/plugin.json` is the authored catalog version. The release helper updates it; the generators derive marketplace and Gemini descriptor versions from it. Never edit a generated descriptor as a release input.
 
 ## Key Guidelines
 
