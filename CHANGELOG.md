@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Verified skills installation: atomic build, validate, install, package, and guarded rollback from canonical source, with CI workflow and release-asset support. Addresses activation issue #23.
+- Verified skills installation: atomic build, validate, install, package, and guarded rollback from canonical source, with CI workflow, PR validation comment, and release-asset support. Addresses activation issue #23.
 - `code-review-checklist` skill (development category): structured five-dimension review
   guide (correctness, security, performance, readability, test coverage) with prioritized,
   file:line-cited output format. Closes #5.
