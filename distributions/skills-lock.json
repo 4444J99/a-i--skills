@@ -1371,12 +1371,12 @@
     {
       "name": "d2l-discussion-responder",
       "path": "skills/education/d2l-discussion-responder",
-      "sha256": "66537df68b6edb9c586a57c70de8ea580b5c12eada06d20e007494972068dadb",
+      "sha256": "d993c5fb1301bfe8dbffa2a98c5d93a2b219231005e316c870001042bb93008f",
       "files": [
         {
           "path": "SKILL.md",
-          "sha256": "1ea895eaf3dcaa91ba553581e80e4c7de2da83ae43124d0219ed8a5fde972690",
-          "size": 5631,
+          "sha256": "c0fe093ba271ba599e0ed8c30b889d409f8e5acb37da2534cdbd99d0dadaf5a0",
+          "size": 5646,
           "executable": false
         },
         {
@@ -3959,12 +3959,12 @@
     {
       "name": "recommendation-letter",
       "path": "skills/education/recommendation-letter",
-      "sha256": "46551007dc698d1d4b17c2f294f33eb0c97210c700c04654e65ecbf08abc2664",
+      "sha256": "40ac6b3479c5e2e912e58ad8615fe5e2c7cf7997c94a8e1012007bebc449a41d",
       "files": [
         {
           "path": "SKILL.md",
-          "sha256": "8eb819d0884543d8cde49c0c424e33cedb5ae83279fc46f71a5db32a59b1765a",
-          "size": 5589,
+          "sha256": "5e55dfbbc41f654ae000012b186a35fe3a3de0a2737242539e2dccde526c1f45",
+          "size": 5623,
           "executable": false
         },
         {
