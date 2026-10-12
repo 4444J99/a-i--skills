@@ -158,7 +158,8 @@ def test_overlapping_archive_checksum_publications_preserve_one_complete_pair(
 
     assert len(successes) == 1
     assert len(failures) == 1 and "already exists" in failures[0]
-    destination, digest = successes[0]
+    destination, result = successes[0]
+    digest = result["sha256"]
     assert hashlib.sha256(destination.read_bytes()).hexdigest() == digest
     assert destination.with_name(destination.name + ".sha256").read_text() == (
         f"{digest}  {destination.name}\n"
