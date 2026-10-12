@@ -81,6 +81,15 @@ def _copy_directory(source: Path, target: Path) -> None:
 
 def _copy_source(source: Path, stage: Path) -> dict:
     """Copy admitted skill folders, complete plugins, and build/runtime sources."""
+    guide = source / "docs/installation.md"
+    if not guide.parent.is_dir() or guide.parent.is_symlink():
+        raise InstallError(
+            f"Missing canonical docs directory or unexpected link: {guide.parent}"
+        )
+    if guide.is_symlink() or (guide.exists() and not guide.is_file()):
+        raise InstallError(
+            f"Optional installation guide must be a regular file, not a link: {guide}"
+        )
     skills = source / "skills"
     if not skills.is_dir():
         raise InstallError(f"Missing canonical skills directory: {skills}")
@@ -116,8 +125,8 @@ def _copy_source(source: Path, stage: Path) -> dict:
         destination = stage / relative
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(origin, destination)
-    if (source / "docs/installation.md").is_file():
-        shutil.copy2(source / "docs/installation.md", stage / "INSTALL.md")
+    if guide.is_file():
+        shutil.copy2(guide, stage / "INSTALL.md")
     return _inventory(stage)
 
 
@@ -160,14 +169,70 @@ def _lock(path: Path):
         os.close(fd)
 
 
+def _validate_manifest_schema(manifest: object) -> None:
+    """Check every required release field before it can be published or used."""
+    if not isinstance(manifest, dict):
+        raise InstallError("Release manifest must be a JSON object")
+    if (
+        type(manifest.get("schema_version")) is not int
+        or manifest["schema_version"] != 1
+        or manifest.get("kind") != KIND
+    ):
+        raise InstallError("Unsupported or missing release manifest")
+
+    def require_text(value: object, field: str) -> None:
+        if not isinstance(value, str) or not value.strip():
+            raise InstallError(
+                f"Release manifest field '{field}' must be non-empty text"
+            )
+
+    for field in ("version", "build_id"):
+        require_text(manifest.get(field), field)
+
+    source = manifest.get("source")
+    if not isinstance(source, dict):
+        raise InstallError("Release manifest field 'source' must be an object")
+    for field in ("repository", "input_sha256"):
+        require_text(source.get(field), f"source.{field}")
+    if "commit" not in source:
+        raise InstallError("Release manifest field 'source.commit' is required")
+    if source["commit"] is not None:
+        require_text(source["commit"], "source.commit")
+
+    counts = manifest.get("counts")
+    if not isinstance(counts, dict):
+        raise InstallError("Release manifest field 'counts' must be an object")
+    for field in ("catalog", "plugins"):
+        value = counts.get(field)
+        # bool is an int subclass, but not a valid catalog count.
+        if type(value) is not int or value < 0:
+            raise InstallError(
+                f"Release manifest field 'counts.{field}' must be a nonnegative integer"
+            )
+
+    files = manifest.get("files")
+    if not isinstance(files, dict):
+        raise InstallError("Release manifest field 'files' must be an object")
+    # Complete inventory equality below checks paths, hashes, modes, and sizes.
+    # Check size types explicitly because Python treats bool and int as equal.
+    for relative, record in files.items():
+        field = f"files[{relative!r}]"
+        if not isinstance(record, dict):
+            raise InstallError(f"Release manifest field '{field}' must be an object")
+        size = record.get("size")
+        if type(size) is not int or size < 0:
+            raise InstallError(
+                f"Release manifest field '{field}.size' must be a nonnegative integer"
+            )
+
+
 def validate_release(release: Path, *, semantic: bool = True) -> dict:
     release = release.resolve(strict=True)
     manifest_path = release / MANIFEST
     if manifest_path.is_symlink():
         raise InstallError("Release manifest must be a regular file")
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    if manifest.get("schema_version") != 1 or manifest.get("kind") != KIND:
-        raise InstallError("Unsupported or missing release manifest")
+    _validate_manifest_schema(manifest)
     identity = dict(manifest)
     build_id = identity.pop("build_id", None)
     if build_id != hashlib.sha256(_json_bytes(identity)).hexdigest():
@@ -438,7 +503,9 @@ def pack_release(release: Path, output: Path) -> str:
     ):
         raise InstallError("Archive and checksum must be outside the release")
     output.parent.mkdir(parents=True, exist_ok=True)
-    with _lock(output.parent / f".{output.name}.pack.lock"):
+    # Different archive names can overlap each other's checksum path (foo and
+    # foo.sha256). Serialize the whole publication set in this directory.
+    with _lock(output.parent / ".skills-pack.lock"):
         if any(path.exists() or path.is_symlink() for path in (output, checksum)):
             raise InstallError(
                 "Archive or checksum already exists; choose a fresh output path"
