@@ -28,6 +28,7 @@ skills/data/corpus-persona-extraction
 skills/creative/creative-writing-craft
 skills/tools/cross-agent-handoff
 skills/professional/cv-resume-builder
+skills/education/d2l-discussion-responder
 skills/development/data-backup-patterns
 skills/data/data-ingestion-pipeline
 skills/data/data-pipeline-architect
@@ -115,6 +116,7 @@ skills/tools/qa-audit
 skills/creative/react-three-fiber-patterns
 skills/creative/reality-tv-narrative-analyzer
 skills/development/realtime-websocket-patterns
+skills/education/recommendation-letter
 skills/knowledge/recursive-boil-down
 skills/knowledge/recursive-systems-architect
 skills/development/redis-patterns

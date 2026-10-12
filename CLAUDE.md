@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 This is Anthony Padavano's (4444J99) agent skills repository—a catalog of skills that extend AI coding agents' capabilities. Each skill is a self-contained folder with a `SKILL.md` file containing YAML frontmatter and instructions.
 
 Skill locations:
-- **Catalog skills**: Located in `skills/` directory, organized by category (e.g., `skills/creative/algorithmic-art/`, `skills/development/mcp-builder/`). 165 skills across 12 categories.
+- **Catalog skills**: Located in `skills/` directory, organized by category (e.g., `skills/creative/algorithmic-art/`, `skills/development/mcp-builder/`). 167 skills across 12 categories.
 - **Plugin skills**: Claude Code plugins under `plugins/` (11 skills).
 
 ## Repository Structure
@@ -16,12 +16,12 @@ Skill locations:
 ai-skills/
 ├── README.md              # Repository documentation
 ├── CLAUDE.md              # Claude Code instructions (this file)
-├── skills/                # All example skills (142), organized by category
+├── skills/                # All example skills (167), organized by category
 │   ├── creative/          # Art, music, design (15 skills)
 │   ├── data/              # Data analysis and ML (8 skills)
 │   ├── development/       # Coding patterns and tools (47 skills, incl. bundles)
 │   ├── documentation/     # Docs and GitHub profiles (7 skills)
-│   ├── education/         # Teaching and learning (4 skills)
+│   ├── education/         # Teaching and learning (6 skills)
 │   ├── integrations/      # Third-party integrations (14 skills)
 │   ├── knowledge/         # Knowledge management (7 skills)
 │   ├── professional/      # Business and career (12 skills)

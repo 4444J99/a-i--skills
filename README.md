@@ -1,7 +1,7 @@
 [![ORGAN-IV: Taxis](https://img.shields.io/badge/ORGAN--IV-Taxis-e65100?style=flat-square)](https://github.com/a-organvm)
 [![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue?style=flat-square)](./LICENSE)
-[![Skills](https://img.shields.io/badge/Skills-176-4CAF50?style=flat-square)](./docs/CATEGORIES.md)
+[![Skills](https://img.shields.io/badge/Skills-178-4CAF50?style=flat-square)](./docs/CATEGORIES.md)
 
 # a-i--skills
 
@@ -10,7 +10,7 @@
 [![Status](https://img.shields.io/badge/status-active-brightgreen)](https://github.com/4444J99/a-i--skills)
 
 
-**A composable skill framework for AI agent orchestration** -- 176 skill modules (165 in the main catalog plus 11 plugin skills) spanning creative, technical, enterprise, and governance domains, organized into a federated registry with multi-agent runtime support.
+**A composable skill framework for AI agent orchestration** -- 178 skill modules (167 in the main catalog plus 11 plugin skills) spanning creative, technical, enterprise, and governance domains, organized into a federated registry with multi-agent runtime support.
 
 > Part of [ORGAN-IV: Taxis](https://github.com/a-organvm) -- the orchestration and governance layer of the [ORGAN system](https://github.com/meta-organvm).
 
@@ -37,11 +37,11 @@
 
 ## Product Overview
 
-`a-i--skills` is a structured repository of 176 AI agent skills -- self-contained instruction modules that teach large language models how to perform specialized tasks in a repeatable, composable way. Each skill is a directory containing a `SKILL.md` file with YAML frontmatter (metadata for discovery and activation) and Markdown content (the actual instructions an agent follows).
+`a-i--skills` is a structured repository of 178 AI agent skills -- self-contained instruction modules that teach large language models how to perform specialized tasks in a repeatable, composable way. Each skill is a directory containing a `SKILL.md` file with YAML frontmatter (metadata for discovery and activation) and Markdown content (the actual instructions an agent follows).
 
 The repository serves three distinct functions:
 
-1. **Skill Library** -- A browsable catalog of 165 skills across 12 categories, from algorithmic art generation to security threat modeling, each with standardized metadata, optional helper scripts, reference documentation, and asset templates.
+1. **Skill Library** -- A browsable catalog of 167 skills across 12 categories, from algorithmic art generation to security threat modeling, each with standardized metadata, optional helper scripts, reference documentation, and asset templates.
 
 2. **Orchestration Infrastructure** -- Python tooling for skill validation, registry generation, health checking, and multi-agent bundle distribution. A built-in MCP (Model Context Protocol) server enables runtime skill discovery and planning.
 
@@ -53,7 +53,7 @@ The skills themselves range from beginner-level single-file instructions to adva
 
 | Dimension | Value |
 |-----------|-------|
-| Total skills | 176 (165 in `skills/` + 11 in `plugins/`) |
+| Total skills | 178 (167 in `skills/` + 11 in `plugins/`) |
 | Skill categories | 12 |
 | Multi-agent runtimes supported | 4 (Claude Code, Codex, Gemini CLI, Claude API) |
 | Federation schema version | 1.1 (stable) |
@@ -107,12 +107,12 @@ This is orchestration in its purest form: a single source of truth, multiple dis
 
 ```
 a-i--skills/
-├── skills/                           # 165 example skills, organized by category
+├── skills/                           # 167 example skills, organized by category
 │   ├── creative/                     # 17 skills (art, music, design, narrative)
 │   ├── data/                         # 10 skills (pipelines, ML, analytics)
 │   ├── development/                  # 49 skills (code quality, testing, infra)
 │   ├── documentation/                # 6 skills (READMEs, profiles, standards)
-│   ├── education/                    # 4 skills (tutoring, curriculum, feedback)
+│   ├── education/                    # 6 skills (tutoring, curriculum, feedback)
 │   ├── integrations/                 # 14 skills (MCP, OAuth, webhooks, SpecStory)
 │   ├── knowledge/                    # 9 skills (graphs, architecture, research)
 │   ├── professional/                 # 13 skills (branding, CVs, proposals)
@@ -301,7 +301,7 @@ python3 scripts/skill_health_check.py
 
 ## Skill Catalog
 
-The 165 skills are organized into 12 categories. Each category below lists skill count and representative examples.
+The 167 skills are organized into 12 categories. Each category below lists skill count and representative examples.
 
 ### Creative and Content (17 skills)
 
@@ -385,9 +385,14 @@ Roadmap strategy, requirements design, and orchestration workflows.
 | `product-requirements-designer` | Product requirements document generation |
 | `project-orchestration` | Multi-project coordination and tracking |
 
-### Education (4 skills)
+### Education (6 skills)
 
-Curriculum design, Socratic tutoring, and feedback pedagogy.
+Curriculum design, Socratic tutoring, feedback pedagogy, and instructor workflows.
+
+| Skill | Description |
+|-------|-------------|
+| `d2l-discussion-responder` | Fact-checked discussion replies with explicit posting scope and saved-reply verification |
+| `recommendation-letter` | Evidence-based reference letters in editable Markdown, with optional requested PDF output |
 
 ### Integrations (14 skills)
 
@@ -555,6 +560,8 @@ Most skills in this repository are original work by Anthony Padavano (many writt
 | [specstoryai/agent-skills](https://github.com/specstoryai/agent-skills) (SpecStory, Inc.) | Apache-2.0 (`LICENSE.txt` in each folder) | `specstory-guard`, `specstory-link-trail`, `specstory-organize`, `specstory-project-stats`, `specstory-session-summary`, `specstory-yak` |
 | [github/spec-kit](https://github.com/github/spec-kit) (GitHub, Inc.) | MIT | `speckit` (methodology and templates derived from spec-kit) |
 | [affaan-m/everything-claude-code](https://github.com/affaan-m/everything-claude-code) (Affaan Mustafa) | MIT | `continuous-learning-agent`, `iterative-code-exploration`, `postgres-advanced-patterns`, `tdd-workflow`, `verification-loop` (adaptations) |
+
+Import provenance and portability decisions for recovered original skills are recorded in [`docs/skill-consolidation.md`](./docs/skill-consolidation.md) and [`docs/skill-import-provenance.json`](./docs/skill-import-provenance.json).
 
 Attribution notices are collected in [`docs/THIRD_PARTY_NOTICES.md`](./docs/THIRD_PARTY_NOTICES.md).
 

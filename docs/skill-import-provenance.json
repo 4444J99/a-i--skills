@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "review_date": "2026-10-06",
+  "destination_repository": "4444J99/a-i--skills",
+  "destination_base_commit": "73d027d15e474380186831fed764df16bca1cb15",
+  "imports": [
+    {
+      "name": "d2l-discussion-responder",
+      "destination": "skills/education/d2l-discussion-responder",
+      "source_repository": "4444J99/_agent",
+      "source_visibility_at_review": "private",
+      "source_commit": "21d62c13bab0f7b82bfa3f6cb3c9a1ee89ad1a2f",
+      "source_introduction_commit": "fe2383caaad4977f27fcde98c297d4a4545cc7fb",
+      "source_introduction_url": "https://github.com/4444J99/_agent/commit/fe2383caaad4977f27fcde98c297d4a4545cc7fb",
+      "source_introduction_author": "Anthony James Padavano",
+      "source_license_declaration": "MIT",
+      "destination_license_declaration": "MIT",
+      "source_license_text_present": false,
+      "treatment": "portable adaptation; private source preserved",
+      "transformations": [
+        "Replace institution, shell, current-course, and deadline examples with blank verified inputs.",
+        "Replace legacy browser scripting and guard workarounds with supported-tool operations.",
+        "Remove mandatory external course-repository paths; preserve fact checking, user posting scope, and live read-back."
+      ],
+      "files": [
+        {
+          "source_path": "_agent.claudebrain/global/skills/d2l-discussion-responder/SKILL.md",
+          "source_blob_sha": "94c943be290dd3e53988da5ee95ffb7b2d11967d",
+          "source_url": "https://github.com/4444J99/_agent/blob/21d62c13bab0f7b82bfa3f6cb3c9a1ee89ad1a2f/_agent.claudebrain/global/skills/d2l-discussion-responder/SKILL.md",
+          "destination_path": "skills/education/d2l-discussion-responder/SKILL.md",
+          "relationship": "adapted"
+        },
+        {
+          "source_path": "_agent.claudebrain/global/skills/d2l-discussion-responder/references/d2l-browser-operations.md",
+          "source_blob_sha": "7f1e6ec22eec98b9dd66f056b406c0c824f561f7",
+          "source_url": "https://github.com/4444J99/_agent/blob/21d62c13bab0f7b82bfa3f6cb3c9a1ee89ad1a2f/_agent.claudebrain/global/skills/d2l-discussion-responder/references/d2l-browser-operations.md",
+          "destination_path": "skills/education/d2l-discussion-responder/references/d2l-browser-operations.md",
+          "relationship": "adapted"
+        },
+        {
+          "source_path": "_agent.claudebrain/global/skills/d2l-discussion-responder/references/course-facts-template.md",
+          "source_blob_sha": "e6c6aa24b1077c5848edc4e612fa23bbd21c4bdd",
+          "source_url": "https://github.com/4444J99/_agent/blob/21d62c13bab0f7b82bfa3f6cb3c9a1ee89ad1a2f/_agent.claudebrain/global/skills/d2l-discussion-responder/references/course-facts-template.md",
+          "destination_path": "skills/education/d2l-discussion-responder/references/course-facts-template.md",
+          "relationship": "adapted"
+        }
+      ]
+    },
+    {
+      "name": "recommendation-letter",
+      "destination": "skills/education/recommendation-letter",
+      "source_repository": "4444J99/edu-organism",
+      "source_visibility_at_review": "private",
+      "source_commit": "b305c7d1537a3fd013647251cba2baf6b0538fbd",
+      "source_introduction_commit": "9904d20c29f6af795198e58ec4e84dcf7186ff98",
+      "source_introduction_url": "https://github.com/4444J99/edu-organism/commit/9904d20c29f6af795198e58ec4e84dcf7186ff98",
+      "source_introduction_author": "Anthony James Padavano",
+      "source_license_declaration": "MIT",
+      "destination_license_declaration": "MIT",
+      "source_license_text_present": false,
+      "treatment": "portable adaptation; private source preserved",
+      "transformations": [
+        "Remove the mandatory edu-organism generator, instance YAML, and external template dependency chain.",
+        "Make editable Markdown the core deliverable and requested PDF conditional on a working renderer.",
+        "Replace assumed private output paths and absolute confidence rules with explicit destination and evidence checks."
+      ],
+      "files": [
+        {
+          "source_path": "skins/teacher-tools/education-skills/recommendation-letter/SKILL.md",
+          "source_blob_sha": "75a9e582229833eda057ecf75c736ed56bdc58e9",
+          "source_url": "https://github.com/4444J99/edu-organism/blob/b305c7d1537a3fd013647251cba2baf6b0538fbd/skins/teacher-tools/education-skills/recommendation-letter/SKILL.md",
+          "destination_path": "skills/education/recommendation-letter/SKILL.md",
+          "relationship": "adapted"
+        },
+        {
+          "source_path": "skins/teacher-tools/education-skills/recommendation-letter/references/recommendation-rubric.md",
+          "source_blob_sha": "d02a03838eeb74af1a0c7f6df672a38a2dd49694",
+          "source_url": "https://github.com/4444J99/edu-organism/blob/b305c7d1537a3fd013647251cba2baf6b0538fbd/skins/teacher-tools/education-skills/recommendation-letter/references/recommendation-rubric.md",
+          "destination_path": "skills/education/recommendation-letter/references/recommendation-rubric.md",
+          "relationship": "adapted"
+        }
+      ]
+    }
+  ]
+}
