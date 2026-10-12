@@ -594,7 +594,7 @@
     {
       "name": "recommendation-letter",
       "path": "skills/education/recommendation-letter",
-      "sha256": "7cd7470535cbd710095453c6cf21e6205616ef32ef4a7a12c4b415bed3cd9c3d"
+      "sha256": "03458d1734bffae055aaed1cbfc603a105e6a0c76b484090e275f4dfd0bdd14d"
     },
     {
       "name": "recursive-boil-down",

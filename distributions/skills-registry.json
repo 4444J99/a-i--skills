@@ -5523,7 +5523,9 @@
       "inputs": [],
       "outputs": [],
       "side_effects": [
-        "creates-files"
+        "creates-files",
+        "reads-filesystem",
+        "network-access"
       ],
       "triggers": [
         "user-asks-to-write-recommendation-letter",
