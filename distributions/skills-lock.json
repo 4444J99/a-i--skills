@@ -154,7 +154,7 @@
     {
       "name": "d2l-discussion-responder",
       "path": "skills/education/d2l-discussion-responder",
-      "sha256": "c77c6046ea26976d473cac7ba425b5b836a80c39bc00d81ff9b76d1d9ea6f90c"
+      "sha256": "a3c83f93fca7ef628d82bab3c3f1139de2e61b5b600da42e0ba30f2ffd733312"
     },
     {
       "name": "data-backup-patterns",

@@ -1465,7 +1465,8 @@
       "inputs": [],
       "outputs": [],
       "side_effects": [
-        "network-access"
+        "network-access",
+        "creates-files"
       ],
       "triggers": [
         "user-asks-to-answer-student-discussions",
