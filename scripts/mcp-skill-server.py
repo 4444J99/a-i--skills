@@ -44,12 +44,13 @@ def _load_skills() -> list[dict]:
 
     prefix = default_prefix()
     if os.environ.get("DOMUS_SKILLS_HOME") or (prefix / "current").is_symlink():
-        release = active_release(prefix)
+        release = active_release(prefix, semantic=False)
     elif (ROOT / MANIFEST).is_file():
         # A prebuilt release can run without the original checkout or an XDG install.
         release = ROOT
+        validate_release(release, semantic=False)
     else:
-        release = active_release(prefix)  # Clear install-required error; no stale fallback.
+        release = active_release(prefix, semantic=False)  # Clear install-required error; no stale fallback.
     registry_path = release / "distributions/skills-registry.json"
     registry_stat = registry_path.stat()
     manifest_stat = (release / MANIFEST).stat()
@@ -58,7 +59,7 @@ def _load_skills() -> list[dict]:
     if _skills_cache is not None and key == _cache_key:
         return _skills_cache
 
-    validate_release(release, semantic=False)
+    validate_release(release)
     data = json.loads(registry_path.read_text(encoding="utf-8"))
     skills = data["skills"]
     for skill in skills:

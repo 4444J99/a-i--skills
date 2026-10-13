@@ -30,11 +30,17 @@ Resolve and validate the active release once, then read its registry and resolve
 
 ```python
 import json
+import os
 import subprocess
+import sys
 from pathlib import Path
 
+prefix = Path(os.environ.get("DOMUS_SKILLS_HOME") or str(
+    Path(os.environ.get("XDG_DATA_HOME", str(Path.home() / ".local/share"))) / "ai-skills"
+)).expanduser().absolute()
+installer = prefix / "current/scripts/skills_install.py"
 release = Path(subprocess.check_output(
-    ["python3", "scripts/skills_install.py", "path"], text=True,
+    [sys.executable, str(installer), "path", "--prefix", str(prefix)], text=True,
 ).strip())
 registry = json.loads((release / "distributions/skills-registry.json").read_text())
 skills = registry["skills"]

@@ -6,7 +6,7 @@ import hashlib
 import json
 from pathlib import Path
 
-from skill_lib import find_plugin_dirs, skill_collections
+from skill_lib import find_plugin_dirs, is_ignored_name, skill_collections
 
 ROOT = Path(__file__).resolve().parents[1]
 BUILD_DIR = ROOT / "distributions"
@@ -28,6 +28,8 @@ def _file_records(directory: Path) -> list[dict]:
     for path in sorted(directory.rglob("*"), key=lambda p: p.relative_to(directory).as_posix()):
         if path.is_symlink():
             raise ValueError(f"Source contains a symlink: {path}")
+        if any(is_ignored_name(part) for part in path.relative_to(directory).parts):
+            continue
         if path.is_dir():
             continue
         if not path.is_file():

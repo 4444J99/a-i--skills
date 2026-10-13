@@ -4,6 +4,11 @@ from __future__ import annotations
 from pathlib import Path
 
 
+def is_ignored_name(name: str) -> bool:
+    """Non-source host caches excluded consistently from copying and locks."""
+    return name in {".git", "__pycache__", ".DS_Store", ".pytest_cache"} or name.endswith((".pyc", ".pyo"))
+
+
 def find_skill_dirs(base_dir: Path) -> list[Path]:
     """Discover admitted entrypoints without silently dropping case mistakes.
 

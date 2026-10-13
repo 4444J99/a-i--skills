@@ -26,9 +26,11 @@ import uuid
 
 sys.dont_write_bytecode = True
 ROOT = Path(__file__).resolve().parents[1]
+# Also support importlib-based consumers launched outside the scripts directory.
+sys.path.insert(0, str(ROOT / "scripts"))
 MANIFEST = "build-manifest.json"
 KIND = "a-i-skills-release"
-IGNORED = {".git", "__pycache__", ".DS_Store", ".pytest_cache"}
+from skill_lib import is_ignored_name  # noqa: E402
 
 
 class InstallError(RuntimeError):
@@ -40,7 +42,7 @@ def _json_bytes(value: object) -> bytes:
 
 
 def _ignored(name: str) -> bool:
-    return name in IGNORED or name.endswith((".pyc", ".pyo"))
+    return is_ignored_name(name)
 
 
 def _files(root: Path, *, ignore_caches: bool = False):
@@ -136,7 +138,7 @@ def _run(stage: Path, script: str, *arguments: str) -> None:
         raise InstallError(f"Required generator or validator is missing: {target}")
     env = dict(os.environ, PYTHONDONTWRITEBYTECODE="1")
     subprocess.run(
-        [sys.executable, str(target), *arguments], cwd=stage, env=env, check=True
+        [sys.executable, str(target), *arguments], cwd=stage, env=env, check=True, stdout=sys.stderr
     )
 
 
@@ -446,7 +448,10 @@ def install_release(
                         # The only activation operation: readers see old or new.
                         _replace_pointer(prefix, "current", destination)
                     except BaseException:
-                        _replace_pointer(prefix, "previous", old_previous)
+                        try:
+                            _replace_pointer(prefix, "current", old_current)
+                        finally:
+                            _replace_pointer(prefix, "previous", old_previous)
                         raise
                 return {
                     "release": str(destination),
@@ -475,7 +480,10 @@ def rollback(prefix: Path, expected_current: Path) -> dict:
             # Activate last, so a failed pointer write can retain the old state.
             _replace_pointer(prefix, "current", previous)
         except BaseException:
-            _replace_pointer(prefix, "previous", previous)
+            try:
+                _replace_pointer(prefix, "current", current)
+            finally:
+                _replace_pointer(prefix, "previous", previous)
             raise
         return {
             "release": str(previous) if previous else None,
@@ -483,14 +491,14 @@ def rollback(prefix: Path, expected_current: Path) -> dict:
         }
 
 
-def active_release(prefix: Path | None = None) -> Path:
+def active_release(prefix: Path | None = None, *, semantic: bool = True) -> Path:
     prefix = (prefix or default_prefix()).expanduser().resolve()
     release = _pointer(prefix, "current")
     if release is None:
         raise InstallError(
             f"No installed release at {prefix}; run scripts/skills_install.py install"
         )
-    validate_release(release)
+    validate_release(release, semantic=semantic)
     return release
 
 
@@ -571,8 +579,13 @@ def main() -> None:
     pack = sub.add_parser("pack", help="write a deterministic release tarball")
     pack.add_argument("--release", type=Path, required=True)
     pack.add_argument("--output", type=Path, required=True)
+    path = sub.add_parser("path", help="print only the verified active release path")
+    path.add_argument("--prefix", type=Path, default=default_prefix())
     args = parser.parse_args()
     try:
+        if args.command == "path":
+            print(active_release(args.prefix))
+            return
         if args.command == "build":
             result = build_release(args.source, args.output)
         elif args.command == "validate":

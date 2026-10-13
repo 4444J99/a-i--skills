@@ -11,7 +11,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from skill_lib import extract_frontmatter_strict, find_plugin_dirs, skill_collections
+from skill_lib import is_ignored_name, extract_frontmatter_strict, find_plugin_dirs, skill_collections
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILLS_DIR = ROOT / "skills"
@@ -259,7 +259,7 @@ def _sync_links(target_dir: Path, sources: list[Path], mode: str) -> None:
         elif destination.exists():
             shutil.rmtree(destination)
         if mode == "copy":
-            shutil.copytree(src, destination)
+            shutil.copytree(src, destination, ignore=lambda _, names: [n for n in names if is_ignored_name(n)])
         else:
             destination.symlink_to(os.path.relpath(src, target_dir), target_is_directory=True)
 
@@ -453,7 +453,8 @@ def main() -> int:
         for script_name in ("generate_registry.py", "generate_lockfile.py"):
             subprocess.run([sys.executable, str(scripts_dir / script_name)], check=True)
         if args.mode == "copy":
-            subprocess.run([sys.executable, str(scripts_dir / "validate_generated_dirs.py")], check=True)
+            subprocess.run([sys.executable, str(scripts_dir / "validate_generated_dirs.py"),
+                            *(["--skip-marketplace"] if args.skip_marketplace else [])], check=True)
         counts: dict[str, int] = {}
         for directory in examples:
             category = directory.relative_to(SKILLS_DIR).parts[0]

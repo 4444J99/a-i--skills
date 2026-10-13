@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from skill_lib import extract_frontmatter_strict, parse_list_field, skill_collections
+from skill_lib import extract_frontmatter_strict, is_ignored_name, parse_list_field, skill_collections
 from validate_skills import _validate_skill
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -67,10 +67,14 @@ def _build_skill_entry(
         entry[field] = parse_list_field(raw) if raw else []
 
     # Resource directories
+    def resource_names(name: str) -> list[str]:
+        directory = skill_dir / name
+        return sorted(p.name for p in directory.iterdir() if not is_ignored_name(p.name)) if directory.is_dir() else []
+
     entry["resources"] = {
-        "scripts": sorted(p.name for p in (skill_dir / "scripts").iterdir()) if (skill_dir / "scripts").is_dir() else [],
-        "references": sorted(p.name for p in (skill_dir / "references").iterdir()) if (skill_dir / "references").is_dir() else [],
-        "assets": sorted(p.name for p in (skill_dir / "assets").iterdir()) if (skill_dir / "assets").is_dir() else [],
+        "scripts": resource_names("scripts"),
+        "references": resource_names("references"),
+        "assets": resource_names("assets"),
     }
 
     return entry

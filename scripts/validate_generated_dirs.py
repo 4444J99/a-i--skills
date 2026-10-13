@@ -2,13 +2,14 @@
 """Verify complete generated output against canonical content and semantics."""
 from __future__ import annotations
 
+import argparse
 import json
 from pathlib import Path
 
 from generate_lockfile import _file_records, build_lockfile
 from generate_registry import build_registry
 from refresh_skill_collections import _bundle_targets, expected_metadata
-from skill_lib import skill_collections
+from skill_lib import is_ignored_name, skill_collections
 
 ROOT = Path(__file__).resolve().parents[1]
 BUILD_DIR = ROOT / "distributions"
@@ -42,11 +43,13 @@ def _compare_json(path: Path, expected: dict, root: Path, errors: list[str]) -> 
         errors.append(f"{path}: generated metadata must not be executable")
 
 
-def validate_generated(root: Path) -> list[str]:
+def validate_generated(root: Path, *, skip_marketplace: bool = False) -> list[str]:
     errors: list[str] = []
     try:
         collections = skill_collections(root)
         metadata = expected_metadata(root)
+        if skip_marketplace:
+            metadata.pop(".claude-plugin/marketplace.json")
         registry = build_registry(root)
         lock = build_lockfile(root)
         targets = _bundle_targets(root)
@@ -89,7 +92,7 @@ def validate_generated(root: Path) -> list[str]:
                 errors.append(f"{marker}: invalid generated marker")
             if marker.stat().st_mode & 0o111:
                 errors.append(f"{marker}: generated marker must not be executable")
-        actual_names = {entry.name for entry in target.iterdir()} - {".skills-generated"}
+        actual_names = {entry.name for entry in target.iterdir() if not is_ignored_name(entry.name)} - {".skills-generated"}
         if actual_names != names:
             errors.append(f"{target}: missing {sorted(names - actual_names)}, extra {sorted(actual_names - names)}")
         for source in collections["example"]:
@@ -113,6 +116,8 @@ def validate_generated(root: Path) -> list[str]:
         for path in build_dir.rglob("*"):
             if path.is_symlink():
                 errors.append(f"{path}: generated output contains a symlink")
+            elif any(is_ignored_name(part) for part in path.relative_to(build_dir).parts):
+                continue
             elif path.is_file():
                 actual_files.add(path.relative_to(root).as_posix())
             elif not path.is_dir():
@@ -126,7 +131,10 @@ def validate_generated(root: Path) -> list[str]:
 
 
 def main() -> int:
-    errors = validate_generated(ROOT)
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--skip-marketplace", action="store_true")
+    args = parser.parse_args()
+    errors = validate_generated(ROOT, skip_marketplace=args.skip_marketplace)
     if errors:
         for error in errors:
             print(f"ERROR: {error}")
