@@ -1,9 +1,6 @@
+closeout
+code-review-checklist
 cv-resume-builder
-github-profile-architect
-skill-creator
-socratic-tutor
-specstory-guard
-specstory-organize
-tdd-workflow
-template-skill
-verification-loop
+shell-history-hygiene
+stranger-test-protocol
+testing-patterns

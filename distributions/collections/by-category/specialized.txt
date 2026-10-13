@@ -1,4 +1,6 @@
 blockchain-integration-builder
+defi-trading-systems
 game-mechanics-designer
 interfaith-sacred-geometry
 local-llm-fine-tuning
+location-ar-experience

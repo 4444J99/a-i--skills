@@ -1,4 +1,9 @@
+domain-ideal-whole-substrate
 github-roadmap-strategist
+personalized-storefront-render
+premortem
+product-domain-engine
 product-requirements-designer
 project-alchemy-orchestrator
 project-orchestration
+promotion-readiness-checklist

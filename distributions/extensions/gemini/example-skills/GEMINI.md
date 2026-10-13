@@ -1,14 +1,7 @@
-# Example Skills Extension
+# Example Skills
 
-This extension exposes the top-level skills from this repository.
+This generated extension contains 167 catalog skills from 4444J99/a-i--skills at catalog version 2.0.0.
 
-## What is included
-- Each skill directory is linked under `skills/`.
-- Skill instructions live in `SKILL.md` with YAML frontmatter.
+Read a skill's instructions from skills/<name>/SKILL.md and its bundled resources when needed. Each folder is a complete copy of canonical source.
 
-## Updating
-If skills are added or removed, regenerate the links:
-
-```bash
-python3 scripts/refresh_skill_collections.py
-```
+Build updates from the repository with scripts/skills_install.py. Generated extension files are replaced only after the staged release passes validation.

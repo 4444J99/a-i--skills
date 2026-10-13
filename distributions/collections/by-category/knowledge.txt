@@ -1,2 +1,9 @@
+claude-project-manifest
+expansive-inquiry
 knowledge-architecture
+knowledge-graph-builder
+recursive-boil-down
+recursive-systems-architect
+research-synthesis-workflow
 second-brain-librarian
+source-evaluation-bibliography

@@ -1,0 +1,3605 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-10-10T18:55:18.258Z",
+  "scope": "Local-only direct upstream discovery API on an exact Git archive with two generated paths removed, followed by the canonical staged build/validate and discovery of its verified release. The source archive has no .git directory, so build-manifest source.commit is null; provenance is recorded externally here. No packaged CLI invocation, remote skill installation, listing submission, global installation, or model invocation.",
+  "node": "v24.19.0",
+  "telemetry": {
+    "DISABLE_TELEMETRY": "1",
+    "DO_NOT_TRACK": "1",
+    "telemetryModuleImported": false
+  },
+  "upstreamCommit": "13e4063a1cf913f5606d57d42ab83a86f5001e04",
+  "source": {
+    "repository": "4444J99/a-i--skills",
+    "commit": "7af4cd94a485aa9e72eed0c02dd211bc35004121",
+    "tree": "fdbb2aa9c5856bdba0198e1c8b189c4b70563059",
+    "archiveSha256": "8cec16585c18b6998e7f64d8c6dbb0bcf7f7b2c3bc56f615e1c660136a47588c",
+    "removedPaths": [
+      "distributions",
+      ".claude-plugin/marketplace.json"
+    ],
+    "strippedSourceFileCount": 969,
+    "strippedSourceManifestSha256": "c43020c85050b51df8525e81929ace3cde43035bf846931c462c6b1c9f06d89d",
+    "sourceUnchangedByBuild": true,
+    "generatedPathsStillAbsentInSource": true
+  },
+  "build": {
+    "command": [
+      "python3",
+      "-B",
+      "$OUTPUT/source/scripts/skills_install.py",
+      "build",
+      "--source",
+      "$OUTPUT/source",
+      "--output",
+      "$OUTPUT/release"
+    ],
+    "exitCode": 0,
+    "stdoutSha256": "8eef15e0f53455b93a8be2153f4471dc10f82dda1b0177ce6044e882a994af5d",
+    "validationExitCode": 0,
+    "validationStdoutSha256": "5d46467e0c7cc56466e73192197fef446ac5559b5863912aebd2b1bab34bcbf5",
+    "releaseManifestSha256": "9840dab1d3c8156e3f238d97a1a96f4222f7590ad9e45c3fb4ec4bf7165a9f70",
+    "buildId": "b6eb5d37729ac675796765c562378d6408ca4122f04d17614f8faedf3208d62e",
+    "releaseSourceCommit": null,
+    "sourceInputSha256": "9f2d8b209df43c7c4685f806469897d75a3f66e2e6a9b7628cef14ba311efc76",
+    "counts": {
+      "catalog": 167,
+      "plugins": 11
+    }
+  },
+  "discovery": {
+    "strippedSource": {
+      "normal": {
+        "options": {},
+        "count": 167,
+        "buckets": {
+          "skills": 167
+        },
+        "entries": [
+          {
+            "name": "algorithmic-art",
+            "path": "skills/creative/algorithmic-art",
+            "pluginName": null
+          },
+          {
+            "name": "audio-engineering-patterns",
+            "path": "skills/creative/audio-engineering-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "canvas-design",
+            "path": "skills/creative/canvas-design",
+            "pluginName": null
+          },
+          {
+            "name": "creative-writing-craft",
+            "path": "skills/creative/creative-writing-craft",
+            "pluginName": null
+          },
+          {
+            "name": "generative-art-algorithms",
+            "path": "skills/creative/generative-art-algorithms",
+            "pluginName": null
+          },
+          {
+            "name": "generative-art-deployment",
+            "path": "skills/creative/generative-art-deployment",
+            "pluginName": null
+          },
+          {
+            "name": "generative-music-composer",
+            "path": "skills/creative/generative-music-composer",
+            "pluginName": null
+          },
+          {
+            "name": "interactive-theatre-designer",
+            "path": "skills/creative/interactive-theatre-designer",
+            "pluginName": null
+          },
+          {
+            "name": "modular-synthesis-philosophy",
+            "path": "skills/creative/modular-synthesis-philosophy",
+            "pluginName": null
+          },
+          {
+            "name": "movement-notation-systems",
+            "path": "skills/creative/movement-notation-systems",
+            "pluginName": null
+          },
+          {
+            "name": "narratological-algorithms",
+            "path": "skills/creative/narratological-algorithms",
+            "pluginName": null
+          },
+          {
+            "name": "natural-center-extraction",
+            "path": "skills/creative/natural-center-extraction",
+            "pluginName": null
+          },
+          {
+            "name": "react-three-fiber-patterns",
+            "path": "skills/creative/react-three-fiber-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "reality-tv-narrative-analyzer",
+            "path": "skills/creative/reality-tv-narrative-analyzer",
+            "pluginName": null
+          },
+          {
+            "name": "script-analysis-dramaturgical",
+            "path": "skills/creative/script-analysis-dramaturgical",
+            "pluginName": null
+          },
+          {
+            "name": "theme-factory",
+            "path": "skills/creative/theme-factory",
+            "pluginName": null
+          },
+          {
+            "name": "three-js-interactive-builder",
+            "path": "skills/creative/three-js-interactive-builder",
+            "pluginName": null
+          },
+          {
+            "name": "corpus-persona-extraction",
+            "path": "skills/data/corpus-persona-extraction",
+            "pluginName": null
+          },
+          {
+            "name": "data-ingestion-pipeline",
+            "path": "skills/data/data-ingestion-pipeline",
+            "pluginName": null
+          },
+          {
+            "name": "data-pipeline-architect",
+            "path": "skills/data/data-pipeline-architect",
+            "pluginName": null
+          },
+          {
+            "name": "data-storytelling-analyst",
+            "path": "skills/data/data-storytelling-analyst",
+            "pluginName": null
+          },
+          {
+            "name": "market-gap-analysis",
+            "path": "skills/data/market-gap-analysis",
+            "pluginName": null
+          },
+          {
+            "name": "ml-experiment-tracker",
+            "path": "skills/data/ml-experiment-tracker",
+            "pluginName": null
+          },
+          {
+            "name": "prompt-atom-formalization",
+            "path": "skills/data/prompt-atom-formalization",
+            "pluginName": null
+          },
+          {
+            "name": "sql-query-optimizer",
+            "path": "skills/data/sql-query-optimizer",
+            "pluginName": null
+          },
+          {
+            "name": "systemic-product-analyst",
+            "path": "skills/data/systemic-product-analyst",
+            "pluginName": null
+          },
+          {
+            "name": "time-series-analyst",
+            "path": "skills/data/time-series-analyst",
+            "pluginName": null
+          },
+          {
+            "name": "accessibility-patterns",
+            "path": "skills/development/accessibility-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "agent-testing-patterns",
+            "path": "skills/development/agent-testing-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "api-design-patterns",
+            "path": "skills/development/api-design-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "artifacts-builder",
+            "path": "skills/development/artifacts-builder",
+            "pluginName": null
+          },
+          {
+            "name": "backend-implementation-patterns",
+            "path": "skills/development/backend-implementation-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "browser-extension-patterns",
+            "path": "skills/development/browser-extension-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "cli-tool-design",
+            "path": "skills/development/cli-tool-design",
+            "pluginName": null
+          },
+          {
+            "name": "code-refactoring-patterns",
+            "path": "skills/development/code-refactoring-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "code-review-checklist",
+            "path": "skills/development/code-review-checklist",
+            "pluginName": null
+          },
+          {
+            "name": "coding-standards-enforcer",
+            "path": "skills/development/coding-standards-enforcer",
+            "pluginName": null
+          },
+          {
+            "name": "community-platform-patterns",
+            "path": "skills/development/community-platform-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "configuration-management",
+            "path": "skills/development/configuration-management",
+            "pluginName": null
+          },
+          {
+            "name": "continuous-learning-agent",
+            "path": "skills/development/continuous-learning-agent",
+            "pluginName": null
+          },
+          {
+            "name": "data-backup-patterns",
+            "path": "skills/development/data-backup-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "database-migration-patterns",
+            "path": "skills/development/database-migration-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "deployment-cicd",
+            "path": "skills/development/deployment-cicd",
+            "pluginName": null
+          },
+          {
+            "name": "docker-containerization",
+            "path": "skills/development/docker-containerization",
+            "pluginName": null
+          },
+          {
+            "name": "dotfile-systems-architect",
+            "path": "skills/development/dotfile-systems-architect",
+            "pluginName": null
+          },
+          {
+            "name": "error-handling-logging-patterns",
+            "path": "skills/development/error-handling-logging-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "fastapi-patterns",
+            "path": "skills/development/fastapi-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "feature-workflow-orchestrator",
+            "path": "skills/development/feature-workflow-orchestrator",
+            "pluginName": null
+          },
+          {
+            "name": "frontend-design-systems",
+            "path": "skills/development/frontend-design-systems",
+            "pluginName": null
+          },
+          {
+            "name": "fullstack-starter-pack",
+            "path": "skills/development/fullstack-starter-pack",
+            "pluginName": null
+          },
+          {
+            "name": "gcp-resource-optimizer",
+            "path": "skills/development/gcp-resource-optimizer",
+            "pluginName": null
+          },
+          {
+            "name": "htmx-interaction-patterns",
+            "path": "skills/development/htmx-interaction-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "iterative-code-exploration",
+            "path": "skills/development/iterative-code-exploration",
+            "pluginName": null
+          },
+          {
+            "name": "json-schema-design",
+            "path": "skills/development/json-schema-design",
+            "pluginName": null
+          },
+          {
+            "name": "mcp-builder",
+            "path": "skills/development/mcp-builder",
+            "pluginName": null
+          },
+          {
+            "name": "mcp-server-orchestrator",
+            "path": "skills/development/mcp-server-orchestrator",
+            "pluginName": null
+          },
+          {
+            "name": "mobile-platform-architect",
+            "path": "skills/development/mobile-platform-architect",
+            "pluginName": null
+          },
+          {
+            "name": "monorepo-devops-pack",
+            "path": "skills/development/monorepo-devops-pack",
+            "pluginName": null
+          },
+          {
+            "name": "monorepo-management",
+            "path": "skills/development/monorepo-management",
+            "pluginName": null
+          },
+          {
+            "name": "nextjs-fullstack-patterns",
+            "path": "skills/development/nextjs-fullstack-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "parametrize-and-cite",
+            "path": "skills/development/parametrize-and-cite",
+            "pluginName": null
+          },
+          {
+            "name": "postgres-advanced-patterns",
+            "path": "skills/development/postgres-advanced-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "python-backend-pack",
+            "path": "skills/development/python-backend-pack",
+            "pluginName": null
+          },
+          {
+            "name": "python-packaging-patterns",
+            "path": "skills/development/python-packaging-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "realtime-websocket-patterns",
+            "path": "skills/development/realtime-websocket-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "redis-patterns",
+            "path": "skills/development/redis-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "repo-onboarding-flow",
+            "path": "skills/development/repo-onboarding-flow",
+            "pluginName": null
+          },
+          {
+            "name": "resilience-patterns",
+            "path": "skills/development/resilience-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "responsive-design-patterns",
+            "path": "skills/development/responsive-design-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "rust-systems-design",
+            "path": "skills/development/rust-systems-design",
+            "pluginName": null
+          },
+          {
+            "name": "tdd-workflow",
+            "path": "skills/development/tdd-workflow",
+            "pluginName": null
+          },
+          {
+            "name": "testing-patterns",
+            "path": "skills/development/testing-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "vector-search-patterns",
+            "path": "skills/development/vector-search-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "verification-loop",
+            "path": "skills/development/verification-loop",
+            "pluginName": null
+          },
+          {
+            "name": "web-artifacts-builder",
+            "path": "skills/development/web-artifacts-builder",
+            "pluginName": null
+          },
+          {
+            "name": "webapp-testing",
+            "path": "skills/development/webapp-testing",
+            "pluginName": null
+          },
+          {
+            "name": "document-audit-extraction",
+            "path": "skills/documentation/document-audit-extraction",
+            "pluginName": null
+          },
+          {
+            "name": "github-profile-architect",
+            "path": "skills/documentation/github-profile-architect",
+            "pluginName": null
+          },
+          {
+            "name": "github-repo-curator",
+            "path": "skills/documentation/github-repo-curator",
+            "pluginName": null
+          },
+          {
+            "name": "github-repository-standards",
+            "path": "skills/documentation/github-repository-standards",
+            "pluginName": null
+          },
+          {
+            "name": "stranger-test-protocol",
+            "path": "skills/documentation/stranger-test-protocol",
+            "pluginName": null
+          },
+          {
+            "name": "technical-analytical-writing",
+            "path": "skills/documentation/technical-analytical-writing",
+            "pluginName": null
+          },
+          {
+            "name": "d2l-discussion-responder",
+            "path": "skills/education/d2l-discussion-responder",
+            "pluginName": null
+          },
+          {
+            "name": "enc1101-curriculum-designer",
+            "path": "skills/education/enc1101-curriculum-designer",
+            "pluginName": null
+          },
+          {
+            "name": "evaluation-to-growth",
+            "path": "skills/education/evaluation-to-growth",
+            "pluginName": null
+          },
+          {
+            "name": "feedback-pedagogy",
+            "path": "skills/education/feedback-pedagogy",
+            "pluginName": null
+          },
+          {
+            "name": "recommendation-letter",
+            "path": "skills/education/recommendation-letter",
+            "pluginName": null
+          },
+          {
+            "name": "socratic-tutor",
+            "path": "skills/education/socratic-tutor",
+            "pluginName": null
+          },
+          {
+            "name": "conversation-content-pipeline",
+            "path": "skills/integrations/conversation-content-pipeline",
+            "pluginName": null
+          },
+          {
+            "name": "essay-publishing-pipeline",
+            "path": "skills/integrations/essay-publishing-pipeline",
+            "pluginName": null
+          },
+          {
+            "name": "essay-to-distribution-pack",
+            "path": "skills/integrations/essay-to-distribution-pack",
+            "pluginName": null
+          },
+          {
+            "name": "mcp-integration-patterns",
+            "path": "skills/integrations/mcp-integration-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "oauth-flow-architect",
+            "path": "skills/integrations/oauth-flow-architect",
+            "pluginName": null
+          },
+          {
+            "name": "posse-distribution-architecture",
+            "path": "skills/integrations/posse-distribution-architecture",
+            "pluginName": null
+          },
+          {
+            "name": "social-media-api-integration",
+            "path": "skills/integrations/social-media-api-integration",
+            "pluginName": null
+          },
+          {
+            "name": "specstory-guard",
+            "path": "skills/integrations/specstory-guard",
+            "pluginName": null
+          },
+          {
+            "name": "specstory-link-trail",
+            "path": "skills/integrations/specstory-link-trail",
+            "pluginName": null
+          },
+          {
+            "name": "specstory-organize",
+            "path": "skills/integrations/specstory-organize",
+            "pluginName": null
+          },
+          {
+            "name": "specstory-project-stats",
+            "path": "skills/integrations/specstory-project-stats",
+            "pluginName": null
+          },
+          {
+            "name": "specstory-session-summary",
+            "path": "skills/integrations/specstory-session-summary",
+            "pluginName": null
+          },
+          {
+            "name": "specstory-yak",
+            "path": "skills/integrations/specstory-yak",
+            "pluginName": null
+          },
+          {
+            "name": "webhook-integration-patterns",
+            "path": "skills/integrations/webhook-integration-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "claude-project-manifest",
+            "path": "skills/knowledge/claude-project-manifest",
+            "pluginName": null
+          },
+          {
+            "name": "expansive-inquiry",
+            "path": "skills/knowledge/expansive-inquiry",
+            "pluginName": null
+          },
+          {
+            "name": "knowledge-architecture",
+            "path": "skills/knowledge/knowledge-architecture",
+            "pluginName": null
+          },
+          {
+            "name": "knowledge-graph-builder",
+            "path": "skills/knowledge/knowledge-graph-builder",
+            "pluginName": null
+          },
+          {
+            "name": "recursive-boil-down",
+            "path": "skills/knowledge/recursive-boil-down",
+            "pluginName": null
+          },
+          {
+            "name": "recursive-systems-architect",
+            "path": "skills/knowledge/recursive-systems-architect",
+            "pluginName": null
+          },
+          {
+            "name": "research-synthesis-workflow",
+            "path": "skills/knowledge/research-synthesis-workflow",
+            "pluginName": null
+          },
+          {
+            "name": "second-brain-librarian",
+            "path": "skills/knowledge/second-brain-librarian",
+            "pluginName": null
+          },
+          {
+            "name": "source-evaluation-bibliography",
+            "path": "skills/knowledge/source-evaluation-bibliography",
+            "pluginName": null
+          },
+          {
+            "name": "brand-guidelines",
+            "path": "skills/professional/brand-guidelines",
+            "pluginName": null
+          },
+          {
+            "name": "content-distribution",
+            "path": "skills/professional/content-distribution",
+            "pluginName": null
+          },
+          {
+            "name": "cv-resume-builder",
+            "path": "skills/professional/cv-resume-builder",
+            "pluginName": null
+          },
+          {
+            "name": "freelance-client-ops",
+            "path": "skills/professional/freelance-client-ops",
+            "pluginName": null
+          },
+          {
+            "name": "grant-proposal-writer",
+            "path": "skills/professional/grant-proposal-writer",
+            "pluginName": null
+          },
+          {
+            "name": "inbound-opportunity-protocol",
+            "path": "skills/professional/inbound-opportunity-protocol",
+            "pluginName": null
+          },
+          {
+            "name": "internal-comms",
+            "path": "skills/professional/internal-comms",
+            "pluginName": null
+          },
+          {
+            "name": "interview-preparation",
+            "path": "skills/professional/interview-preparation",
+            "pluginName": null
+          },
+          {
+            "name": "networking-outreach",
+            "path": "skills/professional/networking-outreach",
+            "pluginName": null
+          },
+          {
+            "name": "pitch-deck-patterns",
+            "path": "skills/professional/pitch-deck-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "portfolio-presentation",
+            "path": "skills/professional/portfolio-presentation",
+            "pluginName": null
+          },
+          {
+            "name": "slack-gif-creator",
+            "path": "skills/professional/slack-gif-creator",
+            "pluginName": null
+          },
+          {
+            "name": "workshop-presentation-design",
+            "path": "skills/professional/workshop-presentation-design",
+            "pluginName": null
+          },
+          {
+            "name": "domain-ideal-whole-substrate",
+            "path": "skills/project-management/domain-ideal-whole-substrate",
+            "pluginName": null
+          },
+          {
+            "name": "github-roadmap-strategist",
+            "path": "skills/project-management/github-roadmap-strategist",
+            "pluginName": null
+          },
+          {
+            "name": "personalized-storefront-render",
+            "path": "skills/project-management/personalized-storefront-render",
+            "pluginName": null
+          },
+          {
+            "name": "premortem",
+            "path": "skills/project-management/premortem",
+            "pluginName": null
+          },
+          {
+            "name": "product-domain-engine",
+            "path": "skills/project-management/product-domain-engine",
+            "pluginName": null
+          },
+          {
+            "name": "product-requirements-designer",
+            "path": "skills/project-management/product-requirements-designer",
+            "pluginName": null
+          },
+          {
+            "name": "project-alchemy-orchestrator",
+            "path": "skills/project-management/project-alchemy-orchestrator",
+            "pluginName": null
+          },
+          {
+            "name": "project-orchestration",
+            "path": "skills/project-management/project-orchestration",
+            "pluginName": null
+          },
+          {
+            "name": "promotion-readiness-checklist",
+            "path": "skills/project-management/promotion-readiness-checklist",
+            "pluginName": null
+          },
+          {
+            "name": "contract-risk-analyzer",
+            "path": "skills/security/contract-risk-analyzer",
+            "pluginName": null
+          },
+          {
+            "name": "gdpr-compliance-check",
+            "path": "skills/security/gdpr-compliance-check",
+            "pluginName": null
+          },
+          {
+            "name": "incident-response-commander",
+            "path": "skills/security/incident-response-commander",
+            "pluginName": null
+          },
+          {
+            "name": "security-essentials-pack",
+            "path": "skills/security/security-essentials-pack",
+            "pluginName": null
+          },
+          {
+            "name": "security-implementation-guide",
+            "path": "skills/security/security-implementation-guide",
+            "pluginName": null
+          },
+          {
+            "name": "security-threat-modeler",
+            "path": "skills/security/security-threat-modeler",
+            "pluginName": null
+          },
+          {
+            "name": "turnstile-spin",
+            "path": "skills/security/turnstile-spin",
+            "pluginName": null
+          },
+          {
+            "name": "blockchain-integration-builder",
+            "path": "skills/specialized/blockchain-integration-builder",
+            "pluginName": null
+          },
+          {
+            "name": "defi-trading-systems",
+            "path": "skills/specialized/defi-trading-systems",
+            "pluginName": null
+          },
+          {
+            "name": "game-mechanics-designer",
+            "path": "skills/specialized/game-mechanics-designer",
+            "pluginName": null
+          },
+          {
+            "name": "interfaith-sacred-geometry",
+            "path": "skills/specialized/interfaith-sacred-geometry",
+            "pluginName": null
+          },
+          {
+            "name": "local-llm-fine-tuning",
+            "path": "skills/specialized/local-llm-fine-tuning",
+            "pluginName": null
+          },
+          {
+            "name": "location-ar-experience",
+            "path": "skills/specialized/location-ar-experience",
+            "pluginName": null
+          },
+          {
+            "name": "agent-development-pack",
+            "path": "skills/tools/agent-development-pack",
+            "pluginName": null
+          },
+          {
+            "name": "agent-swarm-orchestrator",
+            "path": "skills/tools/agent-swarm-orchestrator",
+            "pluginName": null
+          },
+          {
+            "name": "artifact-resurfacing",
+            "path": "skills/tools/artifact-resurfacing",
+            "pluginName": null
+          },
+          {
+            "name": "closeout",
+            "path": "skills/tools/closeout",
+            "pluginName": null
+          },
+          {
+            "name": "cross-agent-handoff",
+            "path": "skills/tools/cross-agent-handoff",
+            "pluginName": null
+          },
+          {
+            "name": "ecosystem-autopsy",
+            "path": "skills/tools/ecosystem-autopsy",
+            "pluginName": null
+          },
+          {
+            "name": "multi-agent-workforce-planner",
+            "path": "skills/tools/multi-agent-workforce-planner",
+            "pluginName": null
+          },
+          {
+            "name": "ontological-renamer",
+            "path": "skills/tools/ontological-renamer",
+            "pluginName": null
+          },
+          {
+            "name": "organvm-governance-pack",
+            "path": "skills/tools/organvm-governance-pack",
+            "pluginName": null
+          },
+          {
+            "name": "portal-router",
+            "path": "skills/tools/portal-router",
+            "pluginName": null
+          },
+          {
+            "name": "prompt-engineering-patterns",
+            "path": "skills/tools/prompt-engineering-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "qa-audit",
+            "path": "skills/tools/qa-audit",
+            "pluginName": null
+          },
+          {
+            "name": "session-governance-audit",
+            "path": "skills/tools/session-governance-audit",
+            "pluginName": null
+          },
+          {
+            "name": "session-lifecycle-patterns",
+            "path": "skills/tools/session-lifecycle-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "shell-history-hygiene",
+            "path": "skills/tools/shell-history-hygiene",
+            "pluginName": null
+          },
+          {
+            "name": "skill-chain-prompts",
+            "path": "skills/tools/skill-chain-prompts",
+            "pluginName": null
+          },
+          {
+            "name": "skill-creator",
+            "path": "skills/tools/skill-creator",
+            "pluginName": null
+          },
+          {
+            "name": "speckit",
+            "path": "skills/tools/speckit",
+            "pluginName": null
+          },
+          {
+            "name": "transcript-promotion",
+            "path": "skills/tools/transcript-promotion",
+            "pluginName": null
+          },
+          {
+            "name": "voice-enforcement",
+            "path": "skills/tools/voice-enforcement",
+            "pluginName": null
+          },
+          {
+            "name": "workspace-autopsy-governance",
+            "path": "skills/tools/workspace-autopsy-governance",
+            "pluginName": null
+          }
+        ]
+      },
+      "fullDepth": {
+        "options": {
+          "fullDepth": true
+        },
+        "count": 178,
+        "buckets": {
+          "skills": 167,
+          "plugins": 11
+        },
+        "entries": [
+          {
+            "name": "algorithmic-art",
+            "path": "skills/creative/algorithmic-art",
+            "pluginName": null
+          },
+          {
+            "name": "audio-engineering-patterns",
+            "path": "skills/creative/audio-engineering-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "canvas-design",
+            "path": "skills/creative/canvas-design",
+            "pluginName": null
+          },
+          {
+            "name": "creative-writing-craft",
+            "path": "skills/creative/creative-writing-craft",
+            "pluginName": null
+          },
+          {
+            "name": "generative-art-algorithms",
+            "path": "skills/creative/generative-art-algorithms",
+            "pluginName": null
+          },
+          {
+            "name": "generative-art-deployment",
+            "path": "skills/creative/generative-art-deployment",
+            "pluginName": null
+          },
+          {
+            "name": "generative-music-composer",
+            "path": "skills/creative/generative-music-composer",
+            "pluginName": null
+          },
+          {
+            "name": "interactive-theatre-designer",
+            "path": "skills/creative/interactive-theatre-designer",
+            "pluginName": null
+          },
+          {
+            "name": "modular-synthesis-philosophy",
+            "path": "skills/creative/modular-synthesis-philosophy",
+            "pluginName": null
+          },
+          {
+            "name": "movement-notation-systems",
+            "path": "skills/creative/movement-notation-systems",
+            "pluginName": null
+          },
+          {
+            "name": "narratological-algorithms",
+            "path": "skills/creative/narratological-algorithms",
+            "pluginName": null
+          },
+          {
+            "name": "natural-center-extraction",
+            "path": "skills/creative/natural-center-extraction",
+            "pluginName": null
+          },
+          {
+            "name": "react-three-fiber-patterns",
+            "path": "skills/creative/react-three-fiber-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "reality-tv-narrative-analyzer",
+            "path": "skills/creative/reality-tv-narrative-analyzer",
+            "pluginName": null
+          },
+          {
+            "name": "script-analysis-dramaturgical",
+            "path": "skills/creative/script-analysis-dramaturgical",
+            "pluginName": null
+          },
+          {
+            "name": "theme-factory",
+            "path": "skills/creative/theme-factory",
+            "pluginName": null
+          },
+          {
+            "name": "three-js-interactive-builder",
+            "path": "skills/creative/three-js-interactive-builder",
+            "pluginName": null
+          },
+          {
+            "name": "corpus-persona-extraction",
+            "path": "skills/data/corpus-persona-extraction",
+            "pluginName": null
+          },
+          {
+            "name": "data-ingestion-pipeline",
+            "path": "skills/data/data-ingestion-pipeline",
+            "pluginName": null
+          },
+          {
+            "name": "data-pipeline-architect",
+            "path": "skills/data/data-pipeline-architect",
+            "pluginName": null
+          },
+          {
+            "name": "data-storytelling-analyst",
+            "path": "skills/data/data-storytelling-analyst",
+            "pluginName": null
+          },
+          {
+            "name": "market-gap-analysis",
+            "path": "skills/data/market-gap-analysis",
+            "pluginName": null
+          },
+          {
+            "name": "ml-experiment-tracker",
+            "path": "skills/data/ml-experiment-tracker",
+            "pluginName": null
+          },
+          {
+            "name": "prompt-atom-formalization",
+            "path": "skills/data/prompt-atom-formalization",
+            "pluginName": null
+          },
+          {
+            "name": "sql-query-optimizer",
+            "path": "skills/data/sql-query-optimizer",
+            "pluginName": null
+          },
+          {
+            "name": "systemic-product-analyst",
+            "path": "skills/data/systemic-product-analyst",
+            "pluginName": null
+          },
+          {
+            "name": "time-series-analyst",
+            "path": "skills/data/time-series-analyst",
+            "pluginName": null
+          },
+          {
+            "name": "accessibility-patterns",
+            "path": "skills/development/accessibility-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "agent-testing-patterns",
+            "path": "skills/development/agent-testing-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "api-design-patterns",
+            "path": "skills/development/api-design-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "artifacts-builder",
+            "path": "skills/development/artifacts-builder",
+            "pluginName": null
+          },
+          {
+            "name": "backend-implementation-patterns",
+            "path": "skills/development/backend-implementation-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "browser-extension-patterns",
+            "path": "skills/development/browser-extension-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "cli-tool-design",
+            "path": "skills/development/cli-tool-design",
+            "pluginName": null
+          },
+          {
+            "name": "code-refactoring-patterns",
+            "path": "skills/development/code-refactoring-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "code-review-checklist",
+            "path": "skills/development/code-review-checklist",
+            "pluginName": null
+          },
+          {
+            "name": "coding-standards-enforcer",
+            "path": "skills/development/coding-standards-enforcer",
+            "pluginName": null
+          },
+          {
+            "name": "community-platform-patterns",
+            "path": "skills/development/community-platform-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "configuration-management",
+            "path": "skills/development/configuration-management",
+            "pluginName": null
+          },
+          {
+            "name": "continuous-learning-agent",
+            "path": "skills/development/continuous-learning-agent",
+            "pluginName": null
+          },
+          {
+            "name": "data-backup-patterns",
+            "path": "skills/development/data-backup-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "database-migration-patterns",
+            "path": "skills/development/database-migration-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "deployment-cicd",
+            "path": "skills/development/deployment-cicd",
+            "pluginName": null
+          },
+          {
+            "name": "docker-containerization",
+            "path": "skills/development/docker-containerization",
+            "pluginName": null
+          },
+          {
+            "name": "dotfile-systems-architect",
+            "path": "skills/development/dotfile-systems-architect",
+            "pluginName": null
+          },
+          {
+            "name": "error-handling-logging-patterns",
+            "path": "skills/development/error-handling-logging-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "fastapi-patterns",
+            "path": "skills/development/fastapi-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "feature-workflow-orchestrator",
+            "path": "skills/development/feature-workflow-orchestrator",
+            "pluginName": null
+          },
+          {
+            "name": "frontend-design-systems",
+            "path": "skills/development/frontend-design-systems",
+            "pluginName": null
+          },
+          {
+            "name": "fullstack-starter-pack",
+            "path": "skills/development/fullstack-starter-pack",
+            "pluginName": null
+          },
+          {
+            "name": "gcp-resource-optimizer",
+            "path": "skills/development/gcp-resource-optimizer",
+            "pluginName": null
+          },
+          {
+            "name": "htmx-interaction-patterns",
+            "path": "skills/development/htmx-interaction-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "iterative-code-exploration",
+            "path": "skills/development/iterative-code-exploration",
+            "pluginName": null
+          },
+          {
+            "name": "json-schema-design",
+            "path": "skills/development/json-schema-design",
+            "pluginName": null
+          },
+          {
+            "name": "mcp-builder",
+            "path": "skills/development/mcp-builder",
+            "pluginName": null
+          },
+          {
+            "name": "mcp-server-orchestrator",
+            "path": "skills/development/mcp-server-orchestrator",
+            "pluginName": null
+          },
+          {
+            "name": "mobile-platform-architect",
+            "path": "skills/development/mobile-platform-architect",
+            "pluginName": null
+          },
+          {
+            "name": "monorepo-devops-pack",
+            "path": "skills/development/monorepo-devops-pack",
+            "pluginName": null
+          },
+          {
+            "name": "monorepo-management",
+            "path": "skills/development/monorepo-management",
+            "pluginName": null
+          },
+          {
+            "name": "nextjs-fullstack-patterns",
+            "path": "skills/development/nextjs-fullstack-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "parametrize-and-cite",
+            "path": "skills/development/parametrize-and-cite",
+            "pluginName": null
+          },
+          {
+            "name": "postgres-advanced-patterns",
+            "path": "skills/development/postgres-advanced-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "python-backend-pack",
+            "path": "skills/development/python-backend-pack",
+            "pluginName": null
+          },
+          {
+            "name": "python-packaging-patterns",
+            "path": "skills/development/python-packaging-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "realtime-websocket-patterns",
+            "path": "skills/development/realtime-websocket-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "redis-patterns",
+            "path": "skills/development/redis-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "repo-onboarding-flow",
+            "path": "skills/development/repo-onboarding-flow",
+            "pluginName": null
+          },
+          {
+            "name": "resilience-patterns",
+            "path": "skills/development/resilience-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "responsive-design-patterns",
+            "path": "skills/development/responsive-design-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "rust-systems-design",
+            "path": "skills/development/rust-systems-design",
+            "pluginName": null
+          },
+          {
+            "name": "tdd-workflow",
+            "path": "skills/development/tdd-workflow",
+            "pluginName": null
+          },
+          {
+            "name": "testing-patterns",
+            "path": "skills/development/testing-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "vector-search-patterns",
+            "path": "skills/development/vector-search-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "verification-loop",
+            "path": "skills/development/verification-loop",
+            "pluginName": null
+          },
+          {
+            "name": "web-artifacts-builder",
+            "path": "skills/development/web-artifacts-builder",
+            "pluginName": null
+          },
+          {
+            "name": "webapp-testing",
+            "path": "skills/development/webapp-testing",
+            "pluginName": null
+          },
+          {
+            "name": "document-audit-extraction",
+            "path": "skills/documentation/document-audit-extraction",
+            "pluginName": null
+          },
+          {
+            "name": "github-profile-architect",
+            "path": "skills/documentation/github-profile-architect",
+            "pluginName": null
+          },
+          {
+            "name": "github-repo-curator",
+            "path": "skills/documentation/github-repo-curator",
+            "pluginName": null
+          },
+          {
+            "name": "github-repository-standards",
+            "path": "skills/documentation/github-repository-standards",
+            "pluginName": null
+          },
+          {
+            "name": "stranger-test-protocol",
+            "path": "skills/documentation/stranger-test-protocol",
+            "pluginName": null
+          },
+          {
+            "name": "technical-analytical-writing",
+            "path": "skills/documentation/technical-analytical-writing",
+            "pluginName": null
+          },
+          {
+            "name": "d2l-discussion-responder",
+            "path": "skills/education/d2l-discussion-responder",
+            "pluginName": null
+          },
+          {
+            "name": "enc1101-curriculum-designer",
+            "path": "skills/education/enc1101-curriculum-designer",
+            "pluginName": null
+          },
+          {
+            "name": "evaluation-to-growth",
+            "path": "skills/education/evaluation-to-growth",
+            "pluginName": null
+          },
+          {
+            "name": "feedback-pedagogy",
+            "path": "skills/education/feedback-pedagogy",
+            "pluginName": null
+          },
+          {
+            "name": "recommendation-letter",
+            "path": "skills/education/recommendation-letter",
+            "pluginName": null
+          },
+          {
+            "name": "socratic-tutor",
+            "path": "skills/education/socratic-tutor",
+            "pluginName": null
+          },
+          {
+            "name": "conversation-content-pipeline",
+            "path": "skills/integrations/conversation-content-pipeline",
+            "pluginName": null
+          },
+          {
+            "name": "essay-publishing-pipeline",
+            "path": "skills/integrations/essay-publishing-pipeline",
+            "pluginName": null
+          },
+          {
+            "name": "essay-to-distribution-pack",
+            "path": "skills/integrations/essay-to-distribution-pack",
+            "pluginName": null
+          },
+          {
+            "name": "mcp-integration-patterns",
+            "path": "skills/integrations/mcp-integration-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "oauth-flow-architect",
+            "path": "skills/integrations/oauth-flow-architect",
+            "pluginName": null
+          },
+          {
+            "name": "posse-distribution-architecture",
+            "path": "skills/integrations/posse-distribution-architecture",
+            "pluginName": null
+          },
+          {
+            "name": "social-media-api-integration",
+            "path": "skills/integrations/social-media-api-integration",
+            "pluginName": null
+          },
+          {
+            "name": "specstory-guard",
+            "path": "skills/integrations/specstory-guard",
+            "pluginName": null
+          },
+          {
+            "name": "specstory-link-trail",
+            "path": "skills/integrations/specstory-link-trail",
+            "pluginName": null
+          },
+          {
+            "name": "specstory-organize",
+            "path": "skills/integrations/specstory-organize",
+            "pluginName": null
+          },
+          {
+            "name": "specstory-project-stats",
+            "path": "skills/integrations/specstory-project-stats",
+            "pluginName": null
+          },
+          {
+            "name": "specstory-session-summary",
+            "path": "skills/integrations/specstory-session-summary",
+            "pluginName": null
+          },
+          {
+            "name": "specstory-yak",
+            "path": "skills/integrations/specstory-yak",
+            "pluginName": null
+          },
+          {
+            "name": "webhook-integration-patterns",
+            "path": "skills/integrations/webhook-integration-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "claude-project-manifest",
+            "path": "skills/knowledge/claude-project-manifest",
+            "pluginName": null
+          },
+          {
+            "name": "expansive-inquiry",
+            "path": "skills/knowledge/expansive-inquiry",
+            "pluginName": null
+          },
+          {
+            "name": "knowledge-architecture",
+            "path": "skills/knowledge/knowledge-architecture",
+            "pluginName": null
+          },
+          {
+            "name": "knowledge-graph-builder",
+            "path": "skills/knowledge/knowledge-graph-builder",
+            "pluginName": null
+          },
+          {
+            "name": "recursive-boil-down",
+            "path": "skills/knowledge/recursive-boil-down",
+            "pluginName": null
+          },
+          {
+            "name": "recursive-systems-architect",
+            "path": "skills/knowledge/recursive-systems-architect",
+            "pluginName": null
+          },
+          {
+            "name": "research-synthesis-workflow",
+            "path": "skills/knowledge/research-synthesis-workflow",
+            "pluginName": null
+          },
+          {
+            "name": "second-brain-librarian",
+            "path": "skills/knowledge/second-brain-librarian",
+            "pluginName": null
+          },
+          {
+            "name": "source-evaluation-bibliography",
+            "path": "skills/knowledge/source-evaluation-bibliography",
+            "pluginName": null
+          },
+          {
+            "name": "brand-guidelines",
+            "path": "skills/professional/brand-guidelines",
+            "pluginName": null
+          },
+          {
+            "name": "content-distribution",
+            "path": "skills/professional/content-distribution",
+            "pluginName": null
+          },
+          {
+            "name": "cv-resume-builder",
+            "path": "skills/professional/cv-resume-builder",
+            "pluginName": null
+          },
+          {
+            "name": "freelance-client-ops",
+            "path": "skills/professional/freelance-client-ops",
+            "pluginName": null
+          },
+          {
+            "name": "grant-proposal-writer",
+            "path": "skills/professional/grant-proposal-writer",
+            "pluginName": null
+          },
+          {
+            "name": "inbound-opportunity-protocol",
+            "path": "skills/professional/inbound-opportunity-protocol",
+            "pluginName": null
+          },
+          {
+            "name": "internal-comms",
+            "path": "skills/professional/internal-comms",
+            "pluginName": null
+          },
+          {
+            "name": "interview-preparation",
+            "path": "skills/professional/interview-preparation",
+            "pluginName": null
+          },
+          {
+            "name": "networking-outreach",
+            "path": "skills/professional/networking-outreach",
+            "pluginName": null
+          },
+          {
+            "name": "pitch-deck-patterns",
+            "path": "skills/professional/pitch-deck-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "portfolio-presentation",
+            "path": "skills/professional/portfolio-presentation",
+            "pluginName": null
+          },
+          {
+            "name": "slack-gif-creator",
+            "path": "skills/professional/slack-gif-creator",
+            "pluginName": null
+          },
+          {
+            "name": "workshop-presentation-design",
+            "path": "skills/professional/workshop-presentation-design",
+            "pluginName": null
+          },
+          {
+            "name": "domain-ideal-whole-substrate",
+            "path": "skills/project-management/domain-ideal-whole-substrate",
+            "pluginName": null
+          },
+          {
+            "name": "github-roadmap-strategist",
+            "path": "skills/project-management/github-roadmap-strategist",
+            "pluginName": null
+          },
+          {
+            "name": "personalized-storefront-render",
+            "path": "skills/project-management/personalized-storefront-render",
+            "pluginName": null
+          },
+          {
+            "name": "premortem",
+            "path": "skills/project-management/premortem",
+            "pluginName": null
+          },
+          {
+            "name": "product-domain-engine",
+            "path": "skills/project-management/product-domain-engine",
+            "pluginName": null
+          },
+          {
+            "name": "product-requirements-designer",
+            "path": "skills/project-management/product-requirements-designer",
+            "pluginName": null
+          },
+          {
+            "name": "project-alchemy-orchestrator",
+            "path": "skills/project-management/project-alchemy-orchestrator",
+            "pluginName": null
+          },
+          {
+            "name": "project-orchestration",
+            "path": "skills/project-management/project-orchestration",
+            "pluginName": null
+          },
+          {
+            "name": "promotion-readiness-checklist",
+            "path": "skills/project-management/promotion-readiness-checklist",
+            "pluginName": null
+          },
+          {
+            "name": "contract-risk-analyzer",
+            "path": "skills/security/contract-risk-analyzer",
+            "pluginName": null
+          },
+          {
+            "name": "gdpr-compliance-check",
+            "path": "skills/security/gdpr-compliance-check",
+            "pluginName": null
+          },
+          {
+            "name": "incident-response-commander",
+            "path": "skills/security/incident-response-commander",
+            "pluginName": null
+          },
+          {
+            "name": "security-essentials-pack",
+            "path": "skills/security/security-essentials-pack",
+            "pluginName": null
+          },
+          {
+            "name": "security-implementation-guide",
+            "path": "skills/security/security-implementation-guide",
+            "pluginName": null
+          },
+          {
+            "name": "security-threat-modeler",
+            "path": "skills/security/security-threat-modeler",
+            "pluginName": null
+          },
+          {
+            "name": "turnstile-spin",
+            "path": "skills/security/turnstile-spin",
+            "pluginName": null
+          },
+          {
+            "name": "blockchain-integration-builder",
+            "path": "skills/specialized/blockchain-integration-builder",
+            "pluginName": null
+          },
+          {
+            "name": "defi-trading-systems",
+            "path": "skills/specialized/defi-trading-systems",
+            "pluginName": null
+          },
+          {
+            "name": "game-mechanics-designer",
+            "path": "skills/specialized/game-mechanics-designer",
+            "pluginName": null
+          },
+          {
+            "name": "interfaith-sacred-geometry",
+            "path": "skills/specialized/interfaith-sacred-geometry",
+            "pluginName": null
+          },
+          {
+            "name": "local-llm-fine-tuning",
+            "path": "skills/specialized/local-llm-fine-tuning",
+            "pluginName": null
+          },
+          {
+            "name": "location-ar-experience",
+            "path": "skills/specialized/location-ar-experience",
+            "pluginName": null
+          },
+          {
+            "name": "agent-development-pack",
+            "path": "skills/tools/agent-development-pack",
+            "pluginName": null
+          },
+          {
+            "name": "agent-swarm-orchestrator",
+            "path": "skills/tools/agent-swarm-orchestrator",
+            "pluginName": null
+          },
+          {
+            "name": "artifact-resurfacing",
+            "path": "skills/tools/artifact-resurfacing",
+            "pluginName": null
+          },
+          {
+            "name": "closeout",
+            "path": "skills/tools/closeout",
+            "pluginName": null
+          },
+          {
+            "name": "cross-agent-handoff",
+            "path": "skills/tools/cross-agent-handoff",
+            "pluginName": null
+          },
+          {
+            "name": "ecosystem-autopsy",
+            "path": "skills/tools/ecosystem-autopsy",
+            "pluginName": null
+          },
+          {
+            "name": "multi-agent-workforce-planner",
+            "path": "skills/tools/multi-agent-workforce-planner",
+            "pluginName": null
+          },
+          {
+            "name": "ontological-renamer",
+            "path": "skills/tools/ontological-renamer",
+            "pluginName": null
+          },
+          {
+            "name": "organvm-governance-pack",
+            "path": "skills/tools/organvm-governance-pack",
+            "pluginName": null
+          },
+          {
+            "name": "portal-router",
+            "path": "skills/tools/portal-router",
+            "pluginName": null
+          },
+          {
+            "name": "prompt-engineering-patterns",
+            "path": "skills/tools/prompt-engineering-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "qa-audit",
+            "path": "skills/tools/qa-audit",
+            "pluginName": null
+          },
+          {
+            "name": "session-governance-audit",
+            "path": "skills/tools/session-governance-audit",
+            "pluginName": null
+          },
+          {
+            "name": "session-lifecycle-patterns",
+            "path": "skills/tools/session-lifecycle-patterns",
+            "pluginName": null
+          },
+          {
+            "name": "shell-history-hygiene",
+            "path": "skills/tools/shell-history-hygiene",
+            "pluginName": null
+          },
+          {
+            "name": "skill-chain-prompts",
+            "path": "skills/tools/skill-chain-prompts",
+            "pluginName": null
+          },
+          {
+            "name": "skill-creator",
+            "path": "skills/tools/skill-creator",
+            "pluginName": null
+          },
+          {
+            "name": "speckit",
+            "path": "skills/tools/speckit",
+            "pluginName": null
+          },
+          {
+            "name": "transcript-promotion",
+            "path": "skills/tools/transcript-promotion",
+            "pluginName": null
+          },
+          {
+            "name": "voice-enforcement",
+            "path": "skills/tools/voice-enforcement",
+            "pluginName": null
+          },
+          {
+            "name": "workspace-autopsy-governance",
+            "path": "skills/tools/workspace-autopsy-governance",
+            "pluginName": null
+          },
+          {
+            "name": "assignment-composition",
+            "path": "plugins/coliseum-from-grain/skills/assignment-composition",
+            "pluginName": null
+          },
+          {
+            "name": "coliseum-dispatch",
+            "path": "plugins/coliseum-from-grain/skills/coliseum-dispatch",
+            "pluginName": null
+          },
+          {
+            "name": "coliseum-orchestrator",
+            "path": "plugins/coliseum-from-grain/skills/coliseum-orchestrator",
+            "pluginName": null
+          },
+          {
+            "name": "coliseum-reconciliation",
+            "path": "plugins/coliseum-from-grain/skills/coliseum-reconciliation",
+            "pluginName": null
+          },
+          {
+            "name": "dimension-surfacing",
+            "path": "plugins/coliseum-from-grain/skills/dimension-surfacing",
+            "pluginName": null
+          },
+          {
+            "name": "governance-evolution-protocol",
+            "path": "plugins/pentaphase-structural-architect/skills/governance-evolution-protocol",
+            "pluginName": null
+          },
+          {
+            "name": "landscape-discovery-audit",
+            "path": "plugins/pentaphase-structural-architect/skills/landscape-discovery-audit",
+            "pluginName": null
+          },
+          {
+            "name": "pentaphase-orchestrator",
+            "path": "plugins/pentaphase-structural-architect/skills/pentaphase-orchestrator",
+            "pluginName": null
+          },
+          {
+            "name": "system-environment-configuration",
+            "path": "plugins/pentaphase-structural-architect/skills/system-environment-configuration",
+            "pluginName": null
+          },
+          {
+            "name": "systemic-ingestion-normalization",
+            "path": "plugins/pentaphase-structural-architect/skills/systemic-ingestion-normalization",
+            "pluginName": null
+          },
+          {
+            "name": "taxonomy-modeling-design",
+            "path": "plugins/pentaphase-structural-architect/skills/taxonomy-modeling-design",
+            "pluginName": null
+          }
+        ]
+      }
+    },
+    "verifiedRelease": {
+      "normal": {
+        "options": {},
+        "count": 178,
+        "buckets": {
+          "skills": 167,
+          "plugins": 11
+        },
+        "entries": [
+          {
+            "name": "algorithmic-art",
+            "path": "skills/creative/algorithmic-art",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "audio-engineering-patterns",
+            "path": "skills/creative/audio-engineering-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "canvas-design",
+            "path": "skills/creative/canvas-design",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "creative-writing-craft",
+            "path": "skills/creative/creative-writing-craft",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "generative-art-algorithms",
+            "path": "skills/creative/generative-art-algorithms",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "generative-art-deployment",
+            "path": "skills/creative/generative-art-deployment",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "generative-music-composer",
+            "path": "skills/creative/generative-music-composer",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "interactive-theatre-designer",
+            "path": "skills/creative/interactive-theatre-designer",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "modular-synthesis-philosophy",
+            "path": "skills/creative/modular-synthesis-philosophy",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "movement-notation-systems",
+            "path": "skills/creative/movement-notation-systems",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "narratological-algorithms",
+            "path": "skills/creative/narratological-algorithms",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "natural-center-extraction",
+            "path": "skills/creative/natural-center-extraction",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "react-three-fiber-patterns",
+            "path": "skills/creative/react-three-fiber-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "reality-tv-narrative-analyzer",
+            "path": "skills/creative/reality-tv-narrative-analyzer",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "script-analysis-dramaturgical",
+            "path": "skills/creative/script-analysis-dramaturgical",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "theme-factory",
+            "path": "skills/creative/theme-factory",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "three-js-interactive-builder",
+            "path": "skills/creative/three-js-interactive-builder",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "corpus-persona-extraction",
+            "path": "skills/data/corpus-persona-extraction",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "data-ingestion-pipeline",
+            "path": "skills/data/data-ingestion-pipeline",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "data-pipeline-architect",
+            "path": "skills/data/data-pipeline-architect",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "data-storytelling-analyst",
+            "path": "skills/data/data-storytelling-analyst",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "market-gap-analysis",
+            "path": "skills/data/market-gap-analysis",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "ml-experiment-tracker",
+            "path": "skills/data/ml-experiment-tracker",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "prompt-atom-formalization",
+            "path": "skills/data/prompt-atom-formalization",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "sql-query-optimizer",
+            "path": "skills/data/sql-query-optimizer",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "systemic-product-analyst",
+            "path": "skills/data/systemic-product-analyst",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "time-series-analyst",
+            "path": "skills/data/time-series-analyst",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "accessibility-patterns",
+            "path": "skills/development/accessibility-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "agent-testing-patterns",
+            "path": "skills/development/agent-testing-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "api-design-patterns",
+            "path": "skills/development/api-design-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "artifacts-builder",
+            "path": "skills/development/artifacts-builder",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "backend-implementation-patterns",
+            "path": "skills/development/backend-implementation-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "browser-extension-patterns",
+            "path": "skills/development/browser-extension-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "cli-tool-design",
+            "path": "skills/development/cli-tool-design",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "code-refactoring-patterns",
+            "path": "skills/development/code-refactoring-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "code-review-checklist",
+            "path": "skills/development/code-review-checklist",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "coding-standards-enforcer",
+            "path": "skills/development/coding-standards-enforcer",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "community-platform-patterns",
+            "path": "skills/development/community-platform-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "configuration-management",
+            "path": "skills/development/configuration-management",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "continuous-learning-agent",
+            "path": "skills/development/continuous-learning-agent",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "data-backup-patterns",
+            "path": "skills/development/data-backup-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "database-migration-patterns",
+            "path": "skills/development/database-migration-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "deployment-cicd",
+            "path": "skills/development/deployment-cicd",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "docker-containerization",
+            "path": "skills/development/docker-containerization",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "dotfile-systems-architect",
+            "path": "skills/development/dotfile-systems-architect",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "error-handling-logging-patterns",
+            "path": "skills/development/error-handling-logging-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "fastapi-patterns",
+            "path": "skills/development/fastapi-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "feature-workflow-orchestrator",
+            "path": "skills/development/feature-workflow-orchestrator",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "frontend-design-systems",
+            "path": "skills/development/frontend-design-systems",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "fullstack-starter-pack",
+            "path": "skills/development/fullstack-starter-pack",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "gcp-resource-optimizer",
+            "path": "skills/development/gcp-resource-optimizer",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "htmx-interaction-patterns",
+            "path": "skills/development/htmx-interaction-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "iterative-code-exploration",
+            "path": "skills/development/iterative-code-exploration",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "json-schema-design",
+            "path": "skills/development/json-schema-design",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "mcp-builder",
+            "path": "skills/development/mcp-builder",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "mcp-server-orchestrator",
+            "path": "skills/development/mcp-server-orchestrator",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "mobile-platform-architect",
+            "path": "skills/development/mobile-platform-architect",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "monorepo-devops-pack",
+            "path": "skills/development/monorepo-devops-pack",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "monorepo-management",
+            "path": "skills/development/monorepo-management",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "nextjs-fullstack-patterns",
+            "path": "skills/development/nextjs-fullstack-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "parametrize-and-cite",
+            "path": "skills/development/parametrize-and-cite",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "postgres-advanced-patterns",
+            "path": "skills/development/postgres-advanced-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "python-backend-pack",
+            "path": "skills/development/python-backend-pack",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "python-packaging-patterns",
+            "path": "skills/development/python-packaging-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "realtime-websocket-patterns",
+            "path": "skills/development/realtime-websocket-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "redis-patterns",
+            "path": "skills/development/redis-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "repo-onboarding-flow",
+            "path": "skills/development/repo-onboarding-flow",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "resilience-patterns",
+            "path": "skills/development/resilience-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "responsive-design-patterns",
+            "path": "skills/development/responsive-design-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "rust-systems-design",
+            "path": "skills/development/rust-systems-design",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "tdd-workflow",
+            "path": "skills/development/tdd-workflow",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "testing-patterns",
+            "path": "skills/development/testing-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "vector-search-patterns",
+            "path": "skills/development/vector-search-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "verification-loop",
+            "path": "skills/development/verification-loop",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "web-artifacts-builder",
+            "path": "skills/development/web-artifacts-builder",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "webapp-testing",
+            "path": "skills/development/webapp-testing",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "document-audit-extraction",
+            "path": "skills/documentation/document-audit-extraction",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "github-profile-architect",
+            "path": "skills/documentation/github-profile-architect",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "github-repo-curator",
+            "path": "skills/documentation/github-repo-curator",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "github-repository-standards",
+            "path": "skills/documentation/github-repository-standards",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "stranger-test-protocol",
+            "path": "skills/documentation/stranger-test-protocol",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "technical-analytical-writing",
+            "path": "skills/documentation/technical-analytical-writing",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "d2l-discussion-responder",
+            "path": "skills/education/d2l-discussion-responder",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "enc1101-curriculum-designer",
+            "path": "skills/education/enc1101-curriculum-designer",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "evaluation-to-growth",
+            "path": "skills/education/evaluation-to-growth",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "feedback-pedagogy",
+            "path": "skills/education/feedback-pedagogy",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "recommendation-letter",
+            "path": "skills/education/recommendation-letter",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "socratic-tutor",
+            "path": "skills/education/socratic-tutor",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "conversation-content-pipeline",
+            "path": "skills/integrations/conversation-content-pipeline",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "essay-publishing-pipeline",
+            "path": "skills/integrations/essay-publishing-pipeline",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "essay-to-distribution-pack",
+            "path": "skills/integrations/essay-to-distribution-pack",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "mcp-integration-patterns",
+            "path": "skills/integrations/mcp-integration-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "oauth-flow-architect",
+            "path": "skills/integrations/oauth-flow-architect",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "posse-distribution-architecture",
+            "path": "skills/integrations/posse-distribution-architecture",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "social-media-api-integration",
+            "path": "skills/integrations/social-media-api-integration",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "specstory-guard",
+            "path": "skills/integrations/specstory-guard",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "specstory-link-trail",
+            "path": "skills/integrations/specstory-link-trail",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "specstory-organize",
+            "path": "skills/integrations/specstory-organize",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "specstory-project-stats",
+            "path": "skills/integrations/specstory-project-stats",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "specstory-session-summary",
+            "path": "skills/integrations/specstory-session-summary",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "specstory-yak",
+            "path": "skills/integrations/specstory-yak",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "webhook-integration-patterns",
+            "path": "skills/integrations/webhook-integration-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "claude-project-manifest",
+            "path": "skills/knowledge/claude-project-manifest",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "expansive-inquiry",
+            "path": "skills/knowledge/expansive-inquiry",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "knowledge-architecture",
+            "path": "skills/knowledge/knowledge-architecture",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "knowledge-graph-builder",
+            "path": "skills/knowledge/knowledge-graph-builder",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "recursive-boil-down",
+            "path": "skills/knowledge/recursive-boil-down",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "recursive-systems-architect",
+            "path": "skills/knowledge/recursive-systems-architect",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "research-synthesis-workflow",
+            "path": "skills/knowledge/research-synthesis-workflow",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "second-brain-librarian",
+            "path": "skills/knowledge/second-brain-librarian",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "source-evaluation-bibliography",
+            "path": "skills/knowledge/source-evaluation-bibliography",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "brand-guidelines",
+            "path": "skills/professional/brand-guidelines",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "content-distribution",
+            "path": "skills/professional/content-distribution",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "cv-resume-builder",
+            "path": "skills/professional/cv-resume-builder",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "freelance-client-ops",
+            "path": "skills/professional/freelance-client-ops",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "grant-proposal-writer",
+            "path": "skills/professional/grant-proposal-writer",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "inbound-opportunity-protocol",
+            "path": "skills/professional/inbound-opportunity-protocol",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "internal-comms",
+            "path": "skills/professional/internal-comms",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "interview-preparation",
+            "path": "skills/professional/interview-preparation",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "networking-outreach",
+            "path": "skills/professional/networking-outreach",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "pitch-deck-patterns",
+            "path": "skills/professional/pitch-deck-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "portfolio-presentation",
+            "path": "skills/professional/portfolio-presentation",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "slack-gif-creator",
+            "path": "skills/professional/slack-gif-creator",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "workshop-presentation-design",
+            "path": "skills/professional/workshop-presentation-design",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "domain-ideal-whole-substrate",
+            "path": "skills/project-management/domain-ideal-whole-substrate",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "github-roadmap-strategist",
+            "path": "skills/project-management/github-roadmap-strategist",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "personalized-storefront-render",
+            "path": "skills/project-management/personalized-storefront-render",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "premortem",
+            "path": "skills/project-management/premortem",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "product-domain-engine",
+            "path": "skills/project-management/product-domain-engine",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "product-requirements-designer",
+            "path": "skills/project-management/product-requirements-designer",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "project-alchemy-orchestrator",
+            "path": "skills/project-management/project-alchemy-orchestrator",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "project-orchestration",
+            "path": "skills/project-management/project-orchestration",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "promotion-readiness-checklist",
+            "path": "skills/project-management/promotion-readiness-checklist",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "contract-risk-analyzer",
+            "path": "skills/security/contract-risk-analyzer",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "gdpr-compliance-check",
+            "path": "skills/security/gdpr-compliance-check",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "incident-response-commander",
+            "path": "skills/security/incident-response-commander",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "security-essentials-pack",
+            "path": "skills/security/security-essentials-pack",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "security-implementation-guide",
+            "path": "skills/security/security-implementation-guide",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "security-threat-modeler",
+            "path": "skills/security/security-threat-modeler",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "turnstile-spin",
+            "path": "skills/security/turnstile-spin",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "blockchain-integration-builder",
+            "path": "skills/specialized/blockchain-integration-builder",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "defi-trading-systems",
+            "path": "skills/specialized/defi-trading-systems",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "game-mechanics-designer",
+            "path": "skills/specialized/game-mechanics-designer",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "interfaith-sacred-geometry",
+            "path": "skills/specialized/interfaith-sacred-geometry",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "local-llm-fine-tuning",
+            "path": "skills/specialized/local-llm-fine-tuning",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "location-ar-experience",
+            "path": "skills/specialized/location-ar-experience",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "agent-development-pack",
+            "path": "skills/tools/agent-development-pack",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "agent-swarm-orchestrator",
+            "path": "skills/tools/agent-swarm-orchestrator",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "artifact-resurfacing",
+            "path": "skills/tools/artifact-resurfacing",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "closeout",
+            "path": "skills/tools/closeout",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "cross-agent-handoff",
+            "path": "skills/tools/cross-agent-handoff",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "ecosystem-autopsy",
+            "path": "skills/tools/ecosystem-autopsy",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "multi-agent-workforce-planner",
+            "path": "skills/tools/multi-agent-workforce-planner",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "ontological-renamer",
+            "path": "skills/tools/ontological-renamer",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "organvm-governance-pack",
+            "path": "skills/tools/organvm-governance-pack",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "portal-router",
+            "path": "skills/tools/portal-router",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "prompt-engineering-patterns",
+            "path": "skills/tools/prompt-engineering-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "qa-audit",
+            "path": "skills/tools/qa-audit",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "session-governance-audit",
+            "path": "skills/tools/session-governance-audit",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "session-lifecycle-patterns",
+            "path": "skills/tools/session-lifecycle-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "shell-history-hygiene",
+            "path": "skills/tools/shell-history-hygiene",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "skill-chain-prompts",
+            "path": "skills/tools/skill-chain-prompts",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "skill-creator",
+            "path": "skills/tools/skill-creator",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "speckit",
+            "path": "skills/tools/speckit",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "transcript-promotion",
+            "path": "skills/tools/transcript-promotion",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "voice-enforcement",
+            "path": "skills/tools/voice-enforcement",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "workspace-autopsy-governance",
+            "path": "skills/tools/workspace-autopsy-governance",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "assignment-composition",
+            "path": "plugins/coliseum-from-grain/skills/assignment-composition",
+            "pluginName": null
+          },
+          {
+            "name": "coliseum-dispatch",
+            "path": "plugins/coliseum-from-grain/skills/coliseum-dispatch",
+            "pluginName": null
+          },
+          {
+            "name": "coliseum-orchestrator",
+            "path": "plugins/coliseum-from-grain/skills/coliseum-orchestrator",
+            "pluginName": null
+          },
+          {
+            "name": "coliseum-reconciliation",
+            "path": "plugins/coliseum-from-grain/skills/coliseum-reconciliation",
+            "pluginName": null
+          },
+          {
+            "name": "dimension-surfacing",
+            "path": "plugins/coliseum-from-grain/skills/dimension-surfacing",
+            "pluginName": null
+          },
+          {
+            "name": "governance-evolution-protocol",
+            "path": "plugins/pentaphase-structural-architect/skills/governance-evolution-protocol",
+            "pluginName": null
+          },
+          {
+            "name": "landscape-discovery-audit",
+            "path": "plugins/pentaphase-structural-architect/skills/landscape-discovery-audit",
+            "pluginName": null
+          },
+          {
+            "name": "pentaphase-orchestrator",
+            "path": "plugins/pentaphase-structural-architect/skills/pentaphase-orchestrator",
+            "pluginName": null
+          },
+          {
+            "name": "system-environment-configuration",
+            "path": "plugins/pentaphase-structural-architect/skills/system-environment-configuration",
+            "pluginName": null
+          },
+          {
+            "name": "systemic-ingestion-normalization",
+            "path": "plugins/pentaphase-structural-architect/skills/systemic-ingestion-normalization",
+            "pluginName": null
+          },
+          {
+            "name": "taxonomy-modeling-design",
+            "path": "plugins/pentaphase-structural-architect/skills/taxonomy-modeling-design",
+            "pluginName": null
+          }
+        ]
+      },
+      "fullDepth": {
+        "options": {
+          "fullDepth": true
+        },
+        "count": 178,
+        "buckets": {
+          "skills": 167,
+          "plugins": 11
+        },
+        "entries": [
+          {
+            "name": "algorithmic-art",
+            "path": "skills/creative/algorithmic-art",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "audio-engineering-patterns",
+            "path": "skills/creative/audio-engineering-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "canvas-design",
+            "path": "skills/creative/canvas-design",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "creative-writing-craft",
+            "path": "skills/creative/creative-writing-craft",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "generative-art-algorithms",
+            "path": "skills/creative/generative-art-algorithms",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "generative-art-deployment",
+            "path": "skills/creative/generative-art-deployment",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "generative-music-composer",
+            "path": "skills/creative/generative-music-composer",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "interactive-theatre-designer",
+            "path": "skills/creative/interactive-theatre-designer",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "modular-synthesis-philosophy",
+            "path": "skills/creative/modular-synthesis-philosophy",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "movement-notation-systems",
+            "path": "skills/creative/movement-notation-systems",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "narratological-algorithms",
+            "path": "skills/creative/narratological-algorithms",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "natural-center-extraction",
+            "path": "skills/creative/natural-center-extraction",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "react-three-fiber-patterns",
+            "path": "skills/creative/react-three-fiber-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "reality-tv-narrative-analyzer",
+            "path": "skills/creative/reality-tv-narrative-analyzer",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "script-analysis-dramaturgical",
+            "path": "skills/creative/script-analysis-dramaturgical",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "theme-factory",
+            "path": "skills/creative/theme-factory",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "three-js-interactive-builder",
+            "path": "skills/creative/three-js-interactive-builder",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "corpus-persona-extraction",
+            "path": "skills/data/corpus-persona-extraction",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "data-ingestion-pipeline",
+            "path": "skills/data/data-ingestion-pipeline",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "data-pipeline-architect",
+            "path": "skills/data/data-pipeline-architect",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "data-storytelling-analyst",
+            "path": "skills/data/data-storytelling-analyst",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "market-gap-analysis",
+            "path": "skills/data/market-gap-analysis",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "ml-experiment-tracker",
+            "path": "skills/data/ml-experiment-tracker",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "prompt-atom-formalization",
+            "path": "skills/data/prompt-atom-formalization",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "sql-query-optimizer",
+            "path": "skills/data/sql-query-optimizer",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "systemic-product-analyst",
+            "path": "skills/data/systemic-product-analyst",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "time-series-analyst",
+            "path": "skills/data/time-series-analyst",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "accessibility-patterns",
+            "path": "skills/development/accessibility-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "agent-testing-patterns",
+            "path": "skills/development/agent-testing-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "api-design-patterns",
+            "path": "skills/development/api-design-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "artifacts-builder",
+            "path": "skills/development/artifacts-builder",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "backend-implementation-patterns",
+            "path": "skills/development/backend-implementation-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "browser-extension-patterns",
+            "path": "skills/development/browser-extension-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "cli-tool-design",
+            "path": "skills/development/cli-tool-design",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "code-refactoring-patterns",
+            "path": "skills/development/code-refactoring-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "code-review-checklist",
+            "path": "skills/development/code-review-checklist",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "coding-standards-enforcer",
+            "path": "skills/development/coding-standards-enforcer",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "community-platform-patterns",
+            "path": "skills/development/community-platform-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "configuration-management",
+            "path": "skills/development/configuration-management",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "continuous-learning-agent",
+            "path": "skills/development/continuous-learning-agent",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "data-backup-patterns",
+            "path": "skills/development/data-backup-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "database-migration-patterns",
+            "path": "skills/development/database-migration-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "deployment-cicd",
+            "path": "skills/development/deployment-cicd",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "docker-containerization",
+            "path": "skills/development/docker-containerization",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "dotfile-systems-architect",
+            "path": "skills/development/dotfile-systems-architect",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "error-handling-logging-patterns",
+            "path": "skills/development/error-handling-logging-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "fastapi-patterns",
+            "path": "skills/development/fastapi-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "feature-workflow-orchestrator",
+            "path": "skills/development/feature-workflow-orchestrator",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "frontend-design-systems",
+            "path": "skills/development/frontend-design-systems",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "fullstack-starter-pack",
+            "path": "skills/development/fullstack-starter-pack",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "gcp-resource-optimizer",
+            "path": "skills/development/gcp-resource-optimizer",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "htmx-interaction-patterns",
+            "path": "skills/development/htmx-interaction-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "iterative-code-exploration",
+            "path": "skills/development/iterative-code-exploration",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "json-schema-design",
+            "path": "skills/development/json-schema-design",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "mcp-builder",
+            "path": "skills/development/mcp-builder",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "mcp-server-orchestrator",
+            "path": "skills/development/mcp-server-orchestrator",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "mobile-platform-architect",
+            "path": "skills/development/mobile-platform-architect",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "monorepo-devops-pack",
+            "path": "skills/development/monorepo-devops-pack",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "monorepo-management",
+            "path": "skills/development/monorepo-management",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "nextjs-fullstack-patterns",
+            "path": "skills/development/nextjs-fullstack-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "parametrize-and-cite",
+            "path": "skills/development/parametrize-and-cite",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "postgres-advanced-patterns",
+            "path": "skills/development/postgres-advanced-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "python-backend-pack",
+            "path": "skills/development/python-backend-pack",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "python-packaging-patterns",
+            "path": "skills/development/python-packaging-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "realtime-websocket-patterns",
+            "path": "skills/development/realtime-websocket-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "redis-patterns",
+            "path": "skills/development/redis-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "repo-onboarding-flow",
+            "path": "skills/development/repo-onboarding-flow",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "resilience-patterns",
+            "path": "skills/development/resilience-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "responsive-design-patterns",
+            "path": "skills/development/responsive-design-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "rust-systems-design",
+            "path": "skills/development/rust-systems-design",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "tdd-workflow",
+            "path": "skills/development/tdd-workflow",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "testing-patterns",
+            "path": "skills/development/testing-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "vector-search-patterns",
+            "path": "skills/development/vector-search-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "verification-loop",
+            "path": "skills/development/verification-loop",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "web-artifacts-builder",
+            "path": "skills/development/web-artifacts-builder",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "webapp-testing",
+            "path": "skills/development/webapp-testing",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "document-audit-extraction",
+            "path": "skills/documentation/document-audit-extraction",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "github-profile-architect",
+            "path": "skills/documentation/github-profile-architect",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "github-repo-curator",
+            "path": "skills/documentation/github-repo-curator",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "github-repository-standards",
+            "path": "skills/documentation/github-repository-standards",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "stranger-test-protocol",
+            "path": "skills/documentation/stranger-test-protocol",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "technical-analytical-writing",
+            "path": "skills/documentation/technical-analytical-writing",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "d2l-discussion-responder",
+            "path": "skills/education/d2l-discussion-responder",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "enc1101-curriculum-designer",
+            "path": "skills/education/enc1101-curriculum-designer",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "evaluation-to-growth",
+            "path": "skills/education/evaluation-to-growth",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "feedback-pedagogy",
+            "path": "skills/education/feedback-pedagogy",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "recommendation-letter",
+            "path": "skills/education/recommendation-letter",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "socratic-tutor",
+            "path": "skills/education/socratic-tutor",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "conversation-content-pipeline",
+            "path": "skills/integrations/conversation-content-pipeline",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "essay-publishing-pipeline",
+            "path": "skills/integrations/essay-publishing-pipeline",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "essay-to-distribution-pack",
+            "path": "skills/integrations/essay-to-distribution-pack",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "mcp-integration-patterns",
+            "path": "skills/integrations/mcp-integration-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "oauth-flow-architect",
+            "path": "skills/integrations/oauth-flow-architect",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "posse-distribution-architecture",
+            "path": "skills/integrations/posse-distribution-architecture",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "social-media-api-integration",
+            "path": "skills/integrations/social-media-api-integration",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "specstory-guard",
+            "path": "skills/integrations/specstory-guard",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "specstory-link-trail",
+            "path": "skills/integrations/specstory-link-trail",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "specstory-organize",
+            "path": "skills/integrations/specstory-organize",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "specstory-project-stats",
+            "path": "skills/integrations/specstory-project-stats",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "specstory-session-summary",
+            "path": "skills/integrations/specstory-session-summary",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "specstory-yak",
+            "path": "skills/integrations/specstory-yak",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "webhook-integration-patterns",
+            "path": "skills/integrations/webhook-integration-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "claude-project-manifest",
+            "path": "skills/knowledge/claude-project-manifest",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "expansive-inquiry",
+            "path": "skills/knowledge/expansive-inquiry",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "knowledge-architecture",
+            "path": "skills/knowledge/knowledge-architecture",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "knowledge-graph-builder",
+            "path": "skills/knowledge/knowledge-graph-builder",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "recursive-boil-down",
+            "path": "skills/knowledge/recursive-boil-down",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "recursive-systems-architect",
+            "path": "skills/knowledge/recursive-systems-architect",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "research-synthesis-workflow",
+            "path": "skills/knowledge/research-synthesis-workflow",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "second-brain-librarian",
+            "path": "skills/knowledge/second-brain-librarian",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "source-evaluation-bibliography",
+            "path": "skills/knowledge/source-evaluation-bibliography",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "brand-guidelines",
+            "path": "skills/professional/brand-guidelines",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "content-distribution",
+            "path": "skills/professional/content-distribution",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "cv-resume-builder",
+            "path": "skills/professional/cv-resume-builder",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "freelance-client-ops",
+            "path": "skills/professional/freelance-client-ops",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "grant-proposal-writer",
+            "path": "skills/professional/grant-proposal-writer",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "inbound-opportunity-protocol",
+            "path": "skills/professional/inbound-opportunity-protocol",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "internal-comms",
+            "path": "skills/professional/internal-comms",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "interview-preparation",
+            "path": "skills/professional/interview-preparation",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "networking-outreach",
+            "path": "skills/professional/networking-outreach",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "pitch-deck-patterns",
+            "path": "skills/professional/pitch-deck-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "portfolio-presentation",
+            "path": "skills/professional/portfolio-presentation",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "slack-gif-creator",
+            "path": "skills/professional/slack-gif-creator",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "workshop-presentation-design",
+            "path": "skills/professional/workshop-presentation-design",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "domain-ideal-whole-substrate",
+            "path": "skills/project-management/domain-ideal-whole-substrate",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "github-roadmap-strategist",
+            "path": "skills/project-management/github-roadmap-strategist",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "personalized-storefront-render",
+            "path": "skills/project-management/personalized-storefront-render",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "premortem",
+            "path": "skills/project-management/premortem",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "product-domain-engine",
+            "path": "skills/project-management/product-domain-engine",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "product-requirements-designer",
+            "path": "skills/project-management/product-requirements-designer",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "project-alchemy-orchestrator",
+            "path": "skills/project-management/project-alchemy-orchestrator",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "project-orchestration",
+            "path": "skills/project-management/project-orchestration",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "promotion-readiness-checklist",
+            "path": "skills/project-management/promotion-readiness-checklist",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "contract-risk-analyzer",
+            "path": "skills/security/contract-risk-analyzer",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "gdpr-compliance-check",
+            "path": "skills/security/gdpr-compliance-check",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "incident-response-commander",
+            "path": "skills/security/incident-response-commander",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "security-essentials-pack",
+            "path": "skills/security/security-essentials-pack",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "security-implementation-guide",
+            "path": "skills/security/security-implementation-guide",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "security-threat-modeler",
+            "path": "skills/security/security-threat-modeler",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "turnstile-spin",
+            "path": "skills/security/turnstile-spin",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "blockchain-integration-builder",
+            "path": "skills/specialized/blockchain-integration-builder",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "defi-trading-systems",
+            "path": "skills/specialized/defi-trading-systems",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "game-mechanics-designer",
+            "path": "skills/specialized/game-mechanics-designer",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "interfaith-sacred-geometry",
+            "path": "skills/specialized/interfaith-sacred-geometry",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "local-llm-fine-tuning",
+            "path": "skills/specialized/local-llm-fine-tuning",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "location-ar-experience",
+            "path": "skills/specialized/location-ar-experience",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "agent-development-pack",
+            "path": "skills/tools/agent-development-pack",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "agent-swarm-orchestrator",
+            "path": "skills/tools/agent-swarm-orchestrator",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "artifact-resurfacing",
+            "path": "skills/tools/artifact-resurfacing",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "closeout",
+            "path": "skills/tools/closeout",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "cross-agent-handoff",
+            "path": "skills/tools/cross-agent-handoff",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "ecosystem-autopsy",
+            "path": "skills/tools/ecosystem-autopsy",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "multi-agent-workforce-planner",
+            "path": "skills/tools/multi-agent-workforce-planner",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "ontological-renamer",
+            "path": "skills/tools/ontological-renamer",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "organvm-governance-pack",
+            "path": "skills/tools/organvm-governance-pack",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "portal-router",
+            "path": "skills/tools/portal-router",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "prompt-engineering-patterns",
+            "path": "skills/tools/prompt-engineering-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "qa-audit",
+            "path": "skills/tools/qa-audit",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "session-governance-audit",
+            "path": "skills/tools/session-governance-audit",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "session-lifecycle-patterns",
+            "path": "skills/tools/session-lifecycle-patterns",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "shell-history-hygiene",
+            "path": "skills/tools/shell-history-hygiene",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "skill-chain-prompts",
+            "path": "skills/tools/skill-chain-prompts",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "skill-creator",
+            "path": "skills/tools/skill-creator",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "speckit",
+            "path": "skills/tools/speckit",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "transcript-promotion",
+            "path": "skills/tools/transcript-promotion",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "voice-enforcement",
+            "path": "skills/tools/voice-enforcement",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "workspace-autopsy-governance",
+            "path": "skills/tools/workspace-autopsy-governance",
+            "pluginName": "example-skills"
+          },
+          {
+            "name": "assignment-composition",
+            "path": "plugins/coliseum-from-grain/skills/assignment-composition",
+            "pluginName": null
+          },
+          {
+            "name": "coliseum-dispatch",
+            "path": "plugins/coliseum-from-grain/skills/coliseum-dispatch",
+            "pluginName": null
+          },
+          {
+            "name": "coliseum-orchestrator",
+            "path": "plugins/coliseum-from-grain/skills/coliseum-orchestrator",
+            "pluginName": null
+          },
+          {
+            "name": "coliseum-reconciliation",
+            "path": "plugins/coliseum-from-grain/skills/coliseum-reconciliation",
+            "pluginName": null
+          },
+          {
+            "name": "dimension-surfacing",
+            "path": "plugins/coliseum-from-grain/skills/dimension-surfacing",
+            "pluginName": null
+          },
+          {
+            "name": "governance-evolution-protocol",
+            "path": "plugins/pentaphase-structural-architect/skills/governance-evolution-protocol",
+            "pluginName": null
+          },
+          {
+            "name": "landscape-discovery-audit",
+            "path": "plugins/pentaphase-structural-architect/skills/landscape-discovery-audit",
+            "pluginName": null
+          },
+          {
+            "name": "pentaphase-orchestrator",
+            "path": "plugins/pentaphase-structural-architect/skills/pentaphase-orchestrator",
+            "pluginName": null
+          },
+          {
+            "name": "system-environment-configuration",
+            "path": "plugins/pentaphase-structural-architect/skills/system-environment-configuration",
+            "pluginName": null
+          },
+          {
+            "name": "systemic-ingestion-normalization",
+            "path": "plugins/pentaphase-structural-architect/skills/systemic-ingestion-normalization",
+            "pluginName": null
+          },
+          {
+            "name": "taxonomy-modeling-design",
+            "path": "plugins/pentaphase-structural-architect/skills/taxonomy-modeling-design",
+            "pluginName": null
+          }
+        ]
+      }
+    }
+  },
+  "probeSha256": "db64b17c20cdbd4916693078d22bc911b35846adc9f521f17792869061321ce7"
+}

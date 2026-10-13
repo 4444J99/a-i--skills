@@ -1,6 +1,14 @@
+conversation-content-pipeline
+essay-publishing-pipeline
+essay-to-distribution-pack
+mcp-integration-patterns
+oauth-flow-architect
+posse-distribution-architecture
+social-media-api-integration
 specstory-guard
 specstory-link-trail
 specstory-organize
 specstory-project-stats
 specstory-session-summary
 specstory-yak
+webhook-integration-patterns

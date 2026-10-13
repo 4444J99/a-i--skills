@@ -7,13 +7,14 @@ from __future__ import annotations
 
 import importlib
 import json
+import os
 import re
+import shutil
 import subprocess
 import sys
 from pathlib import Path
 
 import pytest
-
 import skill_lib
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -24,6 +25,8 @@ SCRIPTS = ROOT / "scripts"
 validate_skills = importlib.import_module("validate_skills")
 generate_registry = importlib.import_module("generate_registry")
 pr_validation_report = importlib.import_module("pr_validation_report")
+generate_lockfile = importlib.import_module("generate_lockfile")
+validate_generated_dirs = importlib.import_module("validate_generated_dirs")
 
 # Names Claude Code reserves for official Anthropic marketplaces; a third-party
 # marketplace must not use them (see the Claude Code marketplace reference).
@@ -136,8 +139,8 @@ def test_validate_skill_check_links_flags_missing_files(tmp_path):
 def test_repository_skills_pass_validation():
     result = subprocess.run(
         [sys.executable, str(SCRIPTS / "validate_skills.py"),
-         "--collection", "example", "--unique", "--check-links"],
-        capture_output=True, text=True, cwd=ROOT,
+         "--collection", "all", "--unique", "--check-links"],
+        check=False, capture_output=True, text=True, cwd=ROOT,
     )
     assert result.returncode == 0, result.stdout + result.stderr
 
@@ -150,9 +153,12 @@ def test_registry_matches_skill_tree():
     registry = json.loads((ROOT / "distributions" / "skills-registry.json").read_text(encoding="utf-8"))
     assert registry["repository"] == "4444J99/a-i--skills"
     names = {s["name"] for s in registry["skills"]}
-    on_disk = {p.name for p in skill_lib.find_skill_dirs(SKILLS_DIR)}
+    on_disk = {p.name for p in skill_lib.find_skill_dirs(SKILLS_DIR) + skill_lib.find_skill_dirs(PLUGINS_DIR)}
     assert names == on_disk
-    assert {s["collection"] for s in registry["skills"]} == {"example"}
+    assert {s["collection"] for s in registry["skills"]} == {"example", "plugins"}
+    for entry in registry["skills"]:
+        if entry["collection"] == "plugins":
+            assert entry["path"].startswith(f"plugins/{entry['plugin']}/skills/")
 
 
 def test_build_skill_entry_derives_category_and_resources(tmp_path, monkeypatch):
@@ -172,15 +178,16 @@ def test_build_skill_entry_derives_category_and_resources(tmp_path, monkeypatch)
     assert entry["path"] == "skills/data/good-skill"
     assert entry["complements"] == ["other-skill"]
     assert entry["resources"]["references"] == ["guide.md"]
-    # A name/directory mismatch is skipped rather than registered.
+    # Invalid sources must fail instead of silently disappearing from discovery.
     bad = _write_skill(base / "data", "mismatch", "name: something-else\n")
-    assert generate_registry._build_skill_entry(bad, base, "example") is None
+    with pytest.raises(ValueError, match="does not match directory"):
+        generate_registry._build_skill_entry(bad, base, "example")
 
 
 def test_generated_bundles_are_in_sync():
     result = subprocess.run(
         [sys.executable, str(SCRIPTS / "validate_generated_dirs.py")],
-        capture_output=True, text=True, cwd=ROOT,
+        check=False, capture_output=True, text=True, cwd=ROOT,
     )
     assert result.returncode == 0, result.stdout + result.stderr
 
@@ -245,3 +252,189 @@ def test_no_all_rights_reserved_licenses_in_tree():
                 offenders.append(str(lic.relative_to(ROOT)))
     assert offenders == []
     assert not (ROOT / "document-skills").exists()
+
+
+# --------------------------------------------------------------------------
+# Complete builds and integrity failures, using a small independent catalog
+# --------------------------------------------------------------------------
+
+@pytest.fixture
+def canonical_source(tmp_path):
+    root = tmp_path / "source"
+    root.mkdir()
+    shutil.copytree(SCRIPTS, root / "scripts", ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
+    _write_skill(root / "skills" / "data", "good-skill", GOOD_FM)
+    _write_skill(root / "skills" / "tools", "spare-skill", GOOD_FM.replace("good-skill", "spare-skill"))
+    resource = root / "skills" / "data" / "good-skill" / "scripts" / "run.sh"
+    resource.parent.mkdir()
+    resource.write_text("#!/bin/sh\nprintf 'ready\\n'\n", encoding="utf-8")
+    resource.chmod(0o755)
+    plugin = root / "plugins" / "demo-plugin"
+    _write_skill(plugin / "skills", "plugin-skill", GOOD_FM.replace("good-skill", "plugin-skill"),
+                 "Read [the shared guide](../../references/guide.md).\n")
+    (plugin / "references").mkdir()
+    (plugin / "references" / "guide.md").write_text("Shared plugin instructions.\n", encoding="utf-8")
+    source_manifests = {
+        root / ".claude-plugin" / "plugin.json": {
+            "name": "example-skills", "description": "Synthetic canonical catalog for the installation tests.",
+            "version": "3.2.1", "author": {"name": "Catalog Owner"}, "license": "MIT",
+        },
+        plugin / ".claude-plugin" / "plugin.json": {
+            "name": "demo-plugin", "description": "Synthetic plugin with shared references.",
+            "version": "1.0.0", "license": "MIT",
+        },
+        root / "config" / "runtime-catalog.json": {
+            "schema_version": 1, "repository": "example/catalog",
+            "marketplace": {"name": "test-catalog", "description": "A test marketplace."},
+            "gemini": {"label": "Catalog Skills", "context_file": "GEMINI.md"},
+            "purpose_collections": {},
+        },
+    }
+    for path, contents in source_manifests.items():
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(contents) + "\n", encoding="utf-8")
+    return root
+
+
+def _refresh(root):
+    return subprocess.run(
+        [sys.executable, str(root / "scripts" / "refresh_skill_collections.py"),
+         "--skip-readme", "--skip-ecosystem"],
+        check=False, capture_output=True, text=True, cwd=root,
+        env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"},
+    )
+
+
+@pytest.fixture
+def generated_source(canonical_source):
+    result = _refresh(canonical_source)
+    assert result.returncode == 0, result.stdout + result.stderr
+    return canonical_source
+
+
+def test_empty_build_reconstructs_descriptors_and_every_collection(canonical_source):
+    root = canonical_source
+    assert not (root / "distributions").exists()
+    assert not (root / ".claude-plugin" / "marketplace.json").exists()
+    result = _refresh(root)
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert validate_generated_dirs.validate_generated(root) == []
+    registry = json.loads((root / "distributions" / "skills-registry.json").read_text())
+    assert {entry["name"] for entry in registry["skills"]} == {"good-skill", "spare-skill", "plugin-skill"}
+    assert {entry["collection"] for entry in registry["skills"]} == {"example", "plugins"}
+    lock = json.loads((root / "distributions" / "skills-lock.json").read_text())
+    assert len(lock["skills"]) == 3
+    assert lock["plugins"][0]["path"] == "plugins/demo-plugin"
+    assert "references/guide.md" in {entry["path"] for entry in lock["plugins"][0]["files"]}
+    extension = root / "distributions" / "extensions" / "gemini" / "example-skills"
+    descriptor = json.loads((extension / "gemini-extension.json").read_text())
+    assert descriptor["version"] == "3.2.1"
+    assert (extension / descriptor["contextFileName"]).is_file()
+    assert (root / "distributions" / "collections" / "plugin-skills.txt").read_text() == "plugins/demo-plugin/skills/plugin-skill\n"
+    before = generate_lockfile._file_records(root / "distributions")
+    assert _refresh(root).returncode == 0
+    assert generate_lockfile._file_records(root / "distributions") == before
+
+
+def test_refresh_propagates_changes_and_removes_stale_copies(generated_source):
+    root = generated_source
+    source = root / "skills" / "data" / "good-skill" / "SKILL.md"
+    source.write_text(source.read_text() + "\nUpdated canonical instruction.\n")
+    shutil.rmtree(root / "skills" / "tools" / "spare-skill")
+    shutil.rmtree(root / "plugins" / "demo-plugin")
+    result = _refresh(root)
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert validate_generated_dirs.validate_generated(root) == []
+    for relative in ("claude/skills", "codex/skills", "direct/example", "extensions/gemini/example-skills/skills"):
+        target = root / "distributions" / relative
+        assert (target / "good-skill" / "SKILL.md").read_text() == source.read_text()
+        assert not (target / "spare-skill").exists()
+    marketplace = json.loads((root / ".claude-plugin" / "marketplace.json").read_text())
+    assert [entry["name"] for entry in marketplace["plugins"]] == ["example-skills"]
+    assert not (root / "distributions" / "collections" / "by-category" / "tools.txt").exists()
+
+
+@pytest.mark.parametrize("failure", ["missing-generator", "nonzero-generator"])
+def test_refresh_fails_hard_when_a_required_generator_fails(canonical_source, failure):
+    root = canonical_source
+    generator = root / "scripts" / "generate_registry.py"
+    if failure == "missing-generator":
+        generator.unlink()
+    else:
+        generator.write_text("raise SystemExit(23)\n")
+    result = _refresh(root)
+    assert result.returncode != 0
+    assert "ERROR: runtime generation failed" in result.stderr
+    assert "Generated runtime output matches" not in result.stdout
+
+
+@pytest.mark.parametrize("bad_source", ["lowercase-catalog", "lowercase-plugin", "duplicate", "source-symlink"])
+def test_invalid_source_cannot_be_silently_omitted(canonical_source, bad_source):
+    root = canonical_source
+    source = root / "skills" / "data" / "good-skill"
+    if bad_source == "lowercase-catalog":
+        (source / "SKILL.md").rename(source / "skill.md")
+    elif bad_source == "lowercase-plugin":
+        path = root / "plugins" / "demo-plugin" / "skills" / "plugin-skill" / "SKILL.md"
+        path.rename(path.with_name("skill.md"))
+    elif bad_source == "duplicate":
+        _write_skill(root / "plugins" / "demo-plugin" / "skills", "good-skill", GOOD_FM)
+    else:
+        (source / "outside.txt").symlink_to(root / "config" / "runtime-catalog.json")
+    result = _refresh(root)
+    assert result.returncode != 0
+    assert not (root / "distributions" / "skills-registry.json").exists()
+
+
+@pytest.mark.parametrize("corruption", [
+    "missing-lock", "registry-semantics", "registry-mode", "omitted-plugin", "copied-content",
+    "copied-mode", "stale-file", "shared-plugin-resource", "stale-marketplace",
+    "missing-descriptor", "missing-context", "copied-symlink",
+])
+def test_generated_validation_detects_material_corruption(generated_source, corruption):
+    root = generated_source
+    output = root / "distributions"
+    copied_script = output / "claude" / "skills" / "good-skill" / "scripts" / "run.sh"
+    if corruption == "missing-lock":
+        (output / "skills-lock.json").unlink()
+    elif corruption == "registry-mode":
+        (output / "skills-registry.json").chmod(0o755)
+    elif corruption in ("registry-semantics", "omitted-plugin"):
+        path = output / "skills-registry.json"
+        data = json.loads(path.read_text())
+        if corruption == "registry-semantics":
+            data["skills"][0]["side_effects"] = ["network-access"]
+        else:
+            data["skills"] = [entry for entry in data["skills"] if entry["collection"] != "plugins"]
+        path.write_text(json.dumps(data))
+    elif corruption == "copied-content":
+        copied_script.write_text("changed\n")
+    elif corruption == "copied-mode":
+        copied_script.chmod(0o644)
+    elif corruption == "stale-file":
+        (output / "unexpected.txt").write_text("stale output\n")
+    elif corruption == "shared-plugin-resource":
+        (root / "plugins" / "demo-plugin" / "references" / "guide.md").write_text("changed\n")
+    elif corruption == "stale-marketplace":
+        path = root / ".claude-plugin" / "marketplace.json"
+        data = json.loads(path.read_text())
+        data["plugins"].append({"name": "retired-plugin", "source": "./plugins/retired-plugin"})
+        path.write_text(json.dumps(data))
+    elif corruption in ("missing-descriptor", "missing-context"):
+        name = "gemini-extension.json" if corruption == "missing-descriptor" else "GEMINI.md"
+        (output / "extensions" / "gemini" / "example-skills" / name).unlink()
+    else:
+        copied_script.unlink()
+        copied_script.symlink_to(root / "skills" / "data" / "good-skill" / "scripts" / "run.sh")
+    assert validate_generated_dirs.validate_generated(root), corruption
+
+
+def test_full_folder_hash_covers_paths_contents_and_executable_mode(tmp_path):
+    file = tmp_path / "run.sh"
+    file.write_text("same content\n")
+    initial = generate_lockfile._sha256_tree(tmp_path)
+    file.chmod(0o755)
+    executable = generate_lockfile._sha256_tree(tmp_path)
+    assert executable != initial
+    file.rename(tmp_path / "renamed.sh")
+    assert generate_lockfile._sha256_tree(tmp_path) != executable

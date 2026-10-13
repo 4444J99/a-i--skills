@@ -5,3 +5,13 @@ updates:
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 5
+  - package-ecosystem: "pip"
+    directories:
+      - "/skills/development/mcp-builder/scripts"
+      - "/skills/professional/slack-gif-creator"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 3
+    groups:
+      skill-python-dependencies:
+        patterns: ["*"]

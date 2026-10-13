@@ -1,11 +1,5 @@
-# Codex Skills
+# Codex skill bundle
 
-Codex loads skills from `.codex/skills`; copy or link `distributions/codex/skills/` there.
+skills/ contains complete copies of all 167 catalog skills. Plugin packages remain intact under ../../plugins in the release root so their shared resources, agents, and source descriptors remain available.
 
-Regenerate links after adding/removing skills:
-
-```bash
-python3 scripts/refresh_skill_collections.py
-```
-
-Use `--mode symlink` if you prefer symlinks instead of copies.
+Install and update using scripts/skills_install.py from the repository root.

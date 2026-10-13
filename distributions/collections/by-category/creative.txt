@@ -3,8 +3,15 @@ audio-engineering-patterns
 canvas-design
 creative-writing-craft
 generative-art-algorithms
+generative-art-deployment
+generative-music-composer
+interactive-theatre-designer
 modular-synthesis-philosophy
+movement-notation-systems
 narratological-algorithms
+natural-center-extraction
+react-three-fiber-patterns
 reality-tv-narrative-analyzer
+script-analysis-dramaturgical
 theme-factory
 three-js-interactive-builder

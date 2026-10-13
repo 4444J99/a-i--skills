@@ -17,10 +17,21 @@ metadata:
   generated: "2026-02-12"
   sprint: "AUTONOMY"
 
+produces:
   - type: skill
     name: domain-ideal-whole-substrate
     path: skills/project-management/domain-ideal-whole-substrate
     description: "Foundational domain substrate (8 strata + 4 operators)"
+
+activation:
+  status: candidate-pending-review
+  acceptance_issue: https://github.com/4444J99/a-i--skills/issues/23
+  install_surface: verified-release-directory
+  install_command: python3 scripts/skills_install.py install
+  validation_command: python3 -m pytest -v tests/test_skills_install.py
+  artifact_workflow: .github/workflows/skills-install.yml
+  release_assets: [ai-skills.tar.gz, ai-skills.tar.gz.sha256]
+  runbook: docs/installation.md
 
 agents:
   - name: ci

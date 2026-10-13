@@ -3,9 +3,11 @@ content-distribution
 cv-resume-builder
 freelance-client-ops
 grant-proposal-writer
+inbound-opportunity-protocol
 internal-comms
 interview-preparation
 networking-outreach
+pitch-deck-patterns
 portfolio-presentation
 slack-gif-creator
 workshop-presentation-design

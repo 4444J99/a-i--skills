@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import argparse
 import re
+from collections.abc import Iterator
 from pathlib import Path
-from typing import Iterator
 
 from skill_lib import extract_frontmatter_strict, find_skill_dirs, parse_list_field
 
@@ -234,14 +234,18 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    if args.collection == "example":
-        skill_dirs = find_skill_dirs(SKILLS_DIR)
-    elif args.collection == "plugins":
-        skill_dirs = find_skill_dirs(PLUGINS_DIR) if PLUGINS_DIR.exists() else []
-    else:
-        skill_dirs = find_skill_dirs(SKILLS_DIR)
-        if PLUGINS_DIR.exists():
-            skill_dirs += find_skill_dirs(PLUGINS_DIR)
+    try:
+        if args.collection == "example":
+            skill_dirs = find_skill_dirs(SKILLS_DIR)
+        elif args.collection == "plugins":
+            skill_dirs = find_skill_dirs(PLUGINS_DIR) if PLUGINS_DIR.exists() else []
+        else:
+            skill_dirs = find_skill_dirs(SKILLS_DIR)
+            if PLUGINS_DIR.exists():
+                skill_dirs += find_skill_dirs(PLUGINS_DIR)
+    except ValueError as exc:
+        print(f"ERROR: {exc}")
+        return 1
 
     errors: list[str] = []
     name_counts: dict[str, int] = {}

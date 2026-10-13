@@ -5,13 +5,13 @@
     "url": "https://github.com/4444J99"
   },
   "metadata": {
-    "description": "Anthony Padavano's agent skill catalog (4444J99/a-i--skills): original skills plus a small set of clearly-licensed third-party skills (Apache-2.0 / MIT, licenses kept in each skill folder).",
+    "description": "Anthony Padavano's agent skill catalog (4444J99/a-i--skills): original skills plus clearly licensed third-party skills, with provenance and per-skill license declarations.",
     "version": "2.0.0"
   },
   "plugins": [
     {
       "name": "example-skills",
-      "description": "The main skill catalog: creative, data, development, documentation, education, integrations, knowledge, professional, project-management, security, specialized, and tools skills.",
+      "description": "The main skill catalog from 4444J99/a-i--skills: creative, data, development, documentation, education, integrations, knowledge, professional, project-management, security, specialized, and tools skills.",
       "source": "./",
       "strict": true,
       "skills": [

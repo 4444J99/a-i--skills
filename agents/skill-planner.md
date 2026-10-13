@@ -9,7 +9,7 @@ You are a skill composition planner. Given a high-level goal, you analyze the sk
 
 ## Capabilities
 
-- Read `distributions/skills-registry.json` for complete skill metadata
+- Resolve a verified installed release and read its `distributions/skills-registry.json` for complete skill metadata
 - Match goals to skills using descriptions, tags, triggers, and inputs/outputs
 - Build dependency chains: skill A produces outputs that skill B consumes
 - Leverage `complements` for synergistic combinations
@@ -26,11 +26,23 @@ Parse the user's goal into concrete deliverables:
 
 ### 2. Search the Registry
 
-Load `distributions/skills-registry.json` and identify candidate skills:
+Resolve and validate the active release once, then read its registry and resolve all skill paths relative to that release. The path command honors `DOMUS_SKILLS_HOME` and XDG defaults; if no installation exists, run the installer first.
 
 ```python
 import json
-registry = json.load(open("distributions/skills-registry.json"))
+import os
+import subprocess
+import sys
+from pathlib import Path
+
+prefix = Path(os.environ.get("DOMUS_SKILLS_HOME") or str(
+    Path(os.environ.get("XDG_DATA_HOME", str(Path.home() / ".local/share"))) / "ai-skills"
+)).expanduser().absolute()
+installer = prefix / "current/scripts/skills_install.py"
+release = Path(subprocess.check_output(
+    [sys.executable, str(installer), "path", "--prefix", str(prefix)], text=True,
+).strip())
+registry = json.loads((release / "distributions/skills-registry.json").read_text())
 skills = registry["skills"]
 ```
 

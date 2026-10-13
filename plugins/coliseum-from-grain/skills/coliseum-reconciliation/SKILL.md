@@ -173,5 +173,5 @@ These are not ping-pong. They are surfacing the *exact* points where the system 
 
 ## Reference material
 
-- `references/assignment-anatomy.md` — what each return embodies
-- `references/handoff-envelope-spec.md` — the envelope contract returns were written against
+- [assignment-anatomy.md](../../references/assignment-anatomy.md) — what each return embodies
+- [handoff-envelope-spec.md](../../references/handoff-envelope-spec.md) — the envelope contract returns were written against

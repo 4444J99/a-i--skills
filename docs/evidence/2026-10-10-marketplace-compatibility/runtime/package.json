@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "xdg-basedir": "5.1.0",
+    "yaml": "2.9.0"
+  }
+}

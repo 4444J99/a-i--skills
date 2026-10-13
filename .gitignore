@@ -13,3 +13,9 @@ __pycache__/
 .coverage
 coverage.xml
 htmlcov/
+
+# Local staged-build outputs; canonical sources stay under skills/ and plugins/.
+out/
+build/
+*.build.lock
+*.pack.lock

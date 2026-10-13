@@ -69,7 +69,7 @@ The challenge is organizational: how do you manage dozens or hundreds of such sk
 
 This repository answers that question with three architectural decisions:
 
-- **Convention over configuration.** Every skill follows the same directory structure and frontmatter schema. No build system, no dependency manager, no runtime framework. A skill is a folder with a Markdown file.
+- **Convention over configuration.** Every skill follows the same directory structure and frontmatter schema. A skill is a folder with a Markdown file. A standard-library Python builder assembles and validates the runtime installation from those canonical folders.
 - **Validation over trust.** Python scripts enforce naming conventions, frontmatter completeness, link integrity, and cross-reference accuracy. CI runs these checks on every pull request.
 - **Federation over centralization.** The published federation schema means anyone can build a compatible skill repository. Agents discover skills by scanning for `SKILL.md` files, not by consulting a central registry.
 
@@ -95,7 +95,7 @@ The `validate_skills.py` script enforces invariants that no individual skill can
 
 ### Multi-Runtime Distribution
 
-The `refresh_skill_collections.py` script generates agent-specific bundle directories for Claude Code (`distributions/claude/skills/`), Codex (`distributions/codex/skills/`), and Gemini CLI (`distributions/extensions/gemini/`). Each bundle uses the native discovery mechanism of its target runtime: Claude Code uses a plugin marketplace, Codex uses a `.codex/skills/` directory, Gemini uses extensions. The same source skills are distributed through four different channels without any skill-level modification.
+The `skills_install.py` installer runs the canonical generators in an isolated staging directory, validates the complete result, and atomically activates an immutable release. Its `refresh_skill_collections.py` generator produces agent-specific bundle directories for Claude Code (`distributions/claude/skills/`), Codex (`distributions/codex/skills/`), and Gemini CLI (`distributions/extensions/gemini/`). Each bundle uses the native discovery mechanism of its target runtime: Claude Code uses a plugin marketplace, Codex uses a `.codex/skills/` directory, Gemini uses extensions. The same source skills are distributed through four different channels without any skill-level modification.
 
 This is orchestration in its purest form: a single source of truth, multiple distribution targets, automated synchronization, and zero manual intervention per skill per runtime.
 
@@ -223,11 +223,51 @@ pip install mcp
 python3 scripts/mcp-skill-server.py
 ```
 
-The server exposes tools for searching skills by keyword, browsing by category, and planning multi-skill workflows. It loads from `skills-registry.json` when available and falls back to scanning `SKILL.md` files directly.
+The server exposes tools for searching skills by keyword, browsing by category, and planning multi-skill workflows. It reads `skills-registry.json` from a verified installed release and refreshes its cache when that release changes. Missing installation is an explicit error.
 
 ---
 
 ## Installation and Quick Start
+
+### Build and install a verified release
+
+Use Git and Python 3.11+ on macOS or Linux. The build/install path needs no pip,
+npm, or pre-existing generated files:
+
+```sh
+git clone https://github.com/4444J99/a-i--skills.git
+cd a-i--skills
+python3 scripts/skills_install.py install
+python3 scripts/skills_install.py path
+```
+
+The default prefix is `${XDG_DATA_HOME:-$HOME/.local/share}/ai-skills`; set
+`DOMUS_SKILLS_HOME` to override it. `current` points to one validated release and
+`previous` retains its predecessor. A failed update preserves the active
+installation. The registry covers all 167 catalog and 11 plugin definitions;
+flat runtime bundles contain the 167 catalog skills, and complete plugin trees
+preserve their shared resources.
+
+Connect runtimes to the installed paths below, or use the coordinated Domus sync
+integration to manage Claude, Cowork, Gemini, and registry consumers. See the
+[installation runbook](docs/installation.md) for runtime registration, isolated
+acceptance tests, recovery, custom prefixes, and artifact installation.
+
+```sh
+# Build/package without activating; output directory must not already exist.
+python3 scripts/skills_install.py build --output out/release
+python3 scripts/skills_install.py pack --release out/release --output out/ai-skills.tar.gz
+
+# Verify an existing release.
+python3 scripts/skills_install.py validate --release out/release
+```
+
+The **Skills installation** workflow produces a validated tarball and checksum
+on PR/main builds and attaches them to newly published releases when the tag
+matches the canonical version. Existing `v1.2.0` assets remain an unfulfilled
+historical activation item; the new installation code must land and its release
+be available before [issue #23](https://github.com/4444J99/a-i--skills/issues/23)
+is considered complete.
 
 ### Claude Code (Plugin Marketplace)
 
@@ -249,23 +289,19 @@ This repository does not include Anthropic's document skills (docx, pdf, pptx, x
 
 ### Codex (OpenAI)
 
-```bash
-# Clone the repository
-git clone https://github.com/4444J99/a-i--skills.git
-cd a-i--skills
-
-# Regenerate bundles
-python3 scripts/refresh_skill_collections.py
-
-# Skills are available in distributions/codex/skills/
-```
+After running the verified installer, use
+`$DOMUS_SKILLS_HOME/current/distributions/codex/skills` as the managed skills
+source. Preserve existing personal skills when configuring the runtime. Set
+`DOMUS_SKILLS_HOME` to the prefix printed by your installation configuration.
 
 ### Gemini CLI
 
-```bash
-# Install the skill catalog extension
-gemini extensions install ./distributions/extensions/gemini/example-skills
+```sh
+# Set DOMUS_SKILLS_HOME to your chosen installation prefix first.
+gemini extensions link --consent "$DOMUS_SKILLS_HOME/current/distributions/extensions/gemini/example-skills"
 ```
+
+Domus performs this native registration and checks it when managing the host.
 
 ### Claude API
 

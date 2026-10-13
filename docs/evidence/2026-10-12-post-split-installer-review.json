@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-12",
+  "source_base": "cc40c7bde0b96a0ca6dc6c6b36fd549f73331be8",
+  "pr": 43,
+  "scope": "Isolated canonical-source/package fixture; no native consumers activated",
+  "validation": [
+    {
+      "name": "full catalog suite after shared cache and registry correction",
+      "result": "157 passed",
+      "seconds": 159.39
+    },
+    {
+      "name": "final installer import bootstrap and all focused review regressions",
+      "result": "14 passed",
+      "seconds": 8.95
+    },
+    {
+      "name": "Ruff E/F/W excluding repository-standard long lines",
+      "result": "pass"
+    }
+  ],
+  "coverage": [
+    "clean real-catalog install",
+    "successful canonical update and stale removal",
+    "failed-generation preservation",
+    "guarded rollback and source-free package install",
+    "caught post-replacement activation and rollback errors",
+    "cache-hit integrity rejection and release invalidation",
+    "absent/stale marketplace skip",
+    "cache exclusion from locks, copies, resource registry and generated audit",
+    "validated absolute path with stdout free of progress logs",
+    "installer import outside scripts directory"
+  ],
+  "fixture_provenance": {
+    "archive_sha256": "0ff79eff60d15c54b6e211a7b39d4d926be55c4567b51aaf56dd53ee6b066e4e",
+    "current_inputs": "Unchanged canonical skill, plugin, configuration and runtime files matched exact PR-head Git blobs; legacy generated .skill archives and marker were not copied because they are not build inputs.",
+    "git_checkout_created": false
+  },
+  "split": {
+    "limen_pair_pr": 2854,
+    "private_routing_pr": 424,
+    "private_routing_merge": "c040244d1d5fa0b80dede6dc4d1d51ef963af49c"
+  },
+  "boundaries": [
+    "Full-suite receipt precedes only the location-independent import bootstrap; its implicated regression shard was rerun afterward.",
+    "Remote checks and approving review remain separate from local validation.",
+    "No native Gemini, Claude or Cowork configuration was deployed.",
+    "Original archive, interrupted install prefix, shared dirty checkout and private history retained."
+  ],
+  "owner": "4444J99"
+}

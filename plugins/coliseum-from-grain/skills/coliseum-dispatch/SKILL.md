@@ -120,5 +120,5 @@ Before composing the parallel dispatch message, verify:
 
 ## Reference material
 
-- `references/handoff-envelope-spec.md` — what the dispatched prompt must contain
-- `references/parallel-dimensions.md` — what makes dimensions truly parallel
+- [handoff-envelope-spec.md](../../references/handoff-envelope-spec.md) — what the dispatched prompt must contain
+- [parallel-dimensions.md](../../references/parallel-dimensions.md) — what makes dimensions truly parallel
