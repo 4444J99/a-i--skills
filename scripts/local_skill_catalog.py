@@ -74,6 +74,11 @@ def validate_catalog(catalog):
         isinstance(item, dict) for item in catalog["occurrences"]
     ):
         raise ValueError("Catalog needs an occurrences list of objects")
+    for group in ("events", "sources"):
+        if group in catalog and (not isinstance(catalog[group], list) or not all(
+            isinstance(item, dict) for item in catalog[group]
+        )):
+            raise ValueError(f"Catalog {group} must be a list of objects")
     for digest, item in catalog["objects"].items():
         if not isinstance(item, dict) or not isinstance(item.get("path"), str):
             raise ValueError(f"Invalid object record: {digest}")
@@ -157,10 +162,10 @@ def package_manifest(root: Path, limits: Limits, excluded=None) -> tuple[str, li
                 entries.append({"path": relative, "type": "directory"})
                 pending.append(child)
             elif stat.S_ISREG(info.st_mode):
-                total += info.st_size
+                data = regular_bytes(child, limits)
+                total += len(data)
                 if total > limits.values["package_bytes"]:
                     raise LimitError(f"package size limit: {root}")
-                data = regular_bytes(child, limits)
                 entries.append(dict(path=relative, type="file", size=len(data),
                                     executable=info.st_mode & 0o111,
                                     sha256=hashlib.sha256(data).hexdigest()))
@@ -290,10 +295,14 @@ def _build(sources: list, output: Path, limits: Limits | None = None) -> dict:
                                   status="needs-review", standalone_compatibility="unverified")
                 catalog["occurrences"].append(occurrence)
                 try:
-                    occurrence.update(metadata(regular_bytes(skill, limits), skill.parent.name))
+                    skill_data = regular_bytes(skill, limits)
                     occurrence["excluded_generated_paths"] = []
                     digest, entries = package_manifest(skill.parent, limits,
                                                        occurrence["excluded_generated_paths"])
+                    entry = next((item for item in entries if item["path"] == skill.name), None)
+                    if entry is None or entry.get("sha256") != hashlib.sha256(skill_data).hexdigest():
+                        raise ValueError("Skill metadata changed during inventory")
+                    occurrence.update(metadata(skill_data, skill.parent.name))
                     occurrence["package_sha256"] = digest
                     if digest not in catalog["objects"]:
                         target = output / "objects" / digest
@@ -422,9 +431,10 @@ def main() -> int:
             return int(not report["verified"])
         if args.catalog and args.find is not None:
             data = validate_catalog(json.loads(regular_bytes(args.catalog, limits)))
-            for item in data["occurrences"]:
-                if args.find.casefold() in json.dumps(item, ensure_ascii=False).casefold():
-                    print(json.dumps(item, ensure_ascii=False))
+            for group in ("occurrences", "events", "sources"):
+                for item in data.get(group, []):
+                    if args.find.casefold() in json.dumps(item, ensure_ascii=False).casefold():
+                        print(json.dumps(item, ensure_ascii=False))
             if data["incomplete"]:
                 print("Warning: results are from an incomplete catalog", file=sys.stderr)
                 return 2

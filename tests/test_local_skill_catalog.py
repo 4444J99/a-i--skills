@@ -225,6 +225,46 @@ class CatalogTests(unittest.TestCase):
         self.assertFalse(report["retained_objects_verified"])
         self.assertIn("unregistered object", report["failures"][0])
 
+    def test_metadata_churn_is_not_marked_verified(self):
+        folder = self.skill("a")
+        original = catalog.regular_bytes
+        changed = []
+
+        def replace_after_first_read(path, limits):
+            data = original(path, limits)
+            if path == folder / "SKILL.md" and not changed:
+                changed.append(True)
+                path.write_text("---\nname: replacement\n---\n")
+            return data
+
+        with patch.object(catalog, "regular_bytes", replace_after_first_read):
+            result = self.build()
+        self.assertEqual(result["objects"], {})
+        self.assertIn("metadata changed", result["occurrences"][0]["error"])
+
+    def test_package_limit_counts_bytes_actually_read(self):
+        folder = self.skill("a", b"x")
+        original = catalog.regular_bytes
+        total = sum(path.stat().st_size for path in folder.iterdir())
+
+        def enlarged_read(path, limits):
+            data = original(path, limits)
+            return data + b"x" * 1000 if path.name == "asset.bin" else data
+
+        with patch.object(catalog, "regular_bytes", enlarged_read):
+            with self.assertRaises(catalog.LimitError):
+                catalog.package_manifest(folder, catalog.Limits(package_bytes=total + 1))
+
+    def test_path_search_includes_review_events(self):
+        import subprocess
+        (self.source / "broken-lookup").symlink_to(self.root / "missing")
+        self.build()
+        result = subprocess.run([__import__("sys").executable, str(MODULE),
+                                 "--catalog", str(self.output / "catalog.json"),
+                                 "--find", "broken-lookup"], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0)
+        self.assertIn("broken-symlink", result.stdout)
+
     def test_readback_detects_tampering(self):
         self.skill("a")
         result = self.build()
