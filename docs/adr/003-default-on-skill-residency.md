@@ -90,3 +90,64 @@ the window and has no charter reference leaves on the next change to the list.
   reapply runs; this repository does not edit runtime roots.
 - Promoting a skill is a one-entry change to `default_on` with its evidence,
   followed by a release build.
+
+## Decision 2: skill roots on the host
+
+Claude Code must discover each skill through exactly one root:
+`$CLAUDE_CONFIG_DIR/skills`. Two other candidates were considered.
+
+- **`~/.claude/skills` stops being a skills root now.** Its chezmoi source
+  (`private_dot_claude/symlink_skills.tmpl`) is dead. `.claude/**` has been in
+  Domus `.chezmoiignore` since #427, so the live link was created out of band
+  and chezmoi can neither manage nor remove it (ignored paths are never acted
+  on by `.chezmoiremove`). The source deletion lands in
+  4444J99/domus-genoma-private#443. The live link is removed once on the host
+  with `rm ~/.claude/skills`, which deletes only the link.
+- **`~/.claude` itself is not retired yet.** It is the `legacy-home` symlink,
+  and about 70 consumers still read or write it by hard-coded path (inventory
+  below). Several of those writers produce live state there today. Retiring it
+  first requires moving those consumers onto one resolver
+  (`$CLAUDE_CONFIG_DIR`, or Limen's `harness_paths` / `agent_config_paths`).
+- **`~/.agents/skills` is not a Claude root.** Claude Code does not read it,
+  and nothing on Domus main bridges it into `$CLAUDE_CONFIG_DIR/skills`.
+  Claude currently gets the 22 agent-neutral #431 skills only as the 22 files
+  in `$CLAUDE_CONFIG_DIR/commands/*.md`. Those files must not be removed until
+  a bridge links each `~/.agents/skills/<name>` into
+  `$CLAUDE_CONFIG_DIR/skills`. That bridge belongs in the Domus connector
+  that already owns runtime-root links (`domus-agent-skills`, Domus #435/#436),
+  as a second source beside this bundle. They are commands without long
+  descriptions, so their resident cost is small, and they stay default-on.
+
+### What still reads or writes `~/.claude` (2026-10-16 inventory)
+
+Read-only sweep of `~/.local/bin`, `~/.local/lib`, the live runtime settings
+and hooks, Domus source, Limen release source, LaunchAgents, zsh startup and
+other agents' configs. "Honors" means it resolves `$CLAUDE_CONFIG_DIR` first.
+
+| Area | Consumers (examples) | Access | Honors |
+|------|----------------------|--------|--------|
+| Memory sync | `domus-memory-sync` | reads projects/*/memory, plans | yes, but exits 78 when the config dir is not `~/.claude` (see below) |
+| Memory readers | Limen `memoria.py`, `covenant.py`, `evocator.py`, `session-orient.py`, `substrate-check` | read `projects/*/memory` | no |
+| Session readers | Limen `session_sources.py`, `corpus-feed.py`, `quicken.py`, `vendor-insights.py` (partial), `claude-workflow-guard.py` (partial) | read `projects/*.jsonl` | mostly no |
+| Live hooks writing legacy | live `settings.json` fleetview digest, `chezmoi-source-lock.sh` (locks), `insights-capture.sh` (usage-data) | write | no |
+| Hook/settings tooling | `substrate-check`, `check-agent-hooks-drift`, `resolve-audit`, `process-audit-daily.sh`, Limen `heal-hook-drift.sh` (writes hooks), `heal-hook-wiring.py`, `armed-valve-audit.py`, `dialogs-silenced.sh` | read/write `settings.json`, `hooks/` | no |
+| Plans | `plans-index`, `build-unified-plan-index`, `sync-plans-to-session-meta`, `inject-session-id`, Limen `plans-lifecycle-audit.py` (partial) | read/write `plans/` | no; Limen `harness_paths.py` and `prompt_sources.py` do |
+| Session scratch | `session-tldr-*`, `thread-*`, `memdiag`, `sysdiag`, `scheduled-task-audit-bookend`, `insights-list/diff/drift`, `housekeeping-lint` | write | no; `insights-snapshot` does |
+| Skills | `domus` doctor `critical_links`, `~/.local/lib/domus_skills.py` `prepare_claude` | read `skills` | no; `domus-agent-skills` does |
+| Charter readers | `agent-surface-healthcheck`, `constitution-budget`, Limen `operating_system_health.py` | read `CLAUDE.md` | no |
+| MCP state | `resolve-audit`, `resolve-bootstrap` (writes), Limen `mcp-auth-verify.py` | `~/.claude.json`, auth cache | no; Limen `agent_config_paths.py` does |
+| Tests | Limen `cli/tests` (35 files), `scripts/tests` (8), Domus `test_agent_runtime_layout.py` | fixtures | n/a |
+
+No LaunchAgent, zsh startup file, Codex, Cursor, VS Code or Gemini config reads
+`~/.claude`.
+
+Two defects found on the way, outside this change:
+
+- `domus-memory-sync` refuses to run (exit 78) whenever the config dir is not
+  `~/.claude`, and the live hooks call it with `2>/dev/null; true`, so memory
+  sync has been silently off since the relocation (errors logged in
+  `~/.local/state/domus/memory-sync.log`).
+- The instructions name `pretooluse-guard-dispatch.sh` as the hard-deny
+  layer, but the live settings do not reference it yet; the converged runtime
+  adapter expects it only after the runtime settings are applied, so the
+  guard is off until that apply happens.
