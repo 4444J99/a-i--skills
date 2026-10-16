@@ -297,10 +297,15 @@ def _build(sources: list, output: Path, limits: Limits | None = None) -> dict:
                     occurrence["package_sha256"] = digest
                     if digest not in catalog["objects"]:
                         target = output / "objects" / digest
-                        copy_package(skill.parent, target, entries, limits)
-                        copied, copied_entries = package_manifest(target, limits)
-                        if (copied, copied_entries) != (digest, entries):
-                            raise ValueError(f"Copied package failed verification: {target}")
+                        try:
+                            copy_package(skill.parent, target, entries, limits)
+                            copied, copied_entries = package_manifest(target, limits)
+                            if (copied, copied_entries) != (digest, entries):
+                                raise ValueError(f"Copied package failed verification: {target}")
+                        except BaseException:
+                            if target.exists():
+                                shutil.rmtree(target)
+                            raise
                         catalog["objects"][digest] = dict(path=f"objects/{digest}",
                                                           verified=True, files=entries)
                     occurrence["status"] = "copied-verified"
@@ -367,6 +372,11 @@ def verify(catalog_path: Path, limits: Limits | None = None) -> dict:
     limits = limits or Limits()
     catalog = validate_catalog(json.loads(regular_bytes(catalog_path, limits)))
     failures = []
+    for index, occurrence in enumerate(catalog["occurrences"]):
+        if occurrence.get("status") == "copied-verified":
+            digest = occurrence.get("package_sha256")
+            if not isinstance(digest, str) or digest not in catalog["objects"]:
+                failures.append(f"occurrences[{index}]: unregistered object {digest}")
     for digest, item in catalog["objects"].items():
         try:
             if not re.fullmatch(r"[0-9a-f]{64}", digest) or item["path"] != f"objects/{digest}":

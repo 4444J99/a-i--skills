@@ -192,7 +192,38 @@ class CatalogTests(unittest.TestCase):
         report = catalog.verify(self.output / "catalog.json")
         self.assertFalse(report["verified"])
         self.assertFalse(report["catalog_complete"])
-        self.assertEqual(len(report["orphan_objects"]), 1)
+        self.assertEqual(report["orphan_objects"], [])
+
+    def test_failed_copy_does_not_prevent_valid_duplicate(self):
+        self.skill("a")
+        self.skill("b")
+        original = catalog.copy_package
+        attempts = []
+
+        def fail_once(source, target, entries, limits):
+            original(source, target, entries, limits)
+            attempts.append(source)
+            if len(attempts) == 1:
+                raise OSError("interrupted object copy")
+
+        with patch.object(catalog, "copy_package", fail_once):
+            result = self.build()
+        self.assertEqual(len(result["objects"]), 1)
+        self.assertEqual(len(attempts), 2)
+        report = catalog.verify(self.output / "catalog.json")
+        self.assertTrue(report["retained_objects_verified"])
+        self.assertEqual(report["orphan_objects"], [])
+
+    def test_verified_occurrence_requires_registered_object(self):
+        self.skill("a")
+        self.build()
+        path = self.output / "catalog.json"
+        data = json.loads(path.read_text())
+        data["occurrences"][0]["package_sha256"] = "0" * 64
+        path.write_text(json.dumps(data))
+        report = catalog.verify(path)
+        self.assertFalse(report["retained_objects_verified"])
+        self.assertIn("unregistered object", report["failures"][0])
 
     def test_readback_detects_tampering(self):
         self.skill("a")
