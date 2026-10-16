@@ -74,6 +74,11 @@ def validate_catalog(catalog):
         isinstance(item, dict) for item in catalog["occurrences"]
     ):
         raise ValueError("Catalog needs an occurrences list of objects")
+    for key in ("events", "sources"):
+        if not isinstance(catalog.get(key, []), list) or not all(
+            isinstance(item, dict) for item in catalog.get(key, [])
+        ):
+            raise ValueError(f"Catalog needs a {key} list of objects")
     for digest, item in catalog["objects"].items():
         if not isinstance(item, dict) or not isinstance(item.get("path"), str):
             raise ValueError(f"Invalid object record: {digest}")
@@ -157,10 +162,10 @@ def package_manifest(root: Path, limits: Limits, excluded=None) -> tuple[str, li
                 entries.append({"path": relative, "type": "directory"})
                 pending.append(child)
             elif stat.S_ISREG(info.st_mode):
-                total += info.st_size
+                data = regular_bytes(child, limits)
+                total += len(data)
                 if total > limits.values["package_bytes"]:
                     raise LimitError(f"package size limit: {root}")
-                data = regular_bytes(child, limits)
                 entries.append(dict(path=relative, type="file", size=len(data),
                                     executable=info.st_mode & 0o111,
                                     sha256=hashlib.sha256(data).hexdigest()))
@@ -308,6 +313,10 @@ def _build(sources: list, output: Path, limits: Limits | None = None) -> dict:
                             raise
                         catalog["objects"][digest] = dict(path=f"objects/{digest}",
                                                           verified=True, files=entries)
+                    # Searchable metadata must describe the verified object,
+                    # even if the source entrypoint changed before manifesting.
+                    retained_skill = output / catalog["objects"][digest]["path"] / skill.name
+                    occurrence.update(metadata(regular_bytes(retained_skill, limits), skill.parent.name))
                     occurrence["status"] = "copied-verified"
                 except (OSError, ValueError) as error:
                     occurrence["error"] = str(error)
@@ -422,9 +431,10 @@ def main() -> int:
             return int(not report["verified"])
         if args.catalog and args.find is not None:
             data = validate_catalog(json.loads(regular_bytes(args.catalog, limits)))
-            for item in data["occurrences"]:
-                if args.find.casefold() in json.dumps(item, ensure_ascii=False).casefold():
-                    print(json.dumps(item, ensure_ascii=False))
+            for collection in ("occurrences", "events", "sources"):
+                for item in data.get(collection, []):
+                    if args.find.casefold() in json.dumps(item, ensure_ascii=False).casefold():
+                        print(json.dumps(item, ensure_ascii=False))
             if data["incomplete"]:
                 print("Warning: results are from an incomplete catalog", file=sys.stderr)
                 return 2

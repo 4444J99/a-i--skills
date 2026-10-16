@@ -43,7 +43,8 @@ Identical `SKILL.md` text alone is insufficient to deduplicate a package: script
 references, assets, relative paths, and executable bits participate in identity.
 Packages with unsupported links or special files remain visible for review.
 
-Query the inventory without executing a skill:
+Query occurrences, source roots, and review events without executing a skill.
+Search warns and exits with status 2 when catalog coverage is incomplete:
 
 ```sh
 python3 scripts/local_skill_catalog.py --catalog /private/consolidated-skills/catalog.json --find insights
