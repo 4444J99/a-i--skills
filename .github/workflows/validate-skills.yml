@@ -54,7 +54,8 @@ jobs:
       - name: Check for secrets in new files
         if: github.event_name == 'pull_request'
         run: |
-          CHANGED=$(git diff --diff-filter=ACMR --name-only origin/main...HEAD)
+          # Generated copies are byte-verified against canonical source by scripts/validate_generated_dirs.py, so scanning source suffices and moves inside distributions/ cannot re-trigger it.
+          CHANGED=$(git diff --diff-filter=ACMR --name-only origin/main...HEAD -- . ':(exclude)distributions')
           if [ -z "$CHANGED" ]; then
             echo "No changed files to scan"
             exit 0
