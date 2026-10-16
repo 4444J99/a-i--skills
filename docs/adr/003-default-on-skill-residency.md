@@ -110,10 +110,15 @@ Claude Code must discover each skill through exactly one root:
   (`$CLAUDE_CONFIG_DIR`, or Limen's `harness_paths` / `agent_config_paths`).
 - **`~/.agents/skills` is not a Claude root.** Claude Code does not read it,
   and nothing on Domus main bridges it into `$CLAUDE_CONFIG_DIR/skills`.
-  Claude currently gets the 22 agent-neutral #431 skills only as the 22 files
-  in `$CLAUDE_CONFIG_DIR/commands/*.md`. Those files must not be removed until
-  a bridge links each `~/.agents/skills/<name>` into
-  `$CLAUDE_CONFIG_DIR/skills`. That bridge belongs in the Domus connector
+  The 22 agent-neutral #431 skills now exist for Claude only as command files
+  in `~/.claude/commands/*.md` (`legacy-home/commands`; the runtime-root
+  `commands/` directory was removed during convergence and no Domus source
+  deploys either copy). Claude reaches them only through the same
+  home-ancestor `.claude/` discovery that duplicated the skills, so they
+  appear as home-scoped commands, and only for sessions whose working
+  directory is under `$HOME`. Those files must not be removed, and `~/.claude`
+  must not be retired, until a bridge links each `~/.agents/skills/<name>`
+  into `$CLAUDE_CONFIG_DIR/skills`. That bridge belongs in the Domus connector
   that already owns runtime-root links (`domus-agent-skills`, Domus #435/#436),
   as a second source beside this bundle. They are commands without long
   descriptions, so their resident cost is small, and they stay default-on.
