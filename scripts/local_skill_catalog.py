@@ -74,11 +74,11 @@ def validate_catalog(catalog):
         isinstance(item, dict) for item in catalog["occurrences"]
     ):
         raise ValueError("Catalog needs an occurrences list of objects")
-    for group in ("events", "sources"):
-        if group in catalog and (not isinstance(catalog[group], list) or not all(
-            isinstance(item, dict) for item in catalog[group]
-        )):
-            raise ValueError(f"Catalog {group} must be a list of objects")
+    for key in ("events", "sources"):
+        if not isinstance(catalog.get(key, []), list) or not all(
+            isinstance(item, dict) for item in catalog.get(key, [])
+        ):
+            raise ValueError(f"Catalog needs a {key} list of objects")
     for digest, item in catalog["objects"].items():
         if not isinstance(item, dict) or not isinstance(item.get("path"), str):
             raise ValueError(f"Invalid object record: {digest}")
@@ -295,14 +295,10 @@ def _build(sources: list, output: Path, limits: Limits | None = None) -> dict:
                                   status="needs-review", standalone_compatibility="unverified")
                 catalog["occurrences"].append(occurrence)
                 try:
-                    skill_data = regular_bytes(skill, limits)
+                    occurrence.update(metadata(regular_bytes(skill, limits), skill.parent.name))
                     occurrence["excluded_generated_paths"] = []
                     digest, entries = package_manifest(skill.parent, limits,
                                                        occurrence["excluded_generated_paths"])
-                    entry = next((item for item in entries if item["path"] == skill.name), None)
-                    if entry is None or entry.get("sha256") != hashlib.sha256(skill_data).hexdigest():
-                        raise ValueError("Skill metadata changed during inventory")
-                    occurrence.update(metadata(skill_data, skill.parent.name))
                     occurrence["package_sha256"] = digest
                     if digest not in catalog["objects"]:
                         target = output / "objects" / digest
@@ -317,6 +313,10 @@ def _build(sources: list, output: Path, limits: Limits | None = None) -> dict:
                             raise
                         catalog["objects"][digest] = dict(path=f"objects/{digest}",
                                                           verified=True, files=entries)
+                    # Searchable metadata must describe the verified object,
+                    # even if the source entrypoint changed before manifesting.
+                    retained_skill = output / catalog["objects"][digest]["path"] / skill.name
+                    occurrence.update(metadata(regular_bytes(retained_skill, limits), skill.parent.name))
                     occurrence["status"] = "copied-verified"
                 except (OSError, ValueError) as error:
                     occurrence["error"] = str(error)
@@ -431,8 +431,8 @@ def main() -> int:
             return int(not report["verified"])
         if args.catalog and args.find is not None:
             data = validate_catalog(json.loads(regular_bytes(args.catalog, limits)))
-            for group in ("occurrences", "events", "sources"):
-                for item in data.get(group, []):
+            for collection in ("occurrences", "events", "sources"):
+                for item in data.get(collection, []):
                     if args.find.casefold() in json.dumps(item, ensure_ascii=False).casefold():
                         print(json.dumps(item, ensure_ascii=False))
             if data["incomplete"]:
