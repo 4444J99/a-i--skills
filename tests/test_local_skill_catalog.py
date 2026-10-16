@@ -68,6 +68,67 @@ class CatalogTests(unittest.TestCase):
         result = self.build()
         self.assertEqual(result["counts"]["occurrences"], 1)
         self.assertEqual({x["status"] for x in result["events"]}, {"symlink-skipped", "broken-symlink"})
+        self.assertEqual(len(result["events"]), 3)
+        self.assertEqual({x["path"] for x in result["events"]},
+                         {str(self.source / name) for name in ("outside", "broken", "loop")})
+
+    def test_root_marker_is_not_a_collection_package(self):
+        (self.source / "SKILL.md").write_text("collection marker")
+        self.skill("a")
+        self.assertEqual(self.build()["counts"], dict(objects=1, occurrences=1))
+
+    def test_index_metadata_cannot_introduce_markup(self):
+        folder = self.skill("a")
+        (folder / "SKILL.md").write_text('---\nname: <script>alert(1)</script> [link](https://example.com)\n---\n')
+        self.build()
+        text = (self.output / "INDEX.md").read_text()
+        self.assertNotIn("<script>", text)
+        self.assertNotIn("[link]", text)
+
+    def test_malformed_sources_are_validation_errors(self):
+        for value in ({}, [dict(id=[], path="x", kind="repository")],
+                      [dict(id="a", path="", kind="repository")],
+                      [dict(id="a", path=None, kind="repository")]):
+            with self.subTest(value=value), self.assertRaises(ValueError):
+                catalog.build(value, self.output)
+            self.assertFalse(self.output.exists())
+
+    def test_malformed_catalog_is_validation_error(self):
+        self.output.mkdir()
+        path = self.output / "catalog.json"
+        for value in ([], {}, dict(objects={"abc": None}, incomplete=False, occurrences=[]),
+                      dict(objects={"abc": {"path": "x", "files": None}}, incomplete=False, occurrences=[])):
+            path.write_text(json.dumps(value))
+            with self.subTest(value=value), self.assertRaises(ValueError):
+                catalog.verify(path)
+
+    def test_directory_enumeration_stops_at_limit(self):
+        for name in range(10):
+            (self.source / str(name)).touch()
+        with self.assertRaises(catalog.LimitError):
+            catalog.bounded_children(self.source, catalog.Limits(entries=3))
+
+    def test_interrupted_publication_can_be_retried(self):
+        self.skill("a")
+        with patch.object(catalog.os, "replace", side_effect=OSError("publish failed")):
+            with self.assertRaises(OSError):
+                self.build()
+        self.assertFalse(self.output.exists())
+        self.assertEqual(list(self.root.glob(".collection-*")), [])
+        self.assertFalse(self.build()["incomplete"])
+
+    def test_incomplete_search_reports_coverage(self):
+        import subprocess
+        self.skill("a")
+        self.build()
+        path = self.output / "catalog.json"
+        data = json.loads(path.read_text())
+        data["incomplete"] = True
+        path.write_text(json.dumps(data))
+        result = subprocess.run([__import__("sys").executable, str(MODULE),
+                                 "--catalog", str(path), "--find", "absent"], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 2)
+        self.assertIn("incomplete catalog", result.stderr)
 
     def test_explicit_root_alias_is_resolved(self):
         self.skill("a")

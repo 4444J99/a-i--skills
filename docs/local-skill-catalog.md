@@ -24,6 +24,12 @@ skills. Label caches and worktrees accurately; presence on disk is not proof of
 installation. Keep the roots, private catalog, and copied third-party packages
 outside public Git history. Do not scan session databases or conversation stores.
 
+Each source is a collection root: a `SKILL.md` directly in that root is ignored.
+Source IDs, paths, and kinds must be nonempty strings. Builds use a private
+sibling staging directory and publish with one rename. Failed publication leaves
+the destination available for retry; an uncatchable process termination may
+leave a hidden staging directory, which does not block a fresh attempt.
+
 Build into a new destination outside every source root:
 
 ```sh
@@ -44,6 +50,11 @@ python3 scripts/local_skill_catalog.py --catalog /private/consolidated-skills/ca
 ```
 
 ## Insights
+
+Search warns and exits 2 when catalog coverage is incomplete, including when no
+matches are found. Verification separately reports retained-object integrity and
+catalog completeness. Directory enumeration applies entry and time bounds before
+sorting; index metadata is rendered as inert text.
 
 Claude Code's `/insights` is a built-in command rather than a separately installed
 plugin. It analyzes local Claude sessions. See the publisher's

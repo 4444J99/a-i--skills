@@ -15,6 +15,9 @@ import os
 from pathlib import Path
 import re
 import stat
+import sys
+import shutil
+import tempfile
 import time
 
 PRUNE = {".git", "node_modules", "__pycache__", ".pytest_cache", ".ruff_cache"}
@@ -45,6 +48,39 @@ class Limits:
             self.counts[key] = self.counts.get(key, 0) + 1
             if self.counts[key] > self.values[key]:
                 raise LimitError(f"{key} limit exceeded")
+
+
+def bounded_children(directory: Path, limits: Limits):
+    """Charge each directory entry before retaining it for deterministic ordering."""
+    children = []
+    with os.scandir(directory) as iterator:
+        for entry in iterator:
+            limits.check("entries")
+            children.append(Path(entry.path))
+    return sorted(children)
+
+
+def inert_text(value) -> str:
+    """Numeric entities keep HTML and Markdown syntax inert in previews."""
+    return "".join(f"&#{ord(char)};" for char in json.dumps(value, ensure_ascii=False))
+
+
+def validate_catalog(catalog):
+    if not isinstance(catalog, dict) or not isinstance(catalog.get("objects"), dict):
+        raise ValueError("Catalog needs an objects mapping")
+    if not isinstance(catalog.get("incomplete"), bool):
+        raise ValueError("Catalog needs a boolean incomplete field")
+    if not isinstance(catalog.get("occurrences"), list) or not all(
+        isinstance(item, dict) for item in catalog["occurrences"]
+    ):
+        raise ValueError("Catalog needs an occurrences list of objects")
+    for digest, item in catalog["objects"].items():
+        if not isinstance(item, dict) or not isinstance(item.get("path"), str):
+            raise ValueError(f"Invalid object record: {digest}")
+        files = item.get("files")
+        if not isinstance(files, list) or not all(isinstance(entry, dict) for entry in files):
+            raise ValueError(f"Invalid object manifest: {digest}")
+    return catalog
 
 
 def regular_bytes(path: Path, limits: Limits) -> bytes:
@@ -110,8 +146,7 @@ def package_manifest(root: Path, limits: Limits, excluded=None) -> tuple[str, li
         if identity in seen:
             raise ValueError(f"directory cycle: {directory}")
         seen.add(identity)
-        for child in sorted(directory.iterdir()):
-            limits.check("entries")
+        for child in bounded_children(directory, limits):
             info = child.lstat()
             relative = child.relative_to(root).as_posix()
             if child.name in GENERATED_NAMES or child.suffix in GENERATED_SUFFIXES:
@@ -173,9 +208,8 @@ def discover(root: Path, kind: str, limits: Limits, events: list):
                 events.append(dict(path=str(directory), status="cycle-skipped"))
                 continue
             seen.add(identity)
-            children = sorted(directory.iterdir())
+            children = bounded_children(directory, limits)
             for child in children:
-                limits.check("entries")
                 info = child.lstat()
                 if stat.S_ISLNK(info.st_mode):
                     try:
@@ -184,7 +218,7 @@ def discover(root: Path, kind: str, limits: Limits, events: list):
                         status = "unresolved-symlink"
                     events.append(dict(path=str(child), status=status,
                                        target=os.readlink(child)))
-                if child.name.lower() == "skill.md":
+                if child.name.lower() == "skill.md" and directory != root:
                     limits.check("packages")
                     yield child
                 if stat.S_ISDIR(info.st_mode):
@@ -200,7 +234,7 @@ def discover(root: Path, kind: str, limits: Limits, events: list):
             events.append(dict(path=str(directory), status="scan-error", error=str(error)))
 
 
-def build(sources: list, output: Path, limits: Limits | None = None) -> dict:
+def _build(sources: list, output: Path, limits: Limits | None = None) -> dict:
     limits = limits or Limits()
     output = output.absolute()
     if output.is_symlink():
@@ -208,9 +242,16 @@ def build(sources: list, output: Path, limits: Limits | None = None) -> dict:
     output = output.resolve()
     resolved = []
     ids = set()
+    if not isinstance(sources, list):
+        raise ValueError("Sources must be a list")
     for source in sources:
         if not isinstance(source, dict) or not all(k in source for k in ("id", "path", "kind")):
             raise ValueError("Each source needs id, path and kind")
+        if not all(isinstance(source[key], str) and source[key].strip()
+                   for key in ("id", "path", "kind")):
+            raise ValueError("Source id, path and kind must be nonempty strings")
+        if source.get("working_directory") is not None and not isinstance(source["working_directory"], str):
+            raise ValueError("Source working_directory must be a string or null")
         if source["id"] in ids:
             raise ValueError("Source IDs must be unique")
         ids.add(source["id"])
@@ -288,17 +329,43 @@ def build(sources: list, output: Path, limits: Limits | None = None) -> dict:
              "Full provenance, exclusions, errors and limits are in catalog.json.", "",
              f"Incomplete: {catalog['incomplete']}. Occurrences: {len(catalog['occurrences'])}.", ""]
     for item in catalog["occurrences"]:
-        lines.extend([f"- {json.dumps(item.get('name', '?'))} — {item['status']}",
-                      f"  source: {json.dumps(item['source_path'])}",
-                      f"  object: {item.get('package_sha256', 'none')}",
-                      f"  working directory: {json.dumps(item['working_directory'])}"])
+        lines.extend([f"- {inert_text(item.get('name', '?'))} — {inert_text(item['status'])}",
+                      f"  source: {inert_text(item['source_path'])}",
+                      f"  object: {inert_text(item.get('package_sha256', 'none'))}",
+                      f"  working directory: {inert_text(item['working_directory'])}"])
     (output / "INDEX.md").write_text("\n".join(lines) + "\n")
     return catalog
 
 
+def build(sources: list, output: Path, limits: Limits | None = None) -> dict:
+    """Publish a complete snapshot by same-filesystem rename; failures are retryable."""
+    output = output.absolute()
+    if output.is_symlink():
+        raise ValueError("Output cannot be a symlink")
+    output = output.resolve()
+    if output.exists() and (not output.is_dir() or any(output.iterdir())):
+        raise ValueError("Output must be a new or empty directory")
+    output.parent.mkdir(parents=True, exist_ok=True)
+    staging = Path(tempfile.mkdtemp(prefix=f".{output.name}-", dir=output.parent))
+    try:
+        # Validate overlap against the requested destination as well as staging.
+        if isinstance(sources, list):
+            for source in sources:
+                if isinstance(source, dict) and isinstance(source.get("path"), str) and source["path"].strip():
+                    root = Path(source["path"]).expanduser().resolve()
+                    if output == root or output in root.parents or root in output.parents:
+                        raise ValueError(f"Output/source overlap: {root}")
+        result = _build(sources, staging, limits)
+        os.replace(staging, output)
+        return result
+    finally:
+        if staging.exists():
+            shutil.rmtree(staging)
+
+
 def verify(catalog_path: Path, limits: Limits | None = None) -> dict:
     limits = limits or Limits()
-    catalog = json.loads(catalog_path.read_text())
+    catalog = validate_catalog(json.loads(regular_bytes(catalog_path, limits)))
     failures = []
     for digest, item in catalog["objects"].items():
         try:
@@ -317,7 +384,7 @@ def verify(catalog_path: Path, limits: Limits | None = None) -> dict:
     if objects_root.is_symlink():
         failures.append("objects directory is a symlink")
     elif objects_root.exists():
-        orphan_objects = sorted(path.name for path in objects_root.iterdir()
+        orphan_objects = sorted(path.name for path in bounded_children(objects_root, limits)
                                 if path.name not in catalog["objects"])
     complete = not catalog.get("incomplete", True)
     retained_verified = not failures
@@ -344,10 +411,13 @@ def main() -> int:
             print(json.dumps(report, indent=2))
             return int(not report["verified"])
         if args.catalog and args.find is not None:
-            data = json.loads(args.catalog.read_text())
+            data = validate_catalog(json.loads(regular_bytes(args.catalog, limits)))
             for item in data["occurrences"]:
                 if args.find.casefold() in json.dumps(item, ensure_ascii=False).casefold():
                     print(json.dumps(item, ensure_ascii=False))
+            if data["incomplete"]:
+                print("Warning: results are from an incomplete catalog", file=sys.stderr)
+                return 2
             return 0
         if not args.sources or not args.output:
             parser.error("Use --sources + --output, or --catalog + --find/--verify")
