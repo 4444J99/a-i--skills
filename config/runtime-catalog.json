@@ -9,6 +9,23 @@
     "label": "Example Skills",
     "context_file": "GEMINI.md"
   },
+  "default_on": {
+    "rule": "A catalog skill is resident in the Claude bundle only if it was invoked in at least one of the host's last 50 Claude sessions (usage), a governing charter names it (charter), or it is the doorway to the on-demand catalog (structural). Every other catalog skill ships in distributions/claude/skills-catalog and loads through skill-catalog. Re-measure with scripts/skill_residency.py usage before changing this list.",
+    "skills": {
+      "closeout": {
+        "basis": ["usage", "charter"],
+        "evidence": "Invoked in 60 of 104 local Claude sessions (2026-10-16 audit); the Tier-0 CLAUDE.md names the /closeout skill as the close-out procedure."
+      },
+      "skill-catalog": {
+        "basis": ["structural"],
+        "evidence": "The only route from a session to the on-demand catalog."
+      },
+      "voice-enforcement": {
+        "basis": ["charter"],
+        "evidence": "The Tier-0 CLAUDE.md names the /voice-enforcement skill as the full voice constitution."
+      }
+    }
+  },
   "purpose_collections": {
     "backend-development": [
       "api-design-patterns",

@@ -116,7 +116,8 @@ repository contains additional work and is not synonymous with this snapshot.
 now would break committed consumers:
 
 - The [Claude skills symlink](https://github.com/4444J99/domus-genoma/blob/0d93f029a8200b98686f95c4dfd173a0f1aaf357/private_dot_claude/symlink_skills.tmpl)
-  points into `distributions/claude/skills`.
+  points into `distributions/claude/skills`, which now holds only the
+  default-on set (see [ADR 003](adr/003-default-on-skill-residency.md)).
 - [Cowork synchronization](https://github.com/4444J99/domus-genoma/blob/0d93f029a8200b98686f95c4dfd173a0f1aaf357/dot_local/bin/executable_cowork-skills-sync)
   copies from that directory and uses `rsync --delete`.
 - The `composer` command and skill-planning commands read the generated registry.

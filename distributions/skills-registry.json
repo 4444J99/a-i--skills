@@ -6553,6 +6553,50 @@
       }
     },
     {
+      "name": "skill-catalog",
+      "description": "Doorway to the full skill catalog. Only a few skills stay resident in every session; the rest live on demand. Use when a task might match a specialized skill that is not in the resident list (design, testing, security, writing, data, deployment, teaching, and so on), or when the user names a skill that is not listed. Finds the matching catalog skill and loads its instructions in place.",
+      "category": "tools",
+      "collection": "example",
+      "path": "skills/tools/skill-catalog",
+      "license": "MIT",
+      "complexity": "beginner",
+      "time_to_learn": "5min",
+      "tier": "core",
+      "governance_norm_group": null,
+      "governance_auto_activate": false,
+      "prerequisites": [],
+      "tags": [
+        "skill-discovery",
+        "on-demand-loading",
+        "context-budget"
+      ],
+      "inputs": [
+        "task-description"
+      ],
+      "outputs": [
+        "loaded-skill-instructions"
+      ],
+      "side_effects": [
+        "reads-filesystem",
+        "runs-commands"
+      ],
+      "triggers": [
+        "user-names-an-unlisted-skill",
+        "task-matches-a-specialized-domain"
+      ],
+      "complements": [
+        "closeout"
+      ],
+      "includes": [],
+      "governance_phases": [],
+      "organ_affinity": [],
+      "resources": {
+        "scripts": [],
+        "references": [],
+        "assets": []
+      }
+    },
+    {
       "name": "skill-chain-prompts",
       "description": "Orchestrate multi-skill workflows with prompt-based skill chaining. Define sequential or parallel skill invocations using YAML chain definitions, track progress through chains, and use pre-built chains for development, documentation, and career workflows. Use when coordinating multiple skills for complex tasks.",
       "category": "tools",
@@ -8124,7 +8168,7 @@
       ]
     },
     "tools": {
-      "count": 21,
+      "count": 22,
       "skills": [
         "agent-development-pack",
         "agent-swarm-orchestrator",
@@ -8141,6 +8185,7 @@
         "session-governance-audit",
         "session-lifecycle-patterns",
         "shell-history-hygiene",
+        "skill-catalog",
         "skill-chain-prompts",
         "skill-creator",
         "speckit",

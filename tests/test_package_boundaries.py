@@ -37,6 +37,7 @@ def package_source(tmp_path):
         shutil.copy2(ROOT / relative, destination)
     config = json.loads((ROOT / "config/runtime-catalog.json").read_text())
     config["purpose_collections"] = {}
+    config.pop("default_on", None)  # Its members name real catalog skills.
     (source / "config").mkdir()
     (source / "config/runtime-catalog.json").write_text(json.dumps(config))
     return source

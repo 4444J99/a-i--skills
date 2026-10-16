@@ -12,5 +12,6 @@ skills/tools/organvm-governance-pack
 skills/development/python-backend-pack
 skills/security/security-essentials-pack
 skills/security/security-threat-modeler
+skills/tools/skill-catalog
 skills/development/tdd-workflow
 skills/tools/transcript-promotion

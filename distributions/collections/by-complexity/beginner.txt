@@ -2,5 +2,6 @@ closeout
 code-review-checklist
 cv-resume-builder
 shell-history-hygiene
+skill-catalog
 stranger-test-protocol
 testing-patterns
