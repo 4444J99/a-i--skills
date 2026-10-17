@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 This is Anthony Padavano's (4444J99) agent skills repository—a catalog of skills that extend AI coding agents' capabilities. Each skill is a self-contained folder with a `SKILL.md` file containing YAML frontmatter and instructions.
 
 Skill locations:
-- **Catalog skills**: Located in `skills/` directory, organized by category (e.g., `skills/creative/algorithmic-art/`, `skills/development/mcp-builder/`). 167 skills across 12 categories.
+- **Catalog skills**: Located in `skills/` directory, organized by category (e.g., `skills/creative/algorithmic-art/`, `skills/development/mcp-builder/`). 168 skills across 12 categories.
 - **Plugin skills**: Claude Code plugins under `plugins/` (11 skills).
 
 ## Repository Structure
@@ -16,7 +16,7 @@ Skill locations:
 ai-skills/
 ├── README.md              # Repository documentation
 ├── CLAUDE.md              # Claude Code instructions (this file)
-├── skills/                # All example skills (167), organized by category
+├── skills/                # All example skills (168), organized by category
 │   ├── creative/          # Art, music, design (15 skills)
 │   ├── data/              # Data analysis and ML (8 skills)
 │   ├── development/       # Coding patterns and tools (47 skills, incl. bundles)
@@ -28,7 +28,7 @@ ai-skills/
 │   ├── project-management/ # Planning and roadmaps (6 skills)
 │   ├── security/          # Security and compliance (6 skills, incl. bundle)
 │   ├── specialized/       # Niche domains (6 skills)
-│   └── tools/             # Meta-skills and orchestration (11 skills)
+│   └── tools/             # Meta-skills and orchestration (12 skills)
 ├── plugins/               # Claude Code plugins (11 skills)
 ├── docs/                  # Documentation files
 │   ├── CHANGELOG.md
@@ -127,7 +127,10 @@ tier: core                          # Quality tier: core or community
 - `distributions/skills-registry.json` — machine-readable skill metadata (all frontmatter + resources)
 - `distributions/skills-lock.json` — lockfile with SHA-256 hashes per skill
 - `distributions/direct/example/` — direct link directory
-- `distributions/codex/skills` / `distributions/claude/skills` — agent-specific bundles
+- `distributions/codex/skills` / `distributions/claude/skills` — agent-specific bundles; the Claude bundle holds only the default-on (resident) skills
+- `distributions/claude/skills-catalog` + `distributions/claude/CATALOG.md` — the remaining catalog skills, loaded on demand via the `skill-catalog` skill
+- `distributions/collections/default-on-skills.txt` — resident skill list
+- Resident membership is authored under `default_on` in `config/runtime-catalog.json` (see `docs/adr/003-default-on-skill-residency.md`); never edit the generated bundles directly
 - `distributions/extensions/gemini/*/skills` — Gemini CLI extensions
 
 These generated artifacts remain tracked until the coordinated installation migration is accepted; include refreshed outputs in PRs that change skills. CI validates that generated files are up-to-date. They are not build inputs: `scripts/skills_install.py` generates and validates a complete staging directory from canonical source, then atomically activates the verified release. The installer supports clean checkouts, failed-update preservation, guarded rollback, and standalone release archives. See [docs/installation.md](docs/installation.md).

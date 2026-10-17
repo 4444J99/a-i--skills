@@ -150,6 +150,7 @@
         "./skills/tools/session-governance-audit",
         "./skills/tools/session-lifecycle-patterns",
         "./skills/tools/shell-history-hygiene",
+        "./skills/tools/skill-catalog",
         "./skills/tools/skill-chain-prompts",
         "./skills/tools/skill-creator",
         "./skills/professional/slack-gif-creator",

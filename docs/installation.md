@@ -32,7 +32,8 @@ once to a specific release when reading several files as one operation.
 
 | Consumer | Verified installation path |
 |---|---|
-| Claude skills directory | `current/distributions/claude/skills` |
+| Claude skills directory (default-on, resident skills) | `current/distributions/claude/skills` |
+| Claude on-demand skill catalog | `current/distributions/claude/skills-catalog` (loaded through the `skill-catalog` skill; index in `CATALOG.md`) |
 | Codex skills directory | `current/distributions/codex/skills` |
 | Direct catalog | `current/distributions/direct/example` |
 | Gemini catalog extension | `current/distributions/extensions/gemini/example-skills` |

@@ -438,3 +438,128 @@ def test_full_folder_hash_covers_paths_contents_and_executable_mode(tmp_path):
     assert executable != initial
     file.rename(tmp_path / "renamed.sh")
     assert generate_lockfile._sha256_tree(tmp_path) != executable
+
+
+# --------------------------------------------------------------------------
+# Default-on residency: the Claude bundle lists only skills that earn it
+# --------------------------------------------------------------------------
+
+def _set_default_on(root, skills):
+    path = root / "config" / "runtime-catalog.json"
+    config = json.loads(path.read_text())
+    if skills is None:
+        config.pop("default_on", None)
+    else:
+        config["default_on"] = {
+            "rule": "Resident only when used, chartered, or structural.",
+            "skills": {name: {"basis": ["usage"], "evidence": "test fixture"} for name in skills},
+        }
+    path.write_text(json.dumps(config) + "\n", encoding="utf-8")
+
+
+def _names(directory):
+    return {entry.name for entry in directory.iterdir() if entry.is_dir()}
+
+
+def test_default_on_partitions_the_claude_bundle_without_duplicates(canonical_source):
+    root = canonical_source
+    _set_default_on(root, ["good-skill"])
+    result = _refresh(root)
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert validate_generated_dirs.validate_generated(root) == []
+    claude = root / "distributions" / "claude"
+    assert _names(claude / "skills") == {"good-skill"}
+    assert _names(claude / "skills-catalog") == {"spare-skill"}
+    for runtime in ("codex/skills", "direct/example"):
+        assert _names(root / "distributions" / runtime) == {"good-skill", "spare-skill"}
+    assert (root / "distributions" / "collections" / "default-on-skills.txt").read_text() == "good-skill\n"
+    index = (claude / "CATALOG.md").read_text()
+    assert "- spare-skill (tools): Does a clearly described" in index
+    assert "good-skill" not in index
+    assert "1 default-on skills" in (claude / "README.md").read_text()
+
+
+def test_default_on_rejects_unknown_skills_and_unsupported_basis(canonical_source):
+    root = canonical_source
+    _set_default_on(root, ["missing-skill"])
+    result = _refresh(root)
+    assert result.returncode != 0
+    assert "unknown catalog skills" in result.stderr
+    path = root / "config" / "runtime-catalog.json"
+    config = json.loads(path.read_text())
+    config["default_on"]["skills"] = {"good-skill": {"basis": ["popular"], "evidence": "x"}}
+    path.write_text(json.dumps(config))
+    result = _refresh(root)
+    assert result.returncode != 0
+    assert "basis must be drawn from" in result.stderr
+
+
+def test_validation_detects_a_skill_in_the_wrong_claude_bundle(canonical_source):
+    root = canonical_source
+    _set_default_on(root, ["good-skill"])
+    assert _refresh(root).returncode == 0
+    claude = root / "distributions" / "claude"
+    shutil.move(str(claude / "skills-catalog" / "spare-skill"), str(claude / "skills" / "spare-skill"))
+    errors = validate_generated_dirs.validate_generated(root)
+    assert any("extra ['spare-skill']" in error for error in errors)
+    assert any("missing ['spare-skill']" in error for error in errors)
+
+
+def test_removing_default_on_restores_the_full_claude_bundle(canonical_source):
+    root = canonical_source
+    _set_default_on(root, ["good-skill"])
+    assert _refresh(root).returncode == 0
+    _set_default_on(root, None)
+    result = _refresh(root)
+    assert result.returncode == 0, result.stdout + result.stderr
+    claude = root / "distributions" / "claude"
+    assert _names(claude / "skills") == {"good-skill", "spare-skill"}
+    assert not (claude / "skills-catalog").exists()
+    assert not (claude / "CATALOG.md").exists()
+    assert validate_generated_dirs.validate_generated(root) == []
+
+
+def test_partition_retirement_refuses_an_unowned_catalog_directory(canonical_source):
+    root = canonical_source
+    assert _refresh(root).returncode == 0
+    foreign = root / "distributions" / "claude" / "skills-catalog"
+    foreign.mkdir()
+    (foreign / "notes.txt").write_text("kept\n")
+    result = _refresh(root)
+    assert result.returncode != 0
+    assert "unowned on-demand bundle" in result.stderr
+    assert (foreign / "notes.txt").read_text() == "kept\n"
+
+
+def test_residency_budget_counts_the_listing_each_session_loads(tmp_path):
+    residency = importlib.import_module("skill_residency")
+    root = tmp_path / "bundle"
+    _write_skill(root, "good-skill", GOOD_FM)
+    _write_skill(root, "folded-skill", "name: folded-skill\ndescription: >\n  Two folded\n  lines.\nlicense: MIT\n")
+    (root / "not-a-skill").mkdir()
+    measured = residency.budget(root)
+    expected = len("- folded-skill: Two folded lines.\n") + len(
+        "- good-skill: Does a clearly described, task-focused thing for tests.\n"
+    )
+    assert measured["skills"] == 2
+    assert measured["listing_chars"] == expected
+    assert measured["estimated_tokens"] == round(expected / 4)
+    alias = tmp_path / "alias"
+    alias.symlink_to(root)
+    rows = residency._with_identity([residency.budget(root), residency.budget(alias)])
+    assert rows[0]["duplicate_of"] is None
+    assert rows[1]["duplicate_of"] == str(root)
+
+
+def test_residency_usage_counts_sessions_not_calls(tmp_path):
+    residency = importlib.import_module("skill_residency")
+    project = tmp_path / "projects" / "-repo"
+    project.mkdir(parents=True)
+    tool_use = {"type": "assistant", "message": {"content": [
+        {"type": "tool_use", "name": "Skill", "input": {"skill": "plugin:closeout"}}]}}
+    command = {"type": "user", "message": {"content": "<command-name>/verify</command-name>"}}
+    (project / "a.jsonl").write_text(json.dumps(tool_use) + "\n" + json.dumps(tool_use) + "\n")
+    (project / "b.jsonl").write_text(json.dumps(command) + "\n" + json.dumps(tool_use) + "\n")
+    report = residency.usage(tmp_path / "projects", 50)
+    assert report["sessions_read"] == 2
+    assert report["sessions_per_skill"] == {"closeout": 2, "verify": 1}
