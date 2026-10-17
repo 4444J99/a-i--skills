@@ -838,7 +838,7 @@
     },
     {
       "name": "closeout",
-      "description": "Session-end ritual that walks back through plans authored and atoms touched in this session, assigning each a closure status (DONE-NNN, IRF-XXX-NNN, or `~/.Codex/plans/abandoned/`). Verifies git state. Produces CLOSEOUT_SUMMARY.md. Triggers on \"/closeout\", \"close out the session\", \"end of session\", \"wrap up\", \"session close\", or before any planned `git push`. Addresses the 90.4% plan-orphan rate documented in docs/evaluation/self-review-2026-05-05/stale-plans-and-orphan-commits.md.",
+      "description": "Session-end ritual. Inventories plans, atoms, git state, and hanging work (unmerged PRs, unreaped branches, live-checkout lag, unfiled follow-ups) from live state, assigns plans a closure status (DONE-NNN, IRF-XXX-NNN, or plans/abandoned/), enforces the merged/live/observed status words, and writes a closeout summary. Triggers on \"/closeout\", \"close out the session\", \"end of session\", \"wrap up\", \"session close\", or before any planned `git push`.",
       "category": "tools",
       "collection": "example",
       "path": "skills/tools/closeout",
@@ -859,12 +859,14 @@
       "inputs": [
         "current-session-state",
         "plans-authored-this-session",
-        "atoms-touched-this-session"
+        "atoms-touched-this-session",
+        "session-branches-and-prs"
       ],
       "outputs": [
         "closure-marks",
         "CLOSEOUT_SUMMARY-md",
-        "abandoned-plans-moved"
+        "abandoned-plans-moved",
+        "hanging-work-inventory"
       ],
       "side_effects": [
         "creates-files",
