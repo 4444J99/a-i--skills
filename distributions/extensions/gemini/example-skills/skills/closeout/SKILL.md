@@ -53,7 +53,7 @@ git worktree list
 git branch --show-current
 ```
 
-Use the native session id if the harness exposes one. A session may span several
+Confirm the current branch is the one intended for this session's work. Use the native session id if the harness exposes one. A session may span several
 repositories; name each root. Inspect only the accepted scope. Never adopt a sibling
 checkout or another session's worktree to obtain a green result, and never reset, stash,
 or reap work you did not start.

@@ -1036,12 +1036,12 @@
     {
       "name": "closeout",
       "path": "skills/tools/closeout",
-      "sha256": "b58acd289ba4d26161ac19db0ac93f771faf45d5f53d1154bcbe13e9737bd64c",
+      "sha256": "568da4d3d9aec0a4e9f73944f0c500c7c4a3264f2abfcda6fa4568c2e3b9385b",
       "files": [
         {
           "path": "SKILL.md",
-          "sha256": "7a280d55ecdf80a923a21d18b7021880efbf661b06bcf0eb9c5ceb3fc67487ed",
-          "size": 7702,
+          "sha256": "31dd8e440fdad177ce3b78fcc7eceb48695ce06c2bc9e951bec455497686de09",
+          "size": 7774,
           "executable": false
         },
         {
