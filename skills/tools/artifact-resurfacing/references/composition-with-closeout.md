@@ -4,6 +4,19 @@ This skill and [`closeout`](../../closeout/SKILL.md) are paired but distinct. Cl
 
 Read alongside `../SKILL.md` Phase 4 (Codify) and `closeout`'s six-step protocol.
 
+> **Scope of the "closeout Step N" citations in this file.** `closeout` is now
+> repo-agnostic; its six-step plan/atom ledger ritual (Step 1 inventory, Step 2 plan
+> classification, Step 3 atoms, Step 4 git state, Step 4.5 autogen gate, Step 5
+> active-handoff, Step 6 `CLOSEOUT_SUMMARY.md`) lives in
+> [`../../closeout/references/organvm-plan-ledger-overlay.md`](../../closeout/references/organvm-plan-ledger-overlay.md).
+> Every "closeout Step N" below refers to that overlay, which applies in repos that opt
+> into the ORGANVM plan ledger. In other repos, closeout's generic inventory and homing
+> steps (`../../closeout/SKILL.md` Steps 3-4) play the same role, and there is no
+> plan-closure label for this skill to defer to. Historical orphan-plan findings are not
+> session-owned work: in such a repo, this skill records or routes each one through the
+> repo's own tracker (a filed issue or plan), so it still ends in a Step 4 durable form
+> rather than being handed to a classifier that has no destination there.
+
 ## The division of labor
 
 | Concern | Owner | What it produces |
