@@ -4,6 +4,19 @@ This skill and [`closeout`](../../closeout/SKILL.md) are paired but distinct. Cl
 
 Read alongside `../SKILL.md` Phase 4 (Codify) and `closeout`'s six-step protocol.
 
+> **Scope of the "closeout Step N" citations in this file.** `closeout` is now
+> repo-agnostic; its six-step plan/atom ledger ritual (Step 1 inventory, Step 2 plan
+> classification, Step 3 atoms, Step 4 git state, Step 4.5 autogen gate, Step 5
+> active-handoff, Step 6 `CLOSEOUT_SUMMARY.md`) lives in
+> [`../../closeout/references/organvm-plan-ledger-overlay.md`](../../closeout/references/organvm-plan-ledger-overlay.md).
+> Every "closeout Step N" below refers to that overlay, which applies in repos that opt
+> into the ORGANVM plan ledger. In other repos, closeout's generic inventory and homing
+> steps (`../../closeout/SKILL.md` Steps 3-4) play the same role, and there is no
+> plan-closure label for this skill to defer to. Historical orphan-plan findings are not
+> session-owned work: in such a repo, this skill records or routes each one through the
+> repo's own tracker (a filed issue or plan), so it still ends in a Step 4 durable form
+> rather than being handed to a classifier that has no destination there.
+
 ## The division of labor
 
 | Concern | Owner | What it produces |
@@ -42,7 +55,10 @@ This addition is a Phase 4 codification proposal of artifact-resurfacing's own g
 
 ## When artifact-resurfacing invokes closeout
 
-Artifact-resurfacing's Phase 2 (Classify) hands every **orphan-plan** finding to closeout's classifier rather than assigning closure labels itself. The handoff is informational:
+Artifact-resurfacing's Phase 2 (Classify) hands every **orphan-plan** finding to closeout's classifier rather than assigning closure labels itself. Use the selected repository overlay's classifier, including for historical plans.
+If it has no classifier, persist each finding in the repository's actual tracker with
+an owner and next action; a suggested label or transcript-only row is not a handoff.
+The handoff is recorded in that durable owner:
 
 ```
 For each plan path with no DONE/IRF marker, request a closeout classification:
@@ -62,9 +78,11 @@ Those are closeout's authorities.
 
 The canonical order:
 
-1. **closeout** Steps 1 through 6 run as written. The session's own outputs are inventoried and classified.
-2. **artifact-resurfacing** runs after closeout completes, scoped to whatever drift surface the conductor names. The two skills don't share state — artifact-resurfacing reads the closeout summary doc to pick up any orphan-plan findings, but it doesn't depend on closeout's runtime state.
+1. **closeout preparation** Steps 1 through 6 inventory and home the session work. The session's own outputs are inventoried and classified.
+2. **artifact-resurfacing** runs before terminal closeout, scoped to whatever drift surface the conductor names. The two skills don't share state — artifact-resurfacing reads the closeout summary doc to pick up any orphan-plan findings, but it doesn't depend on closeout's runtime state.
 3. **closeout summary update** — after artifact-resurfacing emits its polish proposals, closeout's summary doc receives an addendum noting which proposed diffs were authorized and applied in-session vs deferred. This addendum is itself a closeout-step-6 edit; if closeout has already produced the summary, the edit is a one-line append.
+4. **Publish and read back** every changed owner, including that addendum, then run
+   final closeout. Any later summary edit requires a new publication and readback.
 
 ## Conflict points
 

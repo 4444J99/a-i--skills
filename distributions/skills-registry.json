@@ -838,7 +838,7 @@
     },
     {
       "name": "closeout",
-      "description": "Session-end ritual that walks back through plans authored and atoms touched in this session, assigning each a closure status (DONE-NNN, IRF-XXX-NNN, or `~/.Codex/plans/abandoned/`). Verifies git state. Produces CLOSEOUT_SUMMARY.md. Triggers on \"/closeout\", \"close out the session\", \"end of session\", \"wrap up\", \"session close\", or before any planned `git push`. Addresses the 90.4% plan-orphan rate documented in docs/evaluation/self-review-2026-05-05/stale-plans-and-orphan-commits.md.",
+      "description": "Repo-agnostic session-end ritual. Proves every obligation this session created is homed in a durable, remotely visible owner (merged work, open PR, filed issue or plan, explicit blocker), discovers and defers to the repo's own closeout protocol when it has one, and reports merged / live / observed as separate claims. Triggers on \"/closeout\", \"close out the session\", \"end of session\", \"wrap up\", \"session close\", or before a planned `git push`.",
       "category": "tools",
       "collection": "example",
       "path": "skills/tools/closeout",
@@ -852,21 +852,21 @@
       "tags": [
         "session-management",
         "hygiene",
-        "hall-monitor",
         "close-out",
-        "directive-traceability"
+        "handoff"
       ],
       "inputs": [
         "current-session-state",
-        "plans-authored-this-session",
-        "atoms-touched-this-session"
+        "repo-closeout-protocol-if-any"
       ],
       "outputs": [
-        "closure-marks",
-        "CLOSEOUT_SUMMARY-md",
-        "abandoned-plans-moved"
+        "closure-evidence",
+        "handoff-note-if-unfinished"
       ],
       "side_effects": [
+        "reads-filesystem",
+        "runs-commands",
+        "network-access",
         "creates-files",
         "modifies-git"
       ],
@@ -881,8 +881,13 @@
       "governance_phases": [],
       "organ_affinity": [],
       "resources": {
-        "scripts": [],
-        "references": [],
+        "scripts": [
+          "closeout_check.py"
+        ],
+        "references": [
+          "organvm-plan-ledger-overlay.md",
+          "ownership-check.md"
+        ],
         "assets": []
       }
     },
