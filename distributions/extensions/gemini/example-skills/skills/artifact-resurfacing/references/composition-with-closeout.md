@@ -55,7 +55,10 @@ This addition is a Phase 4 codification proposal of artifact-resurfacing's own g
 
 ## When artifact-resurfacing invokes closeout
 
-Artifact-resurfacing's Phase 2 (Classify) hands every **orphan-plan** finding to closeout's classifier rather than assigning closure labels itself. The handoff is informational:
+Artifact-resurfacing's Phase 2 (Classify) hands every **orphan-plan** finding to closeout's classifier rather than assigning closure labels itself. Use the selected repository overlay's classifier, including for historical plans.
+If it has no classifier, persist each finding in the repository's actual tracker with
+an owner and next action; a suggested label or transcript-only row is not a handoff.
+The handoff is recorded in that durable owner:
 
 ```
 For each plan path with no DONE/IRF marker, request a closeout classification:
@@ -75,9 +78,9 @@ Those are closeout's authorities.
 
 The canonical order:
 
-1. **closeout** Steps 1 through 6 run as written. The session's own outputs are inventoried and classified.
-2. **artifact-resurfacing** runs after closeout completes, scoped to whatever drift surface the conductor names. The two skills don't share state — artifact-resurfacing reads the closeout summary doc to pick up any orphan-plan findings, but it doesn't depend on closeout's runtime state.
-3. **closeout summary update** — after artifact-resurfacing emits its polish proposals, closeout's summary doc receives an addendum noting which proposed diffs were authorized and applied in-session vs deferred. This addendum is itself a closeout-step-6 edit; if closeout has already produced the summary, the edit is a one-line append.
+1. **closeout preparation** Steps 1 through 6 inventory and home the session work. The session's own outputs are inventoried and classified.
+2. **artifact-resurfacing** runs before terminal closeout, scoped to whatever drift surface the conductor names. The two skills don't share state — artifact-resurfacing reads the closeout summary doc to pick up any orphan-plan findings, but it doesn't depend on closeout's runtime state.
+3. **publish and read back** every changed owner, then run final closeout. **closeout summary update** — after artifact-resurfacing emits its polish proposals, closeout's summary doc receives an addendum noting which proposed diffs were authorized and applied in-session vs deferred. This addendum is itself a closeout-step-6 edit; if closeout has already produced the summary, the edit is a one-line append.
 
 ## Conflict points
 

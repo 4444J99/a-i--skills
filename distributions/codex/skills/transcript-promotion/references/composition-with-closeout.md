@@ -61,8 +61,11 @@ extraction-and-frontmatter mechanics would balloon the skill and conflate "audit
 - Closeout: *Do all the audit work and surface candidates.*
 - Promotion: *Take a named candidate and make it durable.*
 
-The handoff between them is a flagged row in the closeout summary, not an automatic
-invocation.
+Persist each candidate in its actual durable owner (the repository's issue, existing
+plan, or published handoff), with source anchors and next action. A flagged summary
+row or a spoken blocker alone cannot satisfy ownership. Publish and read back any
+updated handoff before the final closeout check; promotion itself remains separately
+authorized.
 
 ## Sequence diagram
 

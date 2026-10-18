@@ -864,6 +864,10 @@
         "handoff-note-if-unfinished"
       ],
       "side_effects": [
+        "reads-filesystem",
+        "runs-commands",
+        "network-access",
+        "creates-files",
         "modifies-git"
       ],
       "triggers": [
@@ -877,9 +881,12 @@
       "governance_phases": [],
       "organ_affinity": [],
       "resources": {
-        "scripts": [],
+        "scripts": [
+          "closeout_check.py"
+        ],
         "references": [
-          "organvm-plan-ledger-overlay.md"
+          "organvm-plan-ledger-overlay.md",
+          "ownership-check.md"
         ],
         "assets": []
       }

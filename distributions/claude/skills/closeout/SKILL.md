@@ -16,6 +16,10 @@ outputs:
   - closure-evidence
   - handoff-note-if-unfinished
 side_effects:
+  - reads-filesystem
+  - runs-commands
+  - network-access
+  - creates-files
   - modifies-git
 triggers:
   - user-says-closeout
@@ -37,9 +41,9 @@ repo knows about itself (its plan ledger, its scripts, its merge rail) comes fro
 ## When to invoke
 
 - The user says `/closeout`, "close out", "wrap up", "end the session".
-- Before a non-trivial `git push`; closeout prepares the push, it does not perform it.
+- Before a non-trivial `git push`: prepare and inventory only. Final closure follows authorized publication and remote readback, including any newly updated handoff.
 - The session produced files, commits, branches, plans, or tasks and the user signals the end.
-- A quiet session with no artifacts: say so and exit. Closeout is fast when there is nothing to home.
+- A quiet session still uses the read-only ownership check; an empty measured inventory is valid.
 
 ## Steps
 
@@ -68,8 +72,8 @@ Look for how this repo already closes a session, in this order, and stop at the 
 4. A "Closeout" (or "Session end") section in `<root>/AGENTS.md` or `<root>/CLAUDE.md`
 5. A committed predicate: `scripts/closeout*`, `done.sh`, or a `closeout` Makefile / package script
 
-Skip any candidate in items 1, 2 and 3 that is this skill or a copy of it (a `closeout`
-skill whose description begins "Repo-agnostic session-end ritual"). A generic installed
+Skip only the invoked file or a byte-identical copy of it in items 1, 2 and 3.
+An unchanged description does not make a customized overlay generic. A generic installed
 copy is not the repo's protocol, and finding one must not end discovery before items 4
 and 5 are checked.
 
@@ -78,10 +82,25 @@ below are the floor it must not drop. If none exists, the floor stands alone. If
 points at an overlay you cannot read or run, report that precisely rather than guessing.
 
 Repos that keep an ORGANVM-style plan ledger (a `CLAUDE.md` with the `ORGANVM:AUTO`
-sentinel, or DONE-NNN / IRF-XXX-NNN plan references) opt into the preserved ritual in
-`references/organvm-plan-ledger-overlay.md`. It is an example overlay, not a default.
+sentinel in a tracked root instruction file, or actual DONE-NNN / IRF-XXX-NNN ledger
+conventions in repository-owned plan locations) opt into the preserved ritual in
+`references/organvm-plan-ledger-overlay.md`. It is an example overlay, not a default. Ignore sentinel/ledger mentions in bundled
+skills, distributions, documentation and examples; `scripts/closeout_check.py` implements
+this bounded discovery.
 
 ### 3. Inventory (read-only)
+
+Use the bundled [ownership checker](references/ownership-check.md):
+
+```bash
+python3 <skill>/scripts/closeout_check.py inventory --evidence <existing-session-evidence.json>
+```
+
+The evidence document projects existing owners; it is not another task registry. Name
+the native session, scoped roots, exact bases and declared non-file obligations. The
+helper inventories content-bound files, commits, stashes and retained worktrees. An
+unknown item requires a verified owner or a remote evidenced exclusion from this session.
+The following commands are exploratory inventory, never a completion predicate.
 
 ```bash
 git status --short                      # modified, staged, untracked
@@ -96,7 +115,7 @@ gh pr list --head "$(git branch --show-current)" 2>/dev/null   # only if gh and 
 ```
 
 With no upstream, an empty `git log` proves nothing. Inspect from a known session base
-(for example `git log origin/<default>..`) or report remote commit ownership as unverified.
+(using the actual selected remote and its measured default branch) or report remote commit ownership as unverified.
 
 Add whatever the session touched in the repo's *own* plan, task, or issue locations,
 found by looking, not by assuming a path. Also flag substantive content delivered only
@@ -133,7 +152,9 @@ printed FAIL can read as green. Run it bare, or capture to a file and filter the
 
 ### 6. Report status words separately
 
-- **merged**: `git fetch` then `git merge-base --is-ancestor <sha> origin/<default>` exits 0.
+- **merged**: resolve the actual remote/default, fetch, then prove ancestry to that
+  measured branch. A squash landing needs authenticated repository-qualified PR
+  evidence linking the original commit to the PR and its landed commit on that default.
 - **live**: the running checkout or installed runtime contains the commit
   (`git -C <live-root> merge-base --is-ancestor <sha> HEAD`) plus runtime evidence.
 - **observed**: evidence of the behavior itself (a log line, a probe output, a rendered page).
@@ -151,9 +172,13 @@ overlay asks for one. A finished session needs no successor.
 
 Step 5's no-replay rule governs verification. The fixed-point check is a separate,
 deliberate repeat of the *session predicate* (the overlay's session-release predicate, or
-the Step 3 inventory re-run read-only). Run it twice and quote both bare exit codes. If the
+the bundled ownership checker when there is no repository predicate). Successful
+inventory commands cannot establish ownership. Run the read-only ownership check
+with `check --evidence <existing-session-evidence.json> --twice`; both fresh passes
+must return 0 with unchanged inventory and evidence fingerprints. Quote both exit codes. If the
 overlay offers only the full repository verification as its predicate, Step 5's run counts
-as the first and one repeat is the second. Both must be 0, and the second run must
+as the first and one read-only repeat is the second; reuse unchanged verification
+receipts and never replay a mutating verification as a fixed-point check. Both must be 0, and the second run must
 create no files, branches, issues, PRs, or processes.
 
 Only then emit, as the last line:
@@ -162,6 +187,15 @@ Only then emit, as the last line:
 
 Nothing follows it. If any step failed, report the real outcome and the precise owner
 of what remains; do not emit the statement.
+
+## Effects
+
+The helper reads files and Git objects and invokes bounded Git/gh network reads. It
+disables optional Git index refresh writes and creates no artifacts. The surrounding
+workflow may create/update owner records and modify Git only within granted authority.
+Missing helper, unsupported evidence or inaccessible remote readback is unmeasured
+(exit 2); dangling obligations exit 1; complete measured ownership exits 0. Ownership
+alone never overrides a repository session predicate, including Limen.
 
 ## Rules
 

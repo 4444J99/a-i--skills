@@ -179,7 +179,7 @@
     {
       "name": "artifact-resurfacing",
       "path": "skills/tools/artifact-resurfacing",
-      "sha256": "997305aacc608891acac9a60d0d4d81b0b1095534b268d0a7d4960c2bd4a46c1",
+      "sha256": "4437de291ca6243fa194991d5cb7c6850648d2f8297b8121d13fc78af4f13b58",
       "files": [
         {
           "path": "SKILL.md",
@@ -201,8 +201,8 @@
         },
         {
           "path": "references/composition-with-closeout.md",
-          "sha256": "a220e179918726030e6816523970eebf827916b76e2ad38f4fbb04ee0885fc73",
-          "size": 8408,
+          "sha256": "788bd74bf180e567207b1cde1c3c407a88a3ab073c487d57e8e9b8b2811b2f8c",
+          "size": 8783,
           "executable": false
         },
         {
@@ -1036,12 +1036,12 @@
     {
       "name": "closeout",
       "path": "skills/tools/closeout",
-      "sha256": "acf08a31ec2c35d515f883338fabc521c205e1bb0519a57a596e99398acbd772",
+      "sha256": "84478e9085243bbbac6aa00442f4fc27895814469b0a175f7695830744b4d346",
       "files": [
         {
           "path": "SKILL.md",
-          "sha256": "aff22a61e2ccac5bf80c97b743756d3702d2a63b479633fe0b21703a658a06ed",
-          "size": 8996,
+          "sha256": "2d40a0df915344d565610a5bb7e06a44f0272d47dd2f08493ed9a31a51b12825",
+          "size": 11034,
           "executable": false
         },
         {
@@ -1049,6 +1049,18 @@
           "sha256": "22966e64f71e8144a0ef7df68794aeb68bb13d9c611c735d2c6e49df74a0ef54",
           "size": 6595,
           "executable": false
+        },
+        {
+          "path": "references/ownership-check.md",
+          "sha256": "001862fd117431ab969b4e7ab053340a3106981a6e3bb74ba6211383b4549b60",
+          "size": 4274,
+          "executable": false
+        },
+        {
+          "path": "scripts/closeout_check.py",
+          "sha256": "e18d24d4ac5183c5d43dbd45717c006681d20d373fb1368196d5c26cbc1a666b",
+          "size": 25698,
+          "executable": true
         }
       ]
     },
@@ -5429,7 +5441,7 @@
     {
       "name": "transcript-promotion",
       "path": "skills/tools/transcript-promotion",
-      "sha256": "d90e8d181cc2e12cca78cc8b7a3c7ec9312ac55a0661ffc3b43b6285b2d73791",
+      "sha256": "ed83601cb1385270ab726dc28c83ce665932880e0b9fa1b978f0ac0dca8ca440",
       "files": [
         {
           "path": "SKILL.md",
@@ -5451,8 +5463,8 @@
         },
         {
           "path": "references/composition-with-closeout.md",
-          "sha256": "bfddc48dbd1d2d1eae08790a064531e75d59191d5471836aa18a8ea4c831dc40",
-          "size": 4178,
+          "sha256": "aebcdeb17b6e27602d6a919fb0af4b998331ecdf31d51d0a4039b3dfe98c793d",
+          "size": 4430,
           "executable": false
         },
         {
