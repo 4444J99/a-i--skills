@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Verified skills installation: atomic build, validate, install, package, and guarded rollback from canonical source, with CI workflow, PR validation comment, and release-asset support. Addresses activation [issue #23](https://github.com/4444J99/a-i--skills/issues/23). Latest Python CI (runs 38319189660, 38319282014), Skills installation (runs 38319230387, 38411802555, 39097717333), Validate (runs 38319189650, 38319230233, 38319484976, 38319642649, 38319836861, 38319927575, 38320033513, 38320115522, 38320183281, 38320254778, 38336420685, 38336494265), and PR Validation Comment (runs 38319088862, 38319189699, 38319230324, 38319404998, 38319485007, 38319837022, 38319927487, 38319994806, 38320033544, 38320106502, 38320140159, 38320276277, 38336420786, 38336494233) successes recorded. Dependabot pip update (run 38411813478) succeeded on main after merge of #43.
+- Verified skills installation: atomic build, validate, install, package, and guarded rollback from canonical source, with CI workflow, PR validation comment, and release-asset support. Addresses activation [issue #23](https://github.com/4444J99/a-i--skills/issues/23). Latest Python CI (runs 38319189660, 38319282014), Skills installation (runs 38319230387, 38411802555, 39097717333), Validate (runs 38319189650, 38319230233, 38319484976, 38319642649, 38319836861, 38319927575, 38320033513, 38320115522, 38320183281, 38320254778, 38336420685, 38336494265), and PR Validation Comment (runs 38319088862, 38319189699, 38319230324, 38319404998, 38319485007, 38319837022, 38319927487, 38319994806, 38320033544, 38320106502, 38320140159, 38320276277, 38336420786, 38336494233, 39097999170) successes recorded. Dependabot pip update (run 38411813478) succeeded on main after merge of #43.
 - `code-review-checklist` skill (development category): structured five-dimension review
   guide (correctness, security, performance, readability, test coverage) with prioritized,
   file:line-cited output format. Closes #5.
@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- `closeout` skill made repository-agnostic: core is now a universal floor that discovers and defers to any repo-specific protocol; original ORGANVM plan-ledger ritual preserved as an opt-in overlay. (PR #50). Validate workflow success (run 39097999202) recorded on head d3ed2e44867e72c2b0ad771f2de0369bd337a50f.
+- `closeout` skill made repository-agnostic: core is now a universal floor that discovers and defers to any repo-specific protocol; original ORGANVM plan-ledger ritual preserved as an opt-in overlay. (PR #50). Validate workflow success (run 39097999202) recorded on head d3ed2e44867e72c2b0ad771f2de0369bd337a50f. PR Validation Comment success (run 39097999170) recorded.
 
 ## [0.1.0] - 2026-02-11
 
