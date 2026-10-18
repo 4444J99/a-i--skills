@@ -1,1 +1,25 @@
-$(cat /tmp/new_lock.json)
+{
+  "version": "2.0",
+  "hash_algorithm": "sha256-tree-v2",
+  "skills": [
+    {
+      "name": "closeout",
+      "path": "skills/tools/closeout",
+      "sha256": "acf08a31ec2c35d515f883338fabc521c205e1bb0519a57a596e99398acbd772",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "aff22a61e2ccac5bf80c97b743756d3702d2a63b479633fe0b21703a658a06ed",
+          "size": 8996,
+          "executable": false
+        },
+        {
+          "path": "references/organvm-plan-ledger-overlay.md",
+          "sha256": "22966e64f71e8144a0ef7df68794aeb68bb13d9c611c735d2c6e49df74a0ef54",
+          "size": 6595,
+          "executable": false
+        }
+      ]
+    }
+  ]
+}
