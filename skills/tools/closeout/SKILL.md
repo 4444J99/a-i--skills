@@ -63,14 +63,15 @@ or reap work you did not start.
 Look for how this repo already closes a session, in this order, and stop at the first hit:
 
 1. `<root>/.agents/skills/closeout/SKILL.md` (when it is not this skill)
-2. `<root>/.claude/skills/closeout/SKILL.md`
-3. A "Closeout" (or "Session end") section in `<root>/AGENTS.md` or `<root>/CLAUDE.md`
-4. A committed predicate: `scripts/closeout*`, `done.sh`, or a `closeout` Makefile / package script
+2. `<root>/.codex/skills/closeout/SKILL.md` (when it is not this skill)
+3. `<root>/.claude/skills/closeout/SKILL.md` (when it is not this skill)
+4. A "Closeout" (or "Session end") section in `<root>/AGENTS.md` or `<root>/CLAUDE.md`
+5. A committed predicate: `scripts/closeout*`, `done.sh`, or a `closeout` Makefile / package script
 
-Skip any candidate in items 1 and 2 that is this skill or a copy of it (a `closeout`
+Skip any candidate in items 1, 2 and 3 that is this skill or a copy of it (a `closeout`
 skill whose description begins "Repo-agnostic session-end ritual"). A generic installed
-copy is not the repo's protocol, and finding one must not end discovery before items 3
-and 4 are checked.
+copy is not the repo's protocol, and finding one must not end discovery before items 4
+and 5 are checked.
 
 If one exists, **it governs the repo-specific steps and the final predicate**; the steps
 below are the floor it must not drop. If none exists, the floor stands alone. If a repo
