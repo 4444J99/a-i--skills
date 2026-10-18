@@ -12,7 +12,10 @@ Read alongside `../SKILL.md` Phase 4 (Codify) and `closeout`'s six-step protocol
 > Every "closeout Step N" below refers to that overlay, which applies in repos that opt
 > into the ORGANVM plan ledger. In other repos, closeout's generic inventory and homing
 > steps (`../../closeout/SKILL.md` Steps 3-4) play the same role, and there is no
-> plan-closure label for this skill to defer to.
+> plan-closure label for this skill to defer to. Historical orphan-plan findings are not
+> session-owned work: in such a repo, this skill records or routes each one through the
+> repo's own tracker (a filed issue or plan), so it still ends in a Step 4 durable form
+> rather than being handed to a classifier that has no destination there.
 
 ## The division of labor
 

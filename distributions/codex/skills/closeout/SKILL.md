@@ -67,6 +67,11 @@ Look for how this repo already closes a session, in this order, and stop at the 
 3. A "Closeout" (or "Session end") section in `<root>/AGENTS.md` or `<root>/CLAUDE.md`
 4. A committed predicate: `scripts/closeout*`, `done.sh`, or a `closeout` Makefile / package script
 
+Skip any candidate in items 1 and 2 that is this skill or a copy of it (a `closeout`
+skill whose description begins "Repo-agnostic session-end ritual"). A generic installed
+copy is not the repo's protocol, and finding one must not end discovery before items 3
+and 4 are checked.
+
 If one exists, **it governs the repo-specific steps and the final predicate**; the steps
 below are the floor it must not drop. If none exists, the floor stands alone. If a repo
 points at an overlay you cannot read or run, report that precisely rather than guessing.
@@ -89,6 +94,9 @@ git stash list                          # work parked outside any branch
 gh pr list --head "$(git branch --show-current)" 2>/dev/null   # only if gh and a remote exist
 ```
 
+With no upstream, an empty `git log` proves nothing. Inspect from a known session base
+(for example `git log origin/<default>..`) or report remote commit ownership as unverified.
+
 Add whatever the session touched in the repo's *own* plan, task, or issue locations,
 found by looking, not by assuming a path. Also flag substantive content delivered only
 in the conversation and never written to a file; mark those rows
@@ -104,7 +112,9 @@ Each item ends in exactly one durable form:
 - merged to the default branch, with the SHA;
 - an open PR with a named owner and a merge condition;
 - a filed issue, plan, or task in the repo's existing tracker (committed and pushed);
-- one explicit blocker, `BLOCKED: <atom>`, stated once with its owner and next command.
+- one explicit blocker, `BLOCKED: <atom>`, stated once, with its owner and next command
+  recorded in a persisted, remotely visible record (an issue, a PR, or a pushed handoff).
+  Without that record, report the item as unfinished, not blocked.
 
 "On disk" is not a form. A timed-out lane, an empty diff, a stale-looking branch, or a
 remote-pushed branch is not closed; it is an item that still needs one of the four forms.
@@ -138,9 +148,12 @@ overlay asks for one. A finished session needs no successor.
 
 ### 8. Idempotent fixed point
 
-Run the session predicate (the overlay's, or the Step 3 inventory plus Step 5 check)
-twice and quote both bare exit codes. Both must be 0, and the second run must create
-no files, branches, issues, PRs, or processes.
+Step 5's no-replay rule governs verification. The fixed-point check is a separate,
+deliberate repeat of the *session predicate* (the overlay's session-release predicate, or
+the Step 3 inventory re-run read-only). Run it twice and quote both bare exit codes. If the
+overlay offers only the full repository verification as its predicate, Step 5's run counts
+as the first and one repeat is the second. Both must be 0, and the second run must
+create no files, branches, issues, PRs, or processes.
 
 Only then emit, as the last line:
 

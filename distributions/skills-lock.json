@@ -179,7 +179,7 @@
     {
       "name": "artifact-resurfacing",
       "path": "skills/tools/artifact-resurfacing",
-      "sha256": "c19d703ee921bb2acdce4dba43ee80389812fd6edf7f858a0c15e4ce359f2100",
+      "sha256": "997305aacc608891acac9a60d0d4d81b0b1095534b268d0a7d4960c2bd4a46c1",
       "files": [
         {
           "path": "SKILL.md",
@@ -201,8 +201,8 @@
         },
         {
           "path": "references/composition-with-closeout.md",
-          "sha256": "ea2c337e00d05128cb15b4e92bb7fd146a76f0e1fab68334ec3d033d9620b615",
-          "size": 8118,
+          "sha256": "a220e179918726030e6816523970eebf827916b76e2ad38f4fbb04ee0885fc73",
+          "size": 8408,
           "executable": false
         },
         {
@@ -1036,12 +1036,12 @@
     {
       "name": "closeout",
       "path": "skills/tools/closeout",
-      "sha256": "05735c2d162bc15c383d4bc6c5ca768572a512d296305789379db4de70359a4c",
+      "sha256": "7ec21346cf488ae10e18817f02be570d00b27224dd29933814a630da5c52182b",
       "files": [
         {
           "path": "SKILL.md",
-          "sha256": "ff6d45239b52a400ec3ec0c2696573323273dc0caeae13555e4b2d4c2473953b",
-          "size": 8000,
+          "sha256": "2ad0bfbd8cdf9ffd313ddf0a13d74c6ab2147caf84016ccfd47fce0114018279",
+          "size": 8893,
           "executable": false
         },
         {
@@ -5429,7 +5429,7 @@
     {
       "name": "transcript-promotion",
       "path": "skills/tools/transcript-promotion",
-      "sha256": "e6229260aa7c072ff178a2c37a3d674d88f1e264fe10f014da576e821dce7e14",
+      "sha256": "d90e8d181cc2e12cca78cc8b7a3c7ec9312ac55a0661ffc3b43b6285b2d73791",
       "files": [
         {
           "path": "SKILL.md",
@@ -5451,8 +5451,8 @@
         },
         {
           "path": "references/composition-with-closeout.md",
-          "sha256": "9cdddf3d77b73c191fc2efc9f69a2559d5b15f957385eb7134d5dfbc06361abb",
-          "size": 3893,
+          "sha256": "bfddc48dbd1d2d1eae08790a064531e75d59191d5471836aa18a8ea4c831dc40",
+          "size": 4178,
           "executable": false
         },
         {

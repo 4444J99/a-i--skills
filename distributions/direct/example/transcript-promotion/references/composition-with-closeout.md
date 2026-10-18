@@ -27,6 +27,11 @@ The closeout summary table for the genesis session looked like:
 The "inline only" rows are the candidates. They survive in the JSONL transcript but
 are invisible to the plan-file pipeline.
 
+A flagged row alone does not satisfy closeout. Inline-only deliverables are un-homed
+items, so each still needs a durable form under closeout's Step 4: promoted (merged or
+filed), or `BLOCKED: <atom>` with an owner and next command recorded remotely when
+promotion cannot happen yet.
+
 ## When to invoke promotion
 
 Two valid invocation patterns:
