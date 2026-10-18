@@ -179,7 +179,7 @@
     {
       "name": "artifact-resurfacing",
       "path": "skills/tools/artifact-resurfacing",
-      "sha256": "9bfd73e10d0485f9e2c1a658c17dbeaf886b93bb46bc448e2603d646c692f366",
+      "sha256": "c19d703ee921bb2acdce4dba43ee80389812fd6edf7f858a0c15e4ce359f2100",
       "files": [
         {
           "path": "SKILL.md",
@@ -201,8 +201,8 @@
         },
         {
           "path": "references/composition-with-closeout.md",
-          "sha256": "f5d35e7e362140992cfaba884124ade881111dcf7ae80f581db76b3b2386f23c",
-          "size": 7387,
+          "sha256": "ea2c337e00d05128cb15b4e92bb7fd146a76f0e1fab68334ec3d033d9620b615",
+          "size": 8118,
           "executable": false
         },
         {
@@ -1036,12 +1036,18 @@
     {
       "name": "closeout",
       "path": "skills/tools/closeout",
-      "sha256": "3902e0dc34ec2f56a2a7d8d9d496d239819e32dc2ffb0d0849d3a8b0cd6ec37a",
+      "sha256": "b58acd289ba4d26161ac19db0ac93f771faf45d5f53d1154bcbe13e9737bd64c",
       "files": [
         {
           "path": "SKILL.md",
-          "sha256": "735fd08084eb11c35a1625a0cbe14ab055177ce06f576b23997b4385706d6d1e",
-          "size": 6918,
+          "sha256": "7a280d55ecdf80a923a21d18b7021880efbf661b06bcf0eb9c5ceb3fc67487ed",
+          "size": 7702,
+          "executable": false
+        },
+        {
+          "path": "references/organvm-plan-ledger-overlay.md",
+          "sha256": "22966e64f71e8144a0ef7df68794aeb68bb13d9c611c735d2c6e49df74a0ef54",
+          "size": 6595,
           "executable": false
         }
       ]
@@ -5423,7 +5429,7 @@
     {
       "name": "transcript-promotion",
       "path": "skills/tools/transcript-promotion",
-      "sha256": "55823bf8c7a6b4b3f3bce119305e3dcd325649fda7763e69bd1d03d64a345bfd",
+      "sha256": "e6229260aa7c072ff178a2c37a3d674d88f1e264fe10f014da576e821dce7e14",
       "files": [
         {
           "path": "SKILL.md",
@@ -5445,8 +5451,8 @@
         },
         {
           "path": "references/composition-with-closeout.md",
-          "sha256": "47342b0c09da908594de078272c672778c8305a2942c8438f5a2ba586da0e566",
-          "size": 3721,
+          "sha256": "9cdddf3d77b73c191fc2efc9f69a2559d5b15f957385eb7134d5dfbc06361abb",
+          "size": 3893,
           "executable": false
         },
         {

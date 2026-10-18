@@ -6,9 +6,11 @@ the promotion. They are sequential, not redundant.
 ## How closeout flags candidates
 
 The `/closeout` skill walks back through deliverables and marks each with a closure
-status. Some deliverables don't fit the standard closure classes (DONE-NNN executed,
-IRF-XXX-NNN in-progress, abandoned/) because they're substantive references delivered
-inline that have no on-disk artifact yet. Closeout flags these as:
+status. Some deliverables don't fit the standard closure forms (merged, open PR, filed
+item, explicit blocker; or, in repos that opt into the ORGANVM plan-ledger overlay,
+DONE-NNN executed, IRF-XXX-NNN in-progress, abandoned/) because they're substantive
+references delivered inline that have no on-disk artifact yet. Closeout's Step 3
+inventory flags these as:
 
 > "Inline only; not file-persisted by Claude"
 
@@ -45,8 +47,9 @@ exposed the candidate; the promotion protocol made it durable.
 
 ## Why closeout doesn't do the promotion itself
 
-Closeout is broad and ritualized — it does plan walkback, atom walkback, git
-verification, autogen freshness gate, working-state capture, summary write. Adding
+Closeout is broad and ritualized — it does inventory, homing, git verification, status
+words, and handoff (plus plan walkback, atom walkback, and the autogen freshness gate
+under the ORGANVM overlay). Adding
 extraction-and-frontmatter mechanics would balloon the skill and conflate "audit" with
 "reconstruct." The split honors single-responsibility:
 
