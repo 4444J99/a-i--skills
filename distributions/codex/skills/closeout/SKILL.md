@@ -79,7 +79,12 @@ sentinel, or DONE-NNN / IRF-XXX-NNN plan references) opt into the preserved ritu
 
 ```bash
 git status --short                      # modified, staged, untracked
-git log @{u}.. --oneline 2>/dev/null    # unpushed commits (empty output with an upstream = none)
+# Unpushed commits: empty with an upstream means none; missing upstream is an inventory state, not failure
+if git rev-parse --abbrev-ref --symbolic-full-name @{u} >/dev/null 2>&1; then
+  git log @{u}.. --oneline
+else
+  echo "(no upstream configured; remote commit ownership unverified — inspect session base if known)"
+fi
 git stash list                          # work parked outside any branch
 gh pr list --head "$(git branch --show-current)" 2>/dev/null   # only if gh and a remote exist
 ```
