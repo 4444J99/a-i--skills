@@ -69,7 +69,8 @@ Look for how this repo already closes a session, in this order, and stop at the 
 1. `<root>/.agents/skills/closeout/SKILL.md` (when it is not this skill)
 2. `<root>/.codex/skills/closeout/SKILL.md` (when it is not this skill)
 3. `<root>/.claude/skills/closeout/SKILL.md` (when it is not this skill)
-4. A "Closeout" (or "Session end") section in `<root>/AGENTS.md` or `<root>/CLAUDE.md`
+4. A "Closeout", "Session end" or "Session Review" section in scoped `AGENTS.md` or
+   `CLAUDE.md`, searching nearest-first from the actual working directory up to the root
 5. A committed predicate: `scripts/closeout*`, `done.sh`, or a `closeout` Makefile / package script
 
 Skip only the invoked file or a byte-identical copy of it in items 1, 2 and 3.
@@ -103,7 +104,7 @@ unknown item requires a verified owner or a remote evidenced exclusion from this
 The following commands are exploratory inventory, never a completion predicate.
 
 ```bash
-git status --short                      # modified, staged, untracked
+git status --short                      # exploratory only; helper also measures ignored/index-hidden files
 # Unpushed commits: empty with an upstream means none; missing upstream is an inventory state, not failure
 if git rev-parse --abbrev-ref --symbolic-full-name @{u} >/dev/null 2>&1; then
   git log @{u}.. --oneline
@@ -111,7 +112,7 @@ else
   echo "(no upstream configured; remote commit ownership unverified — inspect session base if known)"
 fi
 git stash list                          # work parked outside any branch
-gh pr list --head "$(git branch --show-current)" 2>/dev/null   # only if gh and a remote exist
+# The helper reads PRs from the actual remote through authenticated gh api; errors stay visible.
 ```
 
 With no upstream, an empty `git log` proves nothing. Inspect from a known session base
@@ -143,6 +144,9 @@ move it to the repo's abandoned/archive convention if it has one.
 
 ### 5. Verify once, on the final tree
 
+Finish all authorized handoff, plan and summary edits before this verification. Then
+perform authorized publication and remote readback before the final ownership pass.
+
 Run the repo's verification for what changed, once per changed tree: the overlay's
 predicate if there is one, otherwise the narrowest build/test/lint the repo declares
 (CI config, Makefile, package scripts). Do not replay a green run on an unchanged tree.
@@ -163,7 +167,8 @@ Never write "verified end-to-end" without *observed*. Never claim a status above
 
 ### 7. Hand off only what is unfinished
 
-If work remains, write the handoff into the repo's existing continuation owner (a
+If work remains, prepare the handoff before Step 5 and report its remote owner here.
+Use the repo's existing continuation owner (a
 handoff file, plan, or issue that already exists): what was done, what is locked, what
 the next session picks up first. Do not create a new file or capsule unless the
 overlay asks for one. A finished session needs no successor.
@@ -179,7 +184,8 @@ must return 0 with unchanged inventory and evidence fingerprints. Quote both exi
 overlay offers only the full repository verification as its predicate, Step 5's run counts
 as the first and one read-only repeat is the second; reuse unchanged verification
 receipts and never replay a mutating verification as a fixed-point check. Both must be 0, and the second run must
-create no files, branches, issues, PRs, or processes.
+create no files, branches, issues, PRs, or persistent/detached processes. Bounded
+checker subprocesses may run and must exit before the pass finishes.
 
 Only then emit, as the last line:
 

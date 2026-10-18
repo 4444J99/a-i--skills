@@ -1,7 +1,8 @@
 # ORGANVM plan-ledger overlay (preserved ritual)
 
 > **This is an overlay, not the skill.** `closeout` is repo-agnostic; see `../SKILL.md`.
-> This file is the original six-step ritual, relocated here unchanged so nothing is lost
+> This file preserves the six-step ritual structure; its historical verbatim form is
+> retained in Git at `62214d3`. Amendments below apply the generic ownership contract
 > and so the cross-skill references that cite its Step numbers (`artifact-resurfacing`,
 > `transcript-promotion` → `references/composition-with-closeout.md`) stay true.
 >
@@ -13,10 +14,17 @@
 ## When to invoke
 
 - User explicitly says: `/closeout`, "close out", "wrap up", "end the session"
-- Before any non-trivial `git push` (the close-out should precede the push)
+- Before a non-trivial `git push`, inventory and prepare only. Final closure follows
+  authorized publication and remote readback.
 - When the session has produced 3+ files, plans, or atoms and the user is signaling end
 
 ## Six-step protocol
+
+Resolve the active tool's plan root from the repository's instructions: normally
+`<root>/.<tool>/plans/` in a project, otherwise its native configured plan root.
+Set `CLOSEOUT_PLAN_ROOT` to that resolved path. The historical `~/.Codex/plans` path
+is not a current default. A local summary is a convenience copy; every work product
+still needs the generic skill's remotely visible durable owner.
 
 ### Step 1 — Inventory session outputs
 
@@ -27,7 +35,7 @@ Run, in parallel where possible:
 git status --short
 
 # What plans were authored in this session?
-ls -t ~/.Codex/plans/*.md 2>/dev/null | head -10
+rg --files "$CLOSEOUT_PLAN_ROOT"
 
 # What's the current branch and where does it stand vs origin?
 git branch --show-current
@@ -41,12 +49,13 @@ Surface a brief inventory table to the user:
 
 ### Step 2 — Walk back through plans
 
-For each plan authored this session (filter `~/.Codex/plans/*.md` by mtime within session window):
+For each plan attributable to this native session in `CLOSEOUT_PLAN_ROOT` (use source
+lineage and session evidence; mtime alone does not prove ownership):
 
 For each plan, classify it as one of:
 - **EXECUTED**: contains `DONE-NNN` reference. No action.
 - **IN-PROGRESS**: contains `IRF-XXX-NNN` reference but no DONE-NNN. Update its frontmatter to confirm continued status.
-- **ABANDONED**: no closure reference, no follow-on commits. Move to `~/.Codex/plans/abandoned/` with a brief abandonment-reason.
+- **ABANDONED**: no closure reference, no follow-on commits. Move only under the resolved plan root archive convention with a brief abandonment-reason.
 
 Ask the user for ambiguous cases. Do NOT bulk-classify without confirmation — the home-scope AGENTS.md rule "Atoms are permanent — never batch-close" applies to plans-as-artifacts too.
 
@@ -91,6 +100,16 @@ AUTOGEN_FRESHNESS_THRESHOLD_DAYS=999 ~/.local/bin/claude-md-autogen-gate
 
 Pairs with the pre-commit hook (`claude-md-autogen-freshness`); together they catch staleness at both the commit boundary and the session boundary. Root-cause precedent: 32-day autogen-tail staleness traced on 2026-05-16 to `organvm refresh` step 6 soft-failing on `system-system--system: invalid tier 'sovereign'` (closed via schema + validator lockstep edit; see GH `4444J99/domus-semper-palingenesis#30`, IRF-DOM-048).
 
+### Step 4.6 — Reconcile retained work and runtime evidence
+
+Use the generic helper to inventory all local branches, related PRs, stashes,
+ignored/index-hidden outputs and retained worktrees. A pushed branch alone is not
+closed. Prove squash landings through the repository-qualified PR and its landed
+commit. Home every deferred follow-up and operator action in an existing remote
+owner. Record each change's merged, live and observed evidence separately; verify
+live-checkout lag only against the explicitly identified running checkout/runtime.
+Do not infer installation from the development worktree or remove retained data.
+
 ### Step 5 — Update active-handoff (if exists)
 
 If `.conductor/active-handoff.md` exists in any active repo, update it with:
@@ -98,11 +117,12 @@ If `.conductor/active-handoff.md` exists in any active repo, update it with:
 - What's locked / not-yet-attempted
 - What the next session should pick up
 
-This is the cross-session continuity gate.
+Finish this and the summary before final-tree verification. Publish and read back
+every updated owner before the final read-only ownership check.
 
 ### Step 6 — Write CLOSEOUT_SUMMARY.md
 
-Produce a session-close-out summary at `~/.Codex/plans/closeout-{date}.md` with:
+Produce a session-close-out summary in the resolved existing owner with:
 
 ```markdown
 # Session Close-Out — {date}
@@ -131,7 +151,9 @@ Produce a session-close-out summary at `~/.Codex/plans/closeout-{date}.md` with:
 - **Never batch-close atoms or plans without explicit user confirmation.** Per Universal Rule (memory rule #53): atoms are permanent, never batch-close.
 - **Never delete plan files.** Move to `abandoned/` instead, preserving the history (per the plan-discipline section of the home AGENTS.md).
 - **Never push as part of closeout** unless user has explicitly authorized push for this session. Closeout's job is to *prepare* for push, not perform it.
-- **If the session produced no notable artifacts**, say so and exit cleanly. Closeout is fast on quiet sessions.
+- **Quiet sessions still require measured ownership.** No notable files does not
+  exclude inline obligations, hidden files or unknown ownership. Require the read-only
+  ownership pass and any repository session predicate before claiming completion.
 
 ## Why this exists
 

@@ -179,7 +179,7 @@
     {
       "name": "artifact-resurfacing",
       "path": "skills/tools/artifact-resurfacing",
-      "sha256": "4437de291ca6243fa194991d5cb7c6850648d2f8297b8121d13fc78af4f13b58",
+      "sha256": "25f30756bf1202779877df5e71822a5b5b1b228d72a1ea4b87b83fa640ab92ed",
       "files": [
         {
           "path": "SKILL.md",
@@ -201,8 +201,8 @@
         },
         {
           "path": "references/composition-with-closeout.md",
-          "sha256": "788bd74bf180e567207b1cde1c3c407a88a3ab073c487d57e8e9b8b2811b2f8c",
-          "size": 8783,
+          "sha256": "ca190f05bc033a39688c2bc86b3d5c456b8c1b6cb560b1af306c4023e649bb66",
+          "size": 8878,
           "executable": false
         },
         {
@@ -1036,30 +1036,30 @@
     {
       "name": "closeout",
       "path": "skills/tools/closeout",
-      "sha256": "84478e9085243bbbac6aa00442f4fc27895814469b0a175f7695830744b4d346",
+      "sha256": "7e4039f0ad512d75d1af28780e2ed540c7bde3829da94cbd66df71126e8dac46",
       "files": [
         {
           "path": "SKILL.md",
-          "sha256": "2d40a0df915344d565610a5bb7e06a44f0272d47dd2f08493ed9a31a51b12825",
-          "size": 11034,
+          "sha256": "dfd9f590bee99ed91e8e48a2523bcb61cdf6558849be48267d867b04bedd50be",
+          "size": 11476,
           "executable": false
         },
         {
           "path": "references/organvm-plan-ledger-overlay.md",
-          "sha256": "22966e64f71e8144a0ef7df68794aeb68bb13d9c611c735d2c6e49df74a0ef54",
-          "size": 6595,
+          "sha256": "a034e28bf87bb307948025cf153f9bf560ab44acb731354fa76e32322cce486c",
+          "size": 8053,
           "executable": false
         },
         {
           "path": "references/ownership-check.md",
-          "sha256": "001862fd117431ab969b4e7ab053340a3106981a6e3bb74ba6211383b4549b60",
-          "size": 4274,
+          "sha256": "d445b49f8554008c42fa02a23fa1dfd19f63f824506b83936188e5fcee52c29a",
+          "size": 5423,
           "executable": false
         },
         {
           "path": "scripts/closeout_check.py",
-          "sha256": "e18d24d4ac5183c5d43dbd45717c006681d20d373fb1368196d5c26cbc1a666b",
-          "size": 25698,
+          "sha256": "e31c96c27cfcf3dcde943527eec87a0e80c8500bbf9cfe09d46838a0c84eaeb6",
+          "size": 35756,
           "executable": true
         }
       ]

@@ -80,7 +80,9 @@ The canonical order:
 
 1. **closeout preparation** Steps 1 through 6 inventory and home the session work. The session's own outputs are inventoried and classified.
 2. **artifact-resurfacing** runs before terminal closeout, scoped to whatever drift surface the conductor names. The two skills don't share state — artifact-resurfacing reads the closeout summary doc to pick up any orphan-plan findings, but it doesn't depend on closeout's runtime state.
-3. **publish and read back** every changed owner, then run final closeout. **closeout summary update** — after artifact-resurfacing emits its polish proposals, closeout's summary doc receives an addendum noting which proposed diffs were authorized and applied in-session vs deferred. This addendum is itself a closeout-step-6 edit; if closeout has already produced the summary, the edit is a one-line append.
+3. **closeout summary update** — after artifact-resurfacing emits its polish proposals, closeout's summary doc receives an addendum noting which proposed diffs were authorized and applied in-session vs deferred. This addendum is itself a closeout-step-6 edit; if closeout has already produced the summary, the edit is a one-line append.
+4. **Publish and read back** every changed owner, including that addendum, then run
+   final closeout. Any later summary edit requires a new publication and readback.
 
 ## Conflict points
 

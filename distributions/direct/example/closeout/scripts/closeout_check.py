@@ -12,13 +12,33 @@ import subprocess
 import sys
 from pathlib import Path
 from typing import Any
+from urllib.parse import unquote, urlsplit, urlunsplit
 
 OBSERVATIONS: list[str] = []
+READBACK_CACHE: dict[str, Any] = {}
+GIT_LOCATION_VARS = {
+    "GIT_DIR",
+    "GIT_WORK_TREE",
+    "GIT_COMMON_DIR",
+    "GIT_INDEX_FILE",
+    "GIT_OBJECT_DIRECTORY",
+    "GIT_ALTERNATE_OBJECT_DIRECTORIES",
+    "GIT_PREFIX",
+    "GIT_NAMESPACE",
+    "GIT_CEILING_DIRECTORIES",
+    "GIT_IMPLICIT_WORK_TREE",
+    "GIT_DISCOVERY_ACROSS_FILESYSTEM",
+}
+MAX_INVENTORY_PATHS = 10000
 
 
 def observation_env() -> dict[str, str]:
     return {
-        **os.environ,
+        **{
+            key: value
+            for key, value in os.environ.items()
+            if key not in GIT_LOCATION_VARS
+        },
         "GIT_OPTIONAL_LOCKS": "0",
         "GIT_NO_REPLACE_OBJECTS": "1",
         "GIT_GRAFT_FILE": os.devnull,
@@ -34,17 +54,20 @@ def digest(value: Any) -> str:
         value
         if isinstance(value, bytes)
         else json.dumps(
-            value, sort_keys=True, separators=(",", ":"), ensure_ascii=False
+            value, sort_keys=True, separators=(",", ":"), ensure_ascii=True
         ).encode()
     )
     return hashlib.sha256(data).hexdigest()
 
 
-def run(args: list[str], root: str | Path | None = None) -> bytes:
+def run(
+    args: list[str], root: str | Path | None = None, *, input_data: bytes | None = None
+) -> bytes:
     try:
         result = subprocess.run(
             args,
             cwd=root,
+            input=input_data,
             check=False,
             capture_output=True,
             timeout=30,
@@ -60,12 +83,34 @@ def run(args: list[str], root: str | Path | None = None) -> bytes:
 
 
 def git(root: str | Path, *args: str) -> bytes:
+    if args and args[0] == "diff":
+        args = (args[0], "--no-ext-diff", "--no-textconv", *args[1:])
     return run(["git", "-c", "core.fsmonitor=false", "-C", str(root), *args])
 
 
+def safe_url(url: str) -> str:
+    """Never project remote credentials, query parameters or fragments."""
+    if "://" not in url:
+        return url.rstrip("/")
+    try:
+        parsed = urlsplit(url)
+        host = parsed.hostname or ""
+        if ":" in host:
+            host = "[" + host + "]"
+        if parsed.port:
+            host += ":" + str(parsed.port)
+        return urlunsplit((parsed.scheme, host, parsed.path.rstrip("/"), "", ""))
+    except ValueError as exc:
+        raise Unmeasured("remote URL could not be classified") from exc
+
+
 def identity(url: str) -> str:
-    value = url.strip().removesuffix(".git").rstrip("/")
-    match = re.fullmatch(r"(?:https?://|ssh://git@|git@)github.com[:/](.+)", value)
+    value = safe_url(url.strip()).removesuffix(".git")
+    if "://" in value:
+        parsed = urlsplit(value)
+        if parsed.hostname == "github.com" and parsed.port in (None, 22, 443):
+            return "github.com/" + parsed.path.strip("/").lower()
+    match = re.fullmatch(r"git@github.com:(.+)", value)
     return "github.com/" + match[1].lower() if match else value
 
 
@@ -77,13 +122,15 @@ def github_repo(repository: str) -> str:
 
 def gh_json(endpoint: str) -> Any:
     try:
-        return json.loads(run(["gh", "api", endpoint]))
+        return json.loads(run(["gh", "api", "--hostname", "github.com", endpoint]))
     except (ValueError, UnicodeError) as exc:
         raise Unmeasured("GitHub returned invalid JSON") from exc
 
 
 def discover(
-    root: str | Path, invoked: str | Path | None = None
+    root: str | Path,
+    invoked: str | Path | None = None,
+    working_directory: str | Path | None = None,
 ) -> dict[str, str] | None:
     """Skip only the invoked file and byte-identical copies, never descriptions."""
     root = Path(root)
@@ -97,14 +144,22 @@ def discover(
             ):
                 continue
             return {"kind": "skill", "path": str(path)}
-    for name in ("AGENTS.md", "CLAUDE.md"):
-        path = root / name
-        if path.is_file() and re.search(
-            r"(?im)^#{1,6}\s+.*\b(closeout|session end|session close)\b",
-            path.read_text(),
-        ):
-            return {"kind": "instructions", "path": str(path)}
-    tracked = git(root, "ls-files", "-z").decode().split("\0")
+    directory = Path(working_directory or root).resolve()
+    root = root.resolve()
+    if not directory.is_relative_to(root):
+        raise Unmeasured("working_directory must be contained by its scoped repository")
+    while True:
+        for name in ("AGENTS.md", "CLAUDE.md"):
+            path = directory / name
+            if path.is_file() and re.search(
+                r"(?im)^#{1,6}\s+.*\b(closeout|session end|session close|session review)\b",
+                path.read_text(),
+            ):
+                return {"kind": "instructions", "path": str(path)}
+        if directory == root:
+            break
+        directory = directory.parent
+    tracked = os.fsdecode(git(root, "ls-files", "-z")).split("\0")
     for name in sorted(tracked):
         if re.match(r"scripts/closeout[^/]*$|done\.sh$", name):
             return {"kind": "predicate", "path": str(root / name)}
@@ -124,18 +179,20 @@ def discover(
 def organvm_overlay(root: str | Path) -> bool:
     """Only repository instruction sentinels and actual ledger locations opt in."""
     root = Path(root)
-    tracked = set(git(root, "ls-files", "-z").decode().split("\0"))
+    tracked = set(os.fsdecode(git(root, "ls-files", "-z")).split("\0"))
     for name in ("AGENTS.md", "CLAUDE.md"):
         if (
             name in tracked
             and "<!-- ORGANVM:AUTO:START -->" in (root / name).read_text()
         ):
             return True
-    if "INST-INDEX-RERUM-FACIENDARUM.md" in tracked:
+    ledger = "INST-INDEX-RERUM-FACIENDARUM.md"
+    concrete_id = r"\b(?:DONE-\d{3,}|IRF-[A-Z]{2,}-\d{3,})\b"
+    if ledger in tracked and re.search(concrete_id, (root / ledger).read_text()):
         return True
     for name in tracked:
         if re.match(r"\.(?:agents|codex|claude)/plans/[^/]+\.md$", name) and re.search(
-            r"\b(?:DONE-\d+|IRF-[A-Z]+-\d+)\b", (root / name).read_text()
+            concrete_id, (root / name).read_text()
         ):
             return True
     return False
@@ -165,6 +222,33 @@ def remote_state(root: str | Path, selected: str | None = None) -> dict[str, str
     if selected not in names:
         raise Unmeasured("selected remote does not exist")
     url = git(root, "remote", "get-url", selected).decode().strip()
+    parsed = urlsplit(url) if "://" in url else None
+    local_path = None
+    if parsed is not None and parsed.scheme == "file":
+        if parsed.hostname not in (None, "", "localhost"):
+            raise Unmeasured("non-local file remote cannot be classified")
+        local_path = Path(unquote(parsed.path))
+    elif parsed is None and not re.match(r"[^/]+:.+", url):
+        local_path = Path(url).expanduser()
+        if not local_path.is_absolute():
+            local_path = Path(root) / local_path
+    if local_path is not None:
+        common = git(
+            root, "rev-parse", "--path-format=absolute", "--git-common-dir"
+        ).strip()
+        remote_common = git(
+            local_path.resolve(),
+            "rev-parse",
+            "--path-format=absolute",
+            "--git-common-dir",
+        ).strip()
+        if (
+            Path(os.fsdecode(common)).resolve()
+            == Path(os.fsdecode(remote_common)).resolve()
+        ):
+            raise Unmeasured(
+                "the scoped Git store cannot serve as its own remote publication"
+            )
     rows = git(root, "ls-remote", "--symref", selected, "HEAD").decode().splitlines()
     default = next((r.split()[1] for r in rows if r.startswith("ref: ")), None)
     tip = next(
@@ -179,7 +263,7 @@ def remote_state(root: str | Path, selected: str | None = None) -> dict[str, str
         raise Unmeasured("remote default branch could not be measured")
     return {
         "remote": selected,
-        "url": url,
+        "url": safe_url(url),
         "repository": identity(url),
         "default_ref": default,
         "default_tip": tip,
@@ -195,6 +279,100 @@ def file_digest(path: Path) -> str:
             while chunk := stream.read(1024 * 1024):
                 value.update(chunk)
     return value.hexdigest()
+
+
+def require_filter_free_status(root: str | Path) -> None:
+    """Do not execute repository clean/process programs during observation."""
+    for entry in git(root, "ls-files", "--stage", "-z").split(b"\0"):
+        if entry.startswith(b"160000 "):
+            raise Unmeasured(
+                "Git submodule content requires separately measured scoped observation"
+            )
+    try:
+        result = subprocess.run(
+            [
+                "git",
+                "-C",
+                str(root),
+                "config",
+                "--null",
+                "--name-only",
+                "--get-regexp",
+                r"^filter\..*\.(clean|process)$",
+            ],
+            check=False,
+            capture_output=True,
+            timeout=30,
+            env=observation_env(),
+        )
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        raise Unmeasured("Git filter configuration unavailable") from exc
+    if result.returncode not in (0, 1):
+        raise Unmeasured("Git filter configuration could not be measured")
+    drivers = set()
+    for key in os.fsdecode(result.stdout).split("\0"):
+        match = re.fullmatch(r"filter\.(.*)\.(?:clean|process)", key)
+        if match:
+            drivers.add(match[1])
+    if not drivers:
+        return
+    paths = git(root, "ls-files", "--cached", "--others", "--exclude-standard", "-z")
+    if len(paths.split(b"\0")) - 1 > MAX_INVENTORY_PATHS:
+        raise Unmeasured("filter attribute census exceeds 10000 paths")
+    attrs = run(
+        [
+            "git",
+            "-c",
+            "core.fsmonitor=false",
+            "-C",
+            str(root),
+            "check-attr",
+            "-z",
+            "--stdin",
+            "filter",
+        ],
+        input_data=paths,
+    ).split(b"\0")
+    for index in range(2, len(attrs), 3):
+        if os.fsdecode(attrs[index]) in drivers:
+            raise Unmeasured(
+                "active Git content filter requires separately measured observation"
+            )
+
+
+def working_status(root: str | Path) -> bytes:
+    """Include ignored outputs and content hidden by index flags without changing flags."""
+    require_filter_free_status(root)
+    data = git(root, "status", "--porcelain=v1", "-z", "--untracked-files=all")
+    known = set()
+    chunks = data.split(b"\0")
+    pos = 0
+    while pos < len(chunks):
+        entry = chunks[pos]
+        pos += 1
+        if not entry:
+            continue
+        known.add(entry[3:])
+        if b"R" in entry[:2] or b"C" in entry[:2]:
+            pos += 1
+    additions = []
+    for name in git(
+        root, "ls-files", "--others", "--ignored", "--exclude-standard", "-z"
+    ).split(b"\0"):
+        if name and name not in known:
+            additions.append(b"!! " + name + b"\0")
+            known.add(name)
+    for entry in git(root, "ls-files", "-v", "-z").split(b"\0"):
+        if entry and (entry[:1].islower() or entry[:1] == b"S"):
+            name = entry[2:]
+            if name not in known:
+                additions.append(b"F  " + name + b"\0")
+                known.add(name)
+    if len(known) > MAX_INVENTORY_PATHS:
+        raise Unmeasured(
+            "content census exceeds 10000 paths; measurement is incomplete"
+        )
+    return data + b"".join(additions)
 
 
 def inventory(document: dict[str, Any]) -> dict[str, Any]:
@@ -306,12 +484,12 @@ def inventory(document: dict[str, Any]) -> dict[str, Any]:
             "upstream": upstream.stdout.decode().strip()
             if upstream.returncode == 0
             else None,
-            "protocol": discover(root),
+            "protocol": discover(
+                root, working_directory=scope.get("working_directory")
+            ),
             "organvm_overlay": organvm_overlay(root),
         }
-        entries = git(
-            root, "status", "--porcelain=v1", "-z", "--untracked-files=all"
-        ).split(b"\0")
+        entries = working_status(root).split(b"\0")
         index = 0
         while index < len(entries):
             entry = entries[index]
@@ -319,7 +497,7 @@ def inventory(document: dict[str, Any]) -> dict[str, Any]:
             if not entry:
                 continue
             status, name = entry[:2].decode(), os.fsdecode(entry[3:])
-            if (root / name).is_dir():
+            if (root / name).is_dir() and not (root / name).is_symlink():
                 raise Unmeasured(
                     "changed submodule/directory requires its own declared repository scope"
                 )
@@ -346,6 +524,61 @@ def inventory(document: dict[str, Any]) -> dict[str, Any]:
             )
         for commit in git(root, "rev-list", base + "..HEAD").decode().splitlines():
             add(sid, "commit", commit, {"sha": commit})
+        known_commits = {
+            row["content"]["sha"]
+            for row in items
+            if row["scope"] == sid and row["kind"] == "commit"
+        }
+        local_branches = set()
+        for row in os.fsdecode(
+            git(
+                root, "for-each-ref", "--format=%(objectname) %(refname)", "refs/heads/"
+            )
+        ).splitlines():
+            tip, ref = row.split(" ", 1)
+            local_branches.add(ref.removeprefix("refs/heads/"))
+            commits = (
+                git(root, "rev-list", tip, "--not", state["default_tip"])
+                .decode()
+                .splitlines()
+            )
+            if ref != state["default_ref"] or commits:
+                add(sid, "branch", ref, {"ref": ref, "sha": tip})
+            for commit in commits:
+                if commit not in known_commits:
+                    add(sid, "commit", commit, {"sha": commit})
+                    known_commits.add(commit)
+        if state["repository"].startswith("github.com/"):
+            repository = github_repo(state["repository"])
+            for page in range(1, 21):
+                pulls = gh_json(
+                    f"repos/{repository}/pulls?state=open&per_page=100&page={page}"
+                )
+                if not isinstance(pulls, list):
+                    raise Unmeasured("GitHub PR inventory returned an invalid list")
+                for pull in pulls:
+                    head_data = pull.get("head", {})
+                    repo_data = head_data.get("repo") or {}
+                    if (
+                        repo_data.get("full_name", "").lower() == repository.lower()
+                        and head_data.get("ref") in local_branches
+                    ):
+                        add(
+                            sid,
+                            "pull-request",
+                            str(pull["number"]),
+                            {
+                                "number": pull["number"],
+                                "head": head_data.get("sha"),
+                                "branch": head_data.get("ref"),
+                                "body": digest(pull.get("body") or ""),
+                                "state": pull.get("state"),
+                            },
+                        )
+                if len(pulls) < 100:
+                    break
+            else:
+                raise Unmeasured("GitHub PR inventory exceeded 2000 open records")
         for stash in git(root, "stash", "list", "--format=%H").decode().splitlines():
             add(sid, "stash", stash, {"sha": stash})
         for record in (
@@ -363,15 +596,13 @@ def inventory(document: dict[str, Any]) -> dict[str, Any]:
                 and not any(x["scope"] == sid for x in items)
             ):
                 continue
-            if path:
+            if path and "bare" not in fields:
                 sibling = Path(path)
                 if not sibling.is_dir():
                     raise Unmeasured(
                         "registered worktree unavailable for content measurement"
                     )
-                statuses = git(
-                    sibling, "status", "--porcelain=v1", "-z", "--untracked-files=all"
-                )
+                statuses = working_status(sibling)
                 fields["status"] = digest(statuses)
                 changed = []
                 chunks = statuses.split(b"\0")
@@ -383,12 +614,15 @@ def inventory(document: dict[str, Any]) -> dict[str, Any]:
                         continue
                     name = os.fsdecode(chunk[3:])
                     target = sibling / name
-                    if target.is_dir():
+                    if target.is_dir() and not target.is_symlink():
                         raise Unmeasured("sibling submodule requires explicit scope")
                     changed.append(
                         {
                             "path": name,
                             "content": file_digest(target),
+                            "mode": target.lstat().st_mode
+                            if target.exists() or target.is_symlink()
+                            else None,
                             "index": digest(
                                 git(sibling, "diff", "--cached", "--binary", "--", name)
                             ),
@@ -399,7 +633,7 @@ def inventory(document: dict[str, Any]) -> dict[str, Any]:
                 fields["changes"] = changed
                 add(sid, "worktree", path, fields)
     for obligation in document["non_file_obligations"]:
-        if not all(
+        if not isinstance(obligation, dict) or not all(
             isinstance(obligation.get(k), str) and obligation[k]
             for k in ("id", "scope", "description")
         ):
@@ -447,7 +681,7 @@ def validate_record(record: Any, expected: dict[str, str], disposition: str) -> 
     )
 
 
-def read_record(owner: dict[str, Any], state: dict[str, Any]) -> Any:
+def _read_record(owner: dict[str, Any], state: dict[str, Any]) -> Any:
     kind = owner.get("kind")
     if kind == "git-record":
         ref, path = owner["ref"], owner["path"]
@@ -492,8 +726,39 @@ def read_record(owner: dict[str, Any], state: dict[str, Any]) -> Any:
     raise Unmeasured("unsupported durable owner kind")
 
 
+def read_record(owner: dict[str, Any], state: dict[str, Any]) -> Any:
+    reference = {
+        key: owner.get(key) for key in ("kind", "repository", "ref", "path", "number")
+    }
+    key = digest(
+        {
+            "reference": reference,
+            "root": state.get("root"),
+            "remote": state.get("remote"),
+            "repository": state["repository"],
+        }
+    )
+    if key not in READBACK_CACHE:
+        try:
+            READBACK_CACHE[key] = _read_record(owner, state)
+        except (
+            Unmeasured,
+            OSError,
+            ValueError,
+            KeyError,
+            TypeError,
+            AttributeError,
+            subprocess.TimeoutExpired,
+        ) as exc:
+            READBACK_CACHE[key] = Unmeasured(str(exc))
+    result = READBACK_CACHE[key]
+    if isinstance(result, Unmeasured):
+        raise result
+    return result
+
+
 def landed(owner: dict[str, Any], state: dict[str, Any], item: dict[str, Any]) -> bool:
-    if item["kind"] != "commit":
+    if item["kind"] not in ("commit", "branch"):
         raise Unmeasured("landing proof applies only to commit obligations")
     sha = item["content"]["sha"]
     if owner.get("pull_request") is not None:
@@ -547,6 +812,7 @@ def landed(owner: dict[str, Any], state: dict[str, Any], item: dict[str, Any]) -
 
 def check(document: dict[str, Any]) -> tuple[int, dict[str, Any]]:
     OBSERVATIONS.clear()
+    READBACK_CACHE.clear()
     snapshot = inventory(document)
     owners = document.get("owners")
     if not isinstance(owners, dict):
@@ -610,6 +876,8 @@ def check(document: dict[str, Any]) -> tuple[int, dict[str, Any]]:
             KeyError,
             ValueError,
             OSError,
+            TypeError,
+            AttributeError,
             subprocess.TimeoutExpired,
         ) as exc:
             unmeasured.append({"id": item["id"], "reason": str(exc)})
@@ -667,6 +935,7 @@ def main() -> int:
         ValueError,
         KeyError,
         TypeError,
+        AttributeError,
         subprocess.TimeoutExpired,
     ) as exc:
         code, result = (
