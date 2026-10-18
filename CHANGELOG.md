@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- `closeout` skill made repository-agnostic: core is now a universal floor that discovers and defers to any repo-specific protocol; original ORGANVM plan-ledger ritual preserved as an opt-in overlay. (PR #50). Validate workflow success (run 39097999202) recorded on head d3ed2e44867e72c2b0ad771f2de0369bd337a50f. PR Validation Comment success (run 39097999170) recorded. Python CI success (run 39098318187) recorded on head 1705e67505207c07c60c6e3a25552ba6273e62a6. Skills installation success (run 39098842895) recorded on head 82a9597086f48a8fcac3aa23c2ab5bd2fe8c8d90. PR Validation Comment success (run 39099105196) recorded on head d6ae4a3734b082a6ec6e0c507d3e42aeefb7c2f7. Validate workflow success (run 39099105166) recorded on head d6ae4a3734b082a6ec6e0c507d3e42aeefb7c2f7.
+- `closeout` skill made repository-agnostic: core is now a universal floor that discovers and defers to any repo-specific protocol; original ORGANVM plan-ledger ritual preserved as an opt-in overlay. (PR #50). The no-overlay fixed point now passes on inventory content rather than command exit status, discovery identifies generic copies by content, and pre-push use is preparation only. CI run results live in the PR checks, not here.
 
 ## [0.1.0] - 2026-02-11
 

@@ -9,6 +9,11 @@
 > `<!-- ORGANVM:AUTO:START -->` sentinel, or it keeps a DONE-NNN / IRF-XXX-NNN plan ledger.
 > Everywhere else it does not apply. Paths below (`~/.Codex/plans`, `data/prompt-registry/`,
 > `.conductor/`) are ORGANVM conventions, not universal ones.
+>
+> **The generic floor still binds this overlay.** Files under `~/.Codex/plans` are local to
+> the host. Per `../SKILL.md` Step 4, nothing counts as homed until it also has a remotely
+> visible owner (a pushed plan, filed issue, or PR); Step 6's summary is a convenience view,
+> not the record.
 
 ## When to invoke
 

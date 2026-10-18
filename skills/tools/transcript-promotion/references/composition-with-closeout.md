@@ -32,6 +32,11 @@ items, so each still needs a durable form under closeout's Step 4: promoted (mer
 filed), or `BLOCKED: <atom>` with an owner and next command recorded remotely when
 promotion cannot happen yet.
 
+In a repository with no closeout summary file, the generic Step 3 table exists only in the
+conversation and is not a record. The durable owner of each candidate is whatever Step 4
+produced for it: the promoted file, the filed issue or plan, or the persisted blocker.
+Promotion is invoked against that owner, never against the table.
+
 ## When to invoke promotion
 
 Two valid invocation patterns:

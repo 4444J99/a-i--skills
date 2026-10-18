@@ -864,6 +864,10 @@
         "handoff-note-if-unfinished"
       ],
       "side_effects": [
+        "reads-filesystem",
+        "runs-commands",
+        "network-access",
+        "creates-files",
         "modifies-git"
       ],
       "triggers": [

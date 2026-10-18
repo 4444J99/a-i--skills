@@ -1036,18 +1036,18 @@
     {
       "name": "closeout",
       "path": "skills/tools/closeout",
-      "sha256": "acf08a31ec2c35d515f883338fabc521c205e1bb0519a57a596e99398acbd772",
+      "sha256": "96e88db5ada4c155966e2d268b54c74e777e1a69527f1bbd1d680b9d08e226a1",
       "files": [
         {
           "path": "SKILL.md",
-          "sha256": "aff22a61e2ccac5bf80c97b743756d3702d2a63b479633fe0b21703a658a06ed",
-          "size": 8996,
+          "sha256": "f71e13ecd6a44d5e2beff51280bc8228d59a0ef8ba1309d60712c417ca9de066",
+          "size": 12429,
           "executable": false
         },
         {
           "path": "references/organvm-plan-ledger-overlay.md",
-          "sha256": "22966e64f71e8144a0ef7df68794aeb68bb13d9c611c735d2c6e49df74a0ef54",
-          "size": 6595,
+          "sha256": "44eb42be649b7e5acddb940debea5ed3d0e14de3446d62f8461b984a6988e9da",
+          "size": 6891,
           "executable": false
         }
       ]
@@ -5429,7 +5429,7 @@
     {
       "name": "transcript-promotion",
       "path": "skills/tools/transcript-promotion",
-      "sha256": "d90e8d181cc2e12cca78cc8b7a3c7ec9312ac55a0661ffc3b43b6285b2d73791",
+      "sha256": "f5040e0ea7add3c7d2ce84efbe1c51dc895771a9e5cd26240f5af0329f7a968a",
       "files": [
         {
           "path": "SKILL.md",
@@ -5451,8 +5451,8 @@
         },
         {
           "path": "references/composition-with-closeout.md",
-          "sha256": "bfddc48dbd1d2d1eae08790a064531e75d59191d5471836aa18a8ea4c831dc40",
-          "size": 4178,
+          "sha256": "bdf7cfb45fa9073fdaed4e1d720d3a5083f98693284da9635ac6661864b6bcd8",
+          "size": 4512,
           "executable": false
         },
         {
