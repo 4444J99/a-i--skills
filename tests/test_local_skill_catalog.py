@@ -53,6 +53,75 @@ class CatalogTests(unittest.TestCase):
         self.assertEqual(len(result["objects"]), 3)
         self.assertEqual(len(result["same_name_variants"]["shared"]), 3)
 
+    def test_aggregate_catalog_reads_are_independent_of_package_file_limit(self):
+        import contextlib
+        import io
+        import sys
+
+        self.skill("a")
+        self.skill("b")
+        self.assertFalse(self.build(limits=catalog.Limits(file_bytes=1024))["incomplete"])
+        path = self.output / "catalog.json"
+        self.assertGreater(path.stat().st_size, 1024)
+        try:
+            report = catalog.verify(path, catalog.Limits(file_bytes=1024))
+        except catalog.LimitError as error:
+            self.fail(f"Aggregate catalog incorrectly uses the package file limit: {error}")
+        self.assertTrue(report["verified"])
+        stdout = io.StringIO()
+        with patch.object(sys, "argv", [str(MODULE), "--catalog", str(path),
+                                       "--find", "shared", "--max-file-bytes", "1024"]), \
+                contextlib.redirect_stdout(stdout):
+            self.assertEqual(catalog.main(), 0)
+        self.assertEqual(len(stdout.getvalue().splitlines()), 2)
+
+    def test_catalog_byte_limit_prevents_publication_and_bounds_readers(self):
+        import contextlib
+        import io
+        import sys
+
+        self.skill("a")
+        with self.assertRaises(catalog.LimitError):
+            self.build(limits=catalog.Limits(catalog_bytes=1024))
+        self.assertFalse(self.output.exists())
+        self.assertEqual(list(self.root.glob(".collection-*")), [])
+        self.build()
+        path = self.output / "catalog.json"
+        with self.assertRaises(catalog.LimitError):
+            catalog.verify(path, catalog.Limits(catalog_bytes=1024))
+        stderr = io.StringIO()
+        with patch.object(sys, "argv", [str(MODULE), "--catalog", str(path),
+                                       "--find", "shared", "--max-catalog-bytes", "1024"]), \
+                contextlib.redirect_stderr(stderr), self.assertRaises(SystemExit) as error:
+            catalog.main()
+        self.assertEqual(error.exception.code, 1)
+        self.assertIn("catalog", stderr.getvalue().lower())
+
+    def test_inaccessible_source_keeps_successful_sources_and_incomplete_status(self):
+        self.skill("a")
+        inaccessible = self.root / "private-parent" / "skills"
+        original_is_dir = Path.is_dir
+
+        def check_access(path):
+            if path == inaccessible:
+                raise PermissionError("parent directory is not traversable")
+            return original_is_dir(path)
+
+        sources = [dict(id="good", path=str(self.source), kind="repo"),
+                   dict(id="denied", path=str(inaccessible), kind="runtime")]
+        with patch.object(Path, "is_dir", check_access):
+            try:
+                result = catalog.build(sources, self.output)
+            except PermissionError as error:
+                self.fail(f"One inaccessible root aborted the whole inventory: {error}")
+        self.assertTrue(result["incomplete"])
+        self.assertEqual(result["counts"], dict(objects=1, occurrences=1))
+        self.assertEqual(result["sources"][1]["status"], "incomplete")
+        self.assertIn("not traversable", result["sources"][1]["error"])
+        report = catalog.verify(self.output / "catalog.json")
+        self.assertTrue(report["retained_objects_verified"])
+        self.assertFalse(report["catalog_complete"])
+
     def test_case_insensitive_discovery(self):
         self.skill("a", filename="skill.md")
         self.assertEqual(self.build()["counts"]["objects"], 1)

@@ -15,6 +15,7 @@ Create a private JSON array with one entry per source root:
 ```json
 [
   {"id": "shared", "path": "/absolute/path/to/shared/skills", "kind": "installed"},
+  {"id": "runtime", "path": "/absolute/path/to/agent-runtime", "kind": "runtime"},
   {"id": "project", "path": "/absolute/path/to/project/.claude/skills", "kind": "repo", "working_directory": "/absolute/path/to/project"}
 ]
 ```
@@ -23,6 +24,13 @@ Include current and legacy runtime roots explicitly where both still contain
 skills. Label caches and worktrees accurately; presence on disk is not proof of
 installation. Keep the roots, private catalog, and copied third-party packages
 outside public Git history. Do not scan session databases or conversation stores.
+
+Use `"kind": "runtime"` for agent runtime roots: that kind prunes directories
+named `transcripts`, `projects`, and `logs` during discovery. Other kinds retain
+those directory names, so they must point only at intended skill collections,
+not a broad agent home or conversation store. Pruning these names is not a
+general privacy classifier; choose the narrowest source roots that contain the
+skills you intend to catalog.
 
 Each source is a collection root: a `SKILL.md` directly in that root is ignored.
 Source IDs, paths, and kinds must be nonempty strings. Builds use a private
@@ -49,6 +57,14 @@ Search warns and exits with status 2 when catalog coverage is incomplete:
 ```sh
 python3 scripts/local_skill_catalog.py --catalog /private/consolidated-skills/catalog.json --find insights
 ```
+
+`--max-file-bytes` limits each package file (default 64 MiB). The separate
+`--max-catalog-bytes` limit bounds the aggregate `catalog.json` during both
+publication and reads (default 256 MiB). If the catalog exceeds that bound,
+the staged build is discarded and the requested output is not published. Use
+the same catalog bound when building, searching, and verifying a larger catalog.
+An inaccessible source is recorded as incomplete without discarding eligible
+packages collected from other sources.
 
 ## Insights
 

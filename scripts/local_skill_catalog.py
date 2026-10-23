@@ -36,7 +36,7 @@ class Limits:
     def __init__(self, **kwargs):
         self.values = dict(directories=200000, entries=1000000, packages=20000,
                            file_bytes=64 * 1024**2, package_bytes=256 * 1024**2,
-                           seconds=180)
+                           catalog_bytes=256 * 1024**2, seconds=180)
         self.values.update(kwargs)
         if any(value <= 0 for value in self.values.values()):
             raise ValueError("All limits must be positive")
@@ -123,8 +123,10 @@ def validate_catalog(catalog):
     return catalog
 
 
-def regular_bytes(path: Path, limits: Limits, expected=None, directory_fd=None) -> bytes:
+def regular_bytes(path: Path, limits: Limits, expected=None, directory_fd=None,
+                  byte_limit="file_bytes") -> bytes:
     """Bound reads and refuse linked directories, special files and churn."""
+    maximum = limits.values[byte_limit]
     access = pinned_directory(path.parent) if directory_fd is None else nullcontext(directory_fd)
     with access as parent_fd:
         before = os.stat(path.name, dir_fd=parent_fd, follow_symlinks=False)
@@ -134,8 +136,8 @@ def regular_bytes(path: Path, limits: Limits, expected=None, directory_fd=None) 
             raise ValueError(f"file changed before reading: {path}")
         if not stat.S_ISREG(before.st_mode):
             raise ValueError(f"not a regular file: {path}")
-        if before.st_size > limits.values["file_bytes"]:
-            raise LimitError(f"file size limit: {path}")
+        if before.st_size > maximum:
+            raise LimitError(f"{byte_limit} limit: {path}")
         fd = os.open(path.name, os.O_RDONLY | os.O_NOFOLLOW | getattr(os, "O_NONBLOCK", 0),
                      dir_fd=parent_fd)
         with os.fdopen(fd, "rb") as stream:
@@ -144,11 +146,11 @@ def regular_bytes(path: Path, limits: Limits, expected=None, directory_fd=None) 
                 opened.st_dev, opened.st_ino, opened.st_mode
             ):
                 raise ValueError(f"file changed while opening: {path}")
-            data = stream.read(limits.values["file_bytes"] + 1)
+            data = stream.read(maximum + 1)
             after = os.fstat(stream.fileno())
     limits.check()
-    if len(data) > limits.values["file_bytes"]:
-        raise LimitError(f"file size limit: {path}")
+    if len(data) > maximum:
+        raise LimitError(f"{byte_limit} limit: {path}")
     if (opened.st_size, opened.st_mtime_ns, opened.st_ctime_ns, opened.st_mode) != (
         after.st_size, after.st_mtime_ns, after.st_ctime_ns, after.st_mode
     ):
@@ -317,6 +319,20 @@ def resolve_sources(sources: list, output: Path) -> list:
     return resolved
 
 
+def write_catalog(path: Path, catalog: dict, limits: Limits):
+    """Apply the aggregate read bound before publishing the staged catalog."""
+    size = 0
+    with path.open("wb") as stream:
+        for chunk in json.JSONEncoder(indent=2).iterencode(catalog):
+            data = chunk.encode("utf-8")
+            size += len(data)
+            limits.check()
+            if size + 1 > limits.values["catalog_bytes"]:
+                raise LimitError(f"catalog_bytes limit: {path}")
+            stream.write(data)
+        stream.write(b"\n")
+
+
 def _build(sources: list, output: Path, limits: Limits | None = None) -> dict:
     limits = limits or Limits()
     output = output.absolute()
@@ -338,11 +354,11 @@ def _build(sources: list, output: Path, limits: Limits | None = None) -> dict:
     for source, root, canonical in resolved:
         record = dict(source, resolved_path=str(canonical), status="scanned")
         catalog["sources"].append(record)
-        if not canonical.is_dir():
-            record["status"] = "missing-or-invalid-root"
-            catalog["incomplete"] = True
-            continue
         try:
+            if not canonical.is_dir():
+                record["status"] = "missing-or-invalid-root"
+                catalog["incomplete"] = True
+                continue
             for skill in discover(canonical, source["kind"], limits, catalog["events"]):
                 occurrence = dict(source_id=source["id"], source_kind=source["kind"],
                                   source_path=str(root / skill.relative_to(canonical)),
@@ -393,7 +409,7 @@ def _build(sources: list, output: Path, limits: Limits | None = None) -> dict:
     catalog["exact_duplicates"] = {key: value for key, value in groups.items() if len(value) > 1}
     catalog["same_name_variants"] = {key: sorted(value) for key, value in names.items() if len(value) > 1}
     catalog["counts"] = dict(occurrences=len(catalog["occurrences"]), objects=len(catalog["objects"]))
-    (output / "catalog.json").write_text(json.dumps(catalog, indent=2) + "\n")
+    write_catalog(output / "catalog.json", catalog, limits)
     lines = ["# Local skill catalog", "", "Discovery and custody only. No autoactivation.",
              "Standalone compatibility is unverified. Use the original source and working directory.",
              "Full provenance, exclusions, errors and limits are in catalog.json.", "",
@@ -439,7 +455,8 @@ def catalog_location(path: Path) -> Path:
 def verify(catalog_path: Path, limits: Limits | None = None) -> dict:
     limits = limits or Limits()
     catalog_path = catalog_location(catalog_path)
-    catalog = validate_catalog(json.loads(regular_bytes(catalog_path, limits)))
+    catalog = validate_catalog(json.loads(regular_bytes(catalog_path, limits,
+                                                       byte_limit="catalog_bytes")))
     failures = []
     for index, occurrence in enumerate(catalog["occurrences"]):
         if occurrence.get("status") == "copied-verified":
@@ -490,7 +507,8 @@ def main() -> int:
             print(json.dumps(report, indent=2))
             return int(not report["verified"])
         if args.catalog and args.find is not None:
-            data = validate_catalog(json.loads(regular_bytes(catalog_location(args.catalog), limits)))
+            data = validate_catalog(json.loads(regular_bytes(catalog_location(args.catalog), limits,
+                                                            byte_limit="catalog_bytes")))
             for collection in ("occurrences", "events", "sources"):
                 for item in data.get(collection, []):
                     if args.find.casefold() in json.dumps(item, ensure_ascii=False).casefold():
