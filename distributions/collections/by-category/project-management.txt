@@ -2,6 +2,7 @@ domain-ideal-whole-substrate
 github-roadmap-strategist
 personalized-storefront-render
 premortem
+product-design-harness
 product-domain-engine
 product-requirements-designer
 project-alchemy-orchestrator
