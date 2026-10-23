@@ -9,6 +9,7 @@ never traversed. Objects are copies, not proof of installation compatibility.
 from __future__ import annotations
 
 import argparse
+from contextlib import contextmanager, nullcontext
 import hashlib
 import json
 import os
@@ -24,6 +25,7 @@ PRUNE = {".git", "node_modules", "__pycache__", ".pytest_cache", ".ruff_cache"}
 GENERATED_NAMES = PRUNE | {".DS_Store"}
 GENERATED_SUFFIXES = {".pyc", ".pyo"}
 RUNTIME_PRUNE = {"transcripts", "projects", "logs"}
+INDEX_PREVIEW_CHARS = 1024
 
 
 class LimitError(ValueError):
@@ -50,18 +52,51 @@ class Limits:
                 raise LimitError(f"{key} limit exceeded")
 
 
-def bounded_children(directory: Path, limits: Limits):
+@contextmanager
+def pinned_directory(directory: Path, expected=None):
+    """Open canonical directory components without following replacement links."""
+    directory = directory.absolute()
+    before = expected if expected is not None else directory.lstat()
+    if not stat.S_ISDIR(before.st_mode):
+        raise ValueError(f"unsafe directory: {directory}")
+    if not hasattr(os, "O_DIRECTORY") or not hasattr(os, "O_NOFOLLOW"):
+        raise ValueError("No-follow directory descriptors are unavailable on this platform")
+    flags = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
+    fd = os.open(directory.anchor, flags)
+    try:
+        for name in directory.parts[1:]:
+            child_fd = os.open(name, flags, dir_fd=fd)
+            os.close(fd)
+            fd = child_fd
+        opened = os.fstat(fd)
+        if (before.st_dev, before.st_ino) != (opened.st_dev, opened.st_ino):
+            raise ValueError(f"directory changed while opening: {directory}")
+        yield fd
+        after = directory.lstat()
+        if not stat.S_ISDIR(after.st_mode) or (opened.st_dev, opened.st_ino) != (
+            after.st_dev, after.st_ino
+        ):
+            raise ValueError(f"directory changed during inspection: {directory}")
+    finally:
+        os.close(fd)
+
+
+def bounded_children(directory: Path, limits: Limits, directory_fd=None):
     """Charge each directory entry before retaining it for deterministic ordering."""
     children = []
-    with os.scandir(directory) as iterator:
-        for entry in iterator:
-            limits.check("entries")
-            children.append(Path(entry.path))
+    access = pinned_directory(directory) if directory_fd is None else nullcontext(directory_fd)
+    with access as fd:
+        with os.scandir(fd) as iterator:
+            for entry in iterator:
+                limits.check("entries")
+                children.append(directory / entry.name)
     return sorted(children)
 
 
 def inert_text(value) -> str:
-    """Numeric entities keep HTML and Markdown syntax inert in previews."""
+    """Keep previews bounded and inert; full metadata remains in catalog.json."""
+    if isinstance(value, str) and len(value) > INDEX_PREVIEW_CHARS:
+        value = value[:INDEX_PREVIEW_CHARS] + "... [truncated]"
     return "".join(f"&#{ord(char)};" for char in json.dumps(value, ensure_ascii=False))
 
 
@@ -88,25 +123,35 @@ def validate_catalog(catalog):
     return catalog
 
 
-def regular_bytes(path: Path, limits: Limits) -> bytes:
-    """Bound reads and refuse final-component links, special files and churn."""
-    before = path.lstat()
-    if not stat.S_ISREG(before.st_mode):
-        raise ValueError(f"not a regular file: {path}")
-    if before.st_size > limits.values["file_bytes"]:
-        raise LimitError(f"file size limit: {path}")
-    fd = os.open(path, os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0)
-                 | getattr(os, "O_NONBLOCK", 0))
-    with os.fdopen(fd, "rb") as stream:
-        opened = os.fstat(stream.fileno())
-        if (before.st_dev, before.st_ino) != (opened.st_dev, opened.st_ino):
-            raise ValueError(f"file changed while opening: {path}")
-        data = stream.read(limits.values["file_bytes"] + 1)
-        after = os.fstat(stream.fileno())
+def regular_bytes(path: Path, limits: Limits, expected=None, directory_fd=None) -> bytes:
+    """Bound reads and refuse linked directories, special files and churn."""
+    access = pinned_directory(path.parent) if directory_fd is None else nullcontext(directory_fd)
+    with access as parent_fd:
+        before = os.stat(path.name, dir_fd=parent_fd, follow_symlinks=False)
+        if expected is not None and (before.st_dev, before.st_ino, before.st_mode) != (
+            expected.st_dev, expected.st_ino, expected.st_mode
+        ):
+            raise ValueError(f"file changed before reading: {path}")
+        if not stat.S_ISREG(before.st_mode):
+            raise ValueError(f"not a regular file: {path}")
+        if before.st_size > limits.values["file_bytes"]:
+            raise LimitError(f"file size limit: {path}")
+        fd = os.open(path.name, os.O_RDONLY | os.O_NOFOLLOW | getattr(os, "O_NONBLOCK", 0),
+                     dir_fd=parent_fd)
+        with os.fdopen(fd, "rb") as stream:
+            opened = os.fstat(stream.fileno())
+            if (before.st_dev, before.st_ino, before.st_mode) != (
+                opened.st_dev, opened.st_ino, opened.st_mode
+            ):
+                raise ValueError(f"file changed while opening: {path}")
+            data = stream.read(limits.values["file_bytes"] + 1)
+            after = os.fstat(stream.fileno())
     limits.check()
     if len(data) > limits.values["file_bytes"]:
         raise LimitError(f"file size limit: {path}")
-    if (opened.st_size, opened.st_mtime_ns) != (after.st_size, after.st_mtime_ns):
+    if (opened.st_size, opened.st_mtime_ns, opened.st_ctime_ns, opened.st_mode) != (
+        after.st_size, after.st_mtime_ns, after.st_ctime_ns, after.st_mode
+    ):
         raise ValueError(f"file changed while reading: {path}")
     return data
 
@@ -151,27 +196,28 @@ def package_manifest(root: Path, limits: Limits, excluded=None) -> tuple[str, li
         if identity in seen:
             raise ValueError(f"directory cycle: {directory}")
         seen.add(identity)
-        for child in bounded_children(directory, limits):
-            info = child.lstat()
-            relative = child.relative_to(root).as_posix()
-            if child.name in GENERATED_NAMES or child.suffix in GENERATED_SUFFIXES:
-                if excluded is not None:
-                    excluded.append(relative)
-                continue
-            if stat.S_ISDIR(info.st_mode):
-                entries.append({"path": relative, "type": "directory"})
-                pending.append(child)
-            elif stat.S_ISREG(info.st_mode):
-                data = regular_bytes(child, limits)
-                total += len(data)
-                if total > limits.values["package_bytes"]:
-                    raise LimitError(f"package size limit: {root}")
-                entries.append(dict(path=relative, type="file", size=len(data),
-                                    executable=info.st_mode & 0o111,
-                                    sha256=hashlib.sha256(data).hexdigest()))
-            else:
-                kind = "symlink" if stat.S_ISLNK(info.st_mode) else "special file"
-                raise ValueError(f"unsafe {kind}: {child}")
+        with pinned_directory(directory, expected=info) as directory_fd:
+            for child in bounded_children(directory, limits, directory_fd):
+                info = os.stat(child.name, dir_fd=directory_fd, follow_symlinks=False)
+                relative = child.relative_to(root).as_posix()
+                if child.name in GENERATED_NAMES or child.suffix in GENERATED_SUFFIXES:
+                    if excluded is not None:
+                        excluded.append(relative)
+                    continue
+                if stat.S_ISDIR(info.st_mode):
+                    entries.append({"path": relative, "type": "directory"})
+                    pending.append(child)
+                elif stat.S_ISREG(info.st_mode):
+                    data = regular_bytes(child, limits, expected=info, directory_fd=directory_fd)
+                    total += len(data)
+                    if total > limits.values["package_bytes"]:
+                        raise LimitError(f"package size limit: {root}")
+                    entries.append(dict(path=relative, type="file", size=len(data),
+                                        executable=info.st_mode & 0o111,
+                                        sha256=hashlib.sha256(data).hexdigest()))
+                else:
+                    kind = "symlink" if stat.S_ISLNK(info.st_mode) else "special file"
+                    raise ValueError(f"unsafe {kind}: {child}")
     entries.sort(key=lambda entry: entry["path"])
     digest = hashlib.sha256(json.dumps(entries, sort_keys=True,
                                       separators=(",", ":")).encode()).hexdigest()
@@ -213,38 +259,38 @@ def discover(root: Path, kind: str, limits: Limits, events: list):
                 events.append(dict(path=str(directory), status="cycle-skipped"))
                 continue
             seen.add(identity)
-            children = bounded_children(directory, limits)
-            for child in children:
-                info = child.lstat()
-                if stat.S_ISLNK(info.st_mode):
-                    try:
-                        status = "symlink-skipped" if child.exists() else "broken-symlink"
-                    except OSError:
-                        status = "unresolved-symlink"
-                    events.append(dict(path=str(child), status=status,
-                                       target=os.readlink(child)))
-                if child.name.lower() == "skill.md" and directory != root:
-                    limits.check("packages")
-                    yield child
-                if stat.S_ISDIR(info.st_mode):
-                    pruned = child.name in PRUNE or (kind == "runtime" and
-                                                      child.name in RUNTIME_PRUNE)
-                    if pruned:
-                        events.append(dict(path=str(child), status="excluded-directory"))
-                    else:
-                        pending.append(child)
+            with pinned_directory(directory, expected=info) as directory_fd:
+                children = bounded_children(directory, limits, directory_fd)
+                for child in children:
+                    info = os.stat(child.name, dir_fd=directory_fd, follow_symlinks=False)
+                    if stat.S_ISLNK(info.st_mode):
+                        try:
+                            os.stat(child.name, dir_fd=directory_fd)
+                            status = "symlink-skipped"
+                        except FileNotFoundError:
+                            status = "broken-symlink"
+                        except OSError:
+                            status = "unresolved-symlink"
+                        events.append(dict(path=str(child), status=status,
+                                           target=os.readlink(child.name, dir_fd=directory_fd)))
+                    if child.name.lower() == "skill.md" and directory != root:
+                        limits.check("packages")
+                        yield child
+                    if stat.S_ISDIR(info.st_mode):
+                        pruned = child.name in PRUNE or (kind == "runtime" and
+                                                        child.name in RUNTIME_PRUNE)
+                        if pruned:
+                            events.append(dict(path=str(child), status="excluded-directory"))
+                        else:
+                            pending.append(child)
         except LimitError:
             raise
         except (OSError, ValueError) as error:
             events.append(dict(path=str(directory), status="scan-error", error=str(error)))
 
 
-def _build(sources: list, output: Path, limits: Limits | None = None) -> dict:
-    limits = limits or Limits()
-    output = output.absolute()
-    if output.is_symlink():
-        raise ValueError("Output cannot be a symlink")
-    output = output.resolve()
+def resolve_sources(sources: list, output: Path) -> list:
+    """Validate source declarations and overlap without creating any output paths."""
     resolved = []
     ids = set()
     if not isinstance(sources, list):
@@ -268,6 +314,16 @@ def _build(sources: list, output: Path, limits: Limits | None = None) -> dict:
         if output == canonical or output in canonical.parents or canonical in output.parents:
             raise ValueError(f"Output/source overlap: {root}")
         resolved.append((source, root, canonical))
+    return resolved
+
+
+def _build(sources: list, output: Path, limits: Limits | None = None) -> dict:
+    limits = limits or Limits()
+    output = output.absolute()
+    if output.is_symlink():
+        raise ValueError("Output cannot be a symlink")
+    output = output.resolve()
+    resolved = resolve_sources(sources, output)
     if output.exists() and (not output.is_dir() or any(output.iterdir())):
         raise ValueError("Output must be a new or empty directory")
     output.mkdir(parents=True, exist_ok=True, mode=0o700)
@@ -357,18 +413,13 @@ def build(sources: list, output: Path, limits: Limits | None = None) -> dict:
     if output.is_symlink():
         raise ValueError("Output cannot be a symlink")
     output = output.resolve()
+    # Validate every source against the requested destination before any writes.
+    resolve_sources(sources, output)
     if output.exists() and (not output.is_dir() or any(output.iterdir())):
         raise ValueError("Output must be a new or empty directory")
     output.parent.mkdir(parents=True, exist_ok=True)
     staging = Path(tempfile.mkdtemp(prefix=f".{output.name}-", dir=output.parent))
     try:
-        # Validate overlap against the requested destination as well as staging.
-        if isinstance(sources, list):
-            for source in sources:
-                if isinstance(source, dict) and isinstance(source.get("path"), str) and source["path"].strip():
-                    root = Path(source["path"]).expanduser().resolve()
-                    if output == root or output in root.parents or root in output.parents:
-                        raise ValueError(f"Output/source overlap: {root}")
         result = _build(sources, staging, limits)
         os.replace(staging, output)
         return result
@@ -377,8 +428,17 @@ def build(sources: list, output: Path, limits: Limits | None = None) -> dict:
             shutil.rmtree(staging)
 
 
+def catalog_location(path: Path) -> Path:
+    """Resolve the caller's explicit directory alias, preserving final-link refusal."""
+    try:
+        return path.parent.resolve() / path.name
+    except RuntimeError as error:
+        raise ValueError(f"Invalid catalog directory: {path.parent}") from error
+
+
 def verify(catalog_path: Path, limits: Limits | None = None) -> dict:
     limits = limits or Limits()
+    catalog_path = catalog_location(catalog_path)
     catalog = validate_catalog(json.loads(regular_bytes(catalog_path, limits)))
     failures = []
     for index, occurrence in enumerate(catalog["occurrences"]):
@@ -430,7 +490,7 @@ def main() -> int:
             print(json.dumps(report, indent=2))
             return int(not report["verified"])
         if args.catalog and args.find is not None:
-            data = validate_catalog(json.loads(regular_bytes(args.catalog, limits)))
+            data = validate_catalog(json.loads(regular_bytes(catalog_location(args.catalog), limits)))
             for collection in ("occurrences", "events", "sources"):
                 for item in data.get(collection, []):
                     if args.find.casefold() in json.dumps(item, ensure_ascii=False).casefold():

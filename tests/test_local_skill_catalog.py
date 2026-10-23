@@ -85,6 +85,84 @@ class CatalogTests(unittest.TestCase):
         self.assertNotIn("<script>", text)
         self.assertNotIn("[link]", text)
 
+    def test_index_preview_bounds_large_name_without_losing_catalog_metadata(self):
+        folder = self.skill("a")
+        name = "a" * 250000 + "<script>outside preview</script>"
+        (folder / "SKILL.md").write_text(f"---\nname: {name}\n---\n")
+        result = self.build()
+        preview = (self.output / "INDEX.md").read_text()
+        self.assertEqual(result["occurrences"][0]["name"], name)
+        self.assertLess(len(preview), 32768)
+        self.assertNotIn("<script>", preview)
+
+    def test_directory_replacement_before_enumeration_cannot_discover_external_skill(self):
+        folder = self.source / "candidate"
+        folder.mkdir()
+        identity = (folder.stat().st_dev, folder.stat().st_ino)
+        outside = self.root / "outside"
+        outside.mkdir()
+        (outside / "SKILL.md").write_text("---\nname: outside\n---\n")
+        original = os.scandir
+        replaced = []
+
+        def exchange_before_scandir(directory):
+            info = os.fstat(directory) if isinstance(directory, int) else Path(directory).stat()
+            if (info.st_dev, info.st_ino) == identity and not replaced:
+                folder.rename(self.root / "original-directory")
+                folder.symlink_to(outside, target_is_directory=True)
+                replaced.append(True)
+            return original(directory)
+
+        with patch.object(catalog.os, "scandir", exchange_before_scandir):
+            result = self.build()
+        self.assertEqual(result["counts"]["occurrences"], 0)
+        self.assertTrue(result["incomplete"])
+        self.assertTrue(any(event["path"] == str(folder) and event["status"] == "scan-error"
+                            for event in result["events"]))
+
+    def test_manifest_rejects_file_replacement_with_changed_executable_bits(self):
+        folder = self.skill("a")
+        resource = folder / "asset.bin"
+        original = catalog.regular_bytes
+        for old_mode, new_mode in ((0o644, 0o755), (0o755, 0o644)):
+            with self.subTest(old_mode=old_mode, new_mode=new_mode):
+                resource.chmod(old_mode)
+                replaced = []
+
+                def exchange_before_read(path, limits, **kwargs):
+                    if path == resource and not replaced:
+                        replacement = self.root / "replacement"
+                        replacement.write_bytes(b"new contents")
+                        replacement.chmod(new_mode)
+                        os.replace(replacement, resource)
+                        replaced.append(True)
+                    return original(path, limits, **kwargs)
+
+                with patch.object(catalog, "regular_bytes", exchange_before_read):
+                    with self.assertRaisesRegex(ValueError, "file changed"):
+                        catalog.package_manifest(folder, catalog.Limits())
+
+    def test_directory_replacement_before_read_cannot_expose_external_metadata(self):
+        folder = self.skill("a")
+        outside = self.root / "outside"
+        outside.mkdir()
+        (outside / "SKILL.md").write_text("---\nname: external metadata\n---\n")
+        original = catalog.regular_bytes
+        replaced = []
+
+        def exchange_before_read(path, limits, **kwargs):
+            if path == folder / "SKILL.md" and not replaced:
+                folder.rename(self.root / "original-directory")
+                folder.symlink_to(outside, target_is_directory=True)
+                replaced.append(True)
+            return original(path, limits, **kwargs)
+
+        with patch.object(catalog, "regular_bytes", exchange_before_read):
+            result = self.build()
+        self.assertNotIn("name", result["occurrences"][0])
+        self.assertEqual(result["objects"], {})
+        self.assertTrue(result["incomplete"])
+
     def test_malformed_sources_are_validation_errors(self):
         for value in ({}, [dict(id=[], path="x", kind="repository")],
                       [dict(id="a", path="", kind="repository")],
@@ -151,8 +229,8 @@ class CatalogTests(unittest.TestCase):
         folder = self.skill("a", b"small")
         original = catalog.regular_bytes
 
-        def expanded(path, limits):
-            data = original(path, limits)
+        def expanded(path, limits, **kwargs):
+            data = original(path, limits, **kwargs)
             return data + b"x" * 1000 if path.name == "asset.bin" else data
 
         with patch.object(catalog, "regular_bytes", expanded):
@@ -188,6 +266,19 @@ class CatalogTests(unittest.TestCase):
         self.assertIn("/alias/", result["occurrences"][0]["source_path"])
         self.assertEqual(result["sources"][0]["resolved_path"], str(self.source))
 
+    def test_catalog_commands_accept_explicit_directory_alias(self):
+        import subprocess
+        self.skill("a")
+        self.build()
+        alias = self.root / "catalog-alias"
+        alias.symlink_to(self.output, target_is_directory=True)
+        for operation in (("--verify",), ("--find", "shared")):
+            with self.subTest(operation=operation):
+                result = subprocess.run([__import__("sys").executable, str(MODULE),
+                                         "--catalog", str(alias / "catalog.json"), *operation],
+                                        capture_output=True, text=True)
+                self.assertEqual(result.returncode, 0, result.stderr)
+
     def test_link_inside_package_remains_catalog_only(self):
         folder = self.skill("unsafe")
         (folder / "linked").symlink_to(self.root, target_is_directory=True)
@@ -215,6 +306,31 @@ class CatalogTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.build()
         self.assertEqual((self.output / "keep").read_text(), "untouched")
+
+    def test_overlap_preflight_does_not_create_ancestors_inside_source(self):
+        self.skill("a")
+        alias = self.root / "alias"
+        alias.symlink_to(self.source, target_is_directory=True)
+        for root in (self.source, alias):
+            with self.subTest(root=root), self.assertRaises(ValueError):
+                catalog.build([dict(id="test", path=str(root), kind="repository")],
+                              self.source / "new" / "snapshot")
+            self.assertFalse((self.source / "new").exists())
+
+    def test_cyclic_source_alias_is_incomplete_without_cli_traceback(self):
+        import subprocess
+        cycle = self.root / "cycle"
+        cycle.symlink_to(cycle)
+        sources = self.root / "sources.json"
+        sources.write_text(json.dumps([dict(id="cycle", path=str(cycle), kind="repository")]))
+        result = subprocess.run([__import__("sys").executable, str(MODULE),
+                                 "--sources", str(sources), "--output", str(self.output)],
+                                capture_output=True, text=True)
+        self.assertEqual(result.returncode, 2, result.stderr)
+        self.assertNotIn("Traceback", result.stderr)
+        data = json.loads((self.output / "catalog.json").read_text())
+        self.assertTrue(data["incomplete"])
+        self.assertEqual(data["sources"][0]["status"], "missing-or-invalid-root")
 
     def test_missing_root_and_limits_are_explicit(self):
         self.skill("a", b"long resource")
