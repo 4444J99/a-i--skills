@@ -1,6 +1,6 @@
 ---
 name: closeout
-description: Session-end ritual that walks back through plans authored and atoms touched in this session, assigning each a closure status (DONE-NNN, IRF-XXX-NNN, or `~/.Codex/plans/abandoned/`). Verifies git state. Produces CLOSEOUT_SUMMARY.md. Triggers on "/closeout", "close out the session", "end of session", "wrap up", "session close", or before any planned `git push`. Addresses the 90.4% plan-orphan rate documented in docs/evaluation/self-review-2026-05-05/stale-plans-and-orphan-commits.md.
+description: Session-end ritual that walks back through plans authored and atoms touched in this session, assigning each a closure status (DONE-NNN, IRF-XXX-NNN, or `.gemini/plans/abandoned/`). Verifies git state. Produces CLOSEOUT_SUMMARY.md. Triggers on "/closeout", "close out the session", "end of session", "wrap up", "session close", or before any planned `git push`. Addresses the 90.4% plan-orphan rate documented in docs/evaluation/self-review-2026-05-05/stale-plans-and-orphan-commits.md.
 license: MIT
 complexity: beginner
 time_to_learn: 5min
@@ -47,7 +47,7 @@ Run, in parallel where possible:
 git status --short
 
 # What plans were authored in this session?
-ls -t ~/.Codex/plans/*.md 2>/dev/null | head -10
+ls -t .gemini/plans/*.md 2>/dev/null | head -10
 
 # What's the current branch and where does it stand vs origin?
 git branch --show-current
@@ -61,12 +61,12 @@ Surface a brief inventory table to the user:
 
 ### Step 2 — Walk back through plans
 
-For each plan authored this session (filter `~/.Codex/plans/*.md` by mtime within session window):
+For each plan authored this session (filter `.gemini/plans/*.md` by mtime within session window):
 
 For each plan, classify it as one of:
 - **EXECUTED**: contains `DONE-NNN` reference. No action.
 - **IN-PROGRESS**: contains `IRF-XXX-NNN` reference but no DONE-NNN. Update its frontmatter to confirm continued status.
-- **ABANDONED**: no closure reference, no follow-on commits. Move to `~/.Codex/plans/abandoned/` with a brief abandonment-reason.
+- **ABANDONED**: no closure reference, no follow-on commits. Move to `.gemini/plans/abandoned/` with a brief abandonment-reason.
 
 Ask the user for ambiguous cases. Do NOT bulk-classify without confirmation — the home-scope AGENTS.md rule "Atoms are permanent — never batch-close" applies to plans-as-artifacts too.
 
@@ -122,7 +122,7 @@ This is the cross-session continuity gate.
 
 ### Step 6 — Write CLOSEOUT_SUMMARY.md
 
-Produce a session-close-out summary at `~/.Codex/plans/closeout-{date}.md` with:
+Produce a session-close-out summary at `.gemini/plans/closeout-{date}.md` with:
 
 ```markdown
 # Session Close-Out — {date}
