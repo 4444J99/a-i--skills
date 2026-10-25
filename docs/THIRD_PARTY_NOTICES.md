@@ -28,6 +28,14 @@ Used in: algorithmic-art, canvas-design, theme-factory, artifacts-builder, web-a
 
 The following components are licensed under the MIT License:
 
+**Product Design Harness**, Copyright (c) 2026 Product Design Harness contributors
+
+Source: https://github.com/cis2042/ux3-product-design-harness/tree/48965c6b501f61ebbb8130c9c2e4f9af08922b9f/skills/product-design-harness
+
+Used in: product-design-harness (complete 91-file skill folder, unchanged from the pinned source)
+
+The original MIT copyright notice and license text are preserved in skills/project-management/product-design-harness/LICENSE.
+
 **Spec Kit**, Copyright GitHub, Inc.
 
 Source: https://github.com/github/spec-kit

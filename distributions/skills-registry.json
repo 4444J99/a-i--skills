@@ -5147,6 +5147,34 @@
       }
     },
     {
+      "name": "product-design-harness",
+      "description": "Use when a product direction, feature, workflow, experiment, launch, feedback signal, automation, or scale decision needs judgment before execution or the next iteration.",
+      "category": "project-management",
+      "collection": "example",
+      "path": "skills/project-management/product-design-harness",
+      "license": "MIT",
+      "complexity": null,
+      "time_to_learn": null,
+      "tier": null,
+      "governance_norm_group": null,
+      "governance_auto_activate": false,
+      "prerequisites": [],
+      "tags": [],
+      "inputs": [],
+      "outputs": [],
+      "side_effects": [],
+      "triggers": [],
+      "complements": [],
+      "includes": [],
+      "governance_phases": [],
+      "organ_affinity": [],
+      "resources": {
+        "scripts": [],
+        "references": [],
+        "assets": []
+      }
+    },
+    {
       "name": "product-domain-engine",
       "description": "Conductor skill that formalizes any domain-tied product through a 5-phase protocol (identify-map-encode-express-deploy) expressed through four rhetorical modes (logos-ethos-pathos-kairos). Orchestrates seven existing skills.",
       "category": "project-management",
@@ -8293,12 +8321,13 @@
       ]
     },
     "project-management": {
-      "count": 9,
+      "count": 10,
       "skills": [
         "domain-ideal-whole-substrate",
         "github-roadmap-strategist",
         "personalized-storefront-render",
         "premortem",
+        "product-design-harness",
         "product-domain-engine",
         "product-requirements-designer",
         "project-alchemy-orchestrator",

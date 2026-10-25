@@ -3662,6 +3662,559 @@
       ]
     },
     {
+      "name": "product-design-harness",
+      "path": "skills/project-management/product-design-harness",
+      "sha256": "c25dd719282b52772e85d817456e8b3fecc8d7f75c21c520b539206ed3fc1a11",
+      "files": [
+        {
+          "path": "LICENSE",
+          "sha256": "4b4f6e1475a86afa35d3418ced212d6d34b732ad118f4a11626b9e00f30f5ee7",
+          "size": 1092,
+          "executable": false
+        },
+        {
+          "path": "SKILL.md",
+          "sha256": "ebdb52ec57481aefa76033b6a6367eaa1155659cccad6c76135dc693c6adeb21",
+          "size": 5816,
+          "executable": false
+        },
+        {
+          "path": "resources/agents/README.md",
+          "sha256": "97e89ed8eb0446a8e5fdc3f467fe324cc363f5e8514c2e65089e6f5c29ed84ed",
+          "size": 776,
+          "executable": false
+        },
+        {
+          "path": "resources/agents/business-flow-reviewer.md",
+          "sha256": "0d52cd9589dd37df78943c92e840d7f92b2316a52168feb781ad4396e4e115bf",
+          "size": 2077,
+          "executable": false
+        },
+        {
+          "path": "resources/agents/claim-analyst.md",
+          "sha256": "47ff164e8308b006072473860ee1163c9d345a5e7f5c6fedb45d397bb1d87492",
+          "size": 683,
+          "executable": false
+        },
+        {
+          "path": "resources/agents/council-facilitator.md",
+          "sha256": "6b4018f1e873507ecf48a5643846baa7d3455c00385fdddf3885f3abfe16b310",
+          "size": 2334,
+          "executable": false
+        },
+        {
+          "path": "resources/agents/evidence-flow-reviewer.md",
+          "sha256": "0312d321d3da078344c8f77c26f4a9ccb9ae562fe1b80f168eeb93f6d5f6dcff",
+          "size": 2119,
+          "executable": false
+        },
+        {
+          "path": "resources/agents/registry.json",
+          "sha256": "12150a16d4efb69a7f2121c3e09241bf43b0951b3827e7340c6ef5d6c55f92ca",
+          "size": 1389,
+          "executable": false
+        },
+        {
+          "path": "resources/agents/uncertainty-reviewer.md",
+          "sha256": "62727dd620da3e014b4f14d9261e2d10029044540220ec34dcd48c9f372da00b",
+          "size": 862,
+          "executable": false
+        },
+        {
+          "path": "resources/agents/user-flow-reviewer.md",
+          "sha256": "2b582ff8caf5611e3c95480f116a5503d68b94145b1a2e0ea49e11daf6b2c5f7",
+          "size": 2069,
+          "executable": false
+        },
+        {
+          "path": "resources/assets/decision-gate.svg",
+          "sha256": "62e8a9eba1ff5b6a1af9ca906c27e1d053e6fe1796ee9465058cb66561a2ff7f",
+          "size": 3121,
+          "executable": false
+        },
+        {
+          "path": "resources/assets/harness-sequence.svg",
+          "sha256": "d48d5d53a7bb2295d29821dcc71dcbb53447e2423de4b20e026377af0449da58",
+          "size": 3352,
+          "executable": false
+        },
+        {
+          "path": "resources/docs/ADOPTION.md",
+          "sha256": "6c9f581d7278263b1b223a4ebb9005fa849dd62be89ac22c482b954e7bfeee91",
+          "size": 6189,
+          "executable": false
+        },
+        {
+          "path": "resources/docs/ANTI-PATTERNS.md",
+          "sha256": "bfcf1d190e1385718942a99764d58a17ef586f82e471308aeec0ca1d8718330b",
+          "size": 2111,
+          "executable": false
+        },
+        {
+          "path": "resources/docs/CLAIMS.md",
+          "sha256": "f1f7886b82cb742c04873f64902cbc835ad190b758371b7fb88a545e8ecc9f8f",
+          "size": 2272,
+          "executable": false
+        },
+        {
+          "path": "resources/docs/CODING-HARNESS-COMPARISON.md",
+          "sha256": "9bf5a1b285141304c665decbe36d52161b46798709cd778ed152d1fda642cdeb",
+          "size": 2866,
+          "executable": false
+        },
+        {
+          "path": "resources/docs/CONTRACTS.md",
+          "sha256": "e283f13de7339ad0512d272c3afe1d734bb79240948f3db6ad375a6754f58c38",
+          "size": 4260,
+          "executable": false
+        },
+        {
+          "path": "resources/docs/COUNCIL.md",
+          "sha256": "81e86d79b004e07a51bef66b2e5bd1bf8023b1f205fdf8c1b7ba832a66f92554",
+          "size": 4341,
+          "executable": false
+        },
+        {
+          "path": "resources/docs/DECISION-RULES.md",
+          "sha256": "45c5b8edb0295d9760f953b03a16edec2b7713d7b943c34c3362b4647181ffab",
+          "size": 6997,
+          "executable": false
+        },
+        {
+          "path": "resources/docs/GLOSSARY.md",
+          "sha256": "c9d62ba1e1d253f063e534fab9580bdd62a78a86bf1c40f2b153ab01bf6f27e1",
+          "size": 4413,
+          "executable": false
+        },
+        {
+          "path": "resources/docs/HARNESS.md",
+          "sha256": "8b909d3cdf8588d652323e6c6f1578dc6b6e2a8a2ca755e0ad4cf85bf80f927c",
+          "size": 10915,
+          "executable": false
+        },
+        {
+          "path": "resources/docs/LEARNING-LOOP.md",
+          "sha256": "a339d9ccfeeef7182f51d127390e2fd49bd1531323466d2ea835f0c0a71fc80e",
+          "size": 2093,
+          "executable": false
+        },
+        {
+          "path": "resources/docs/LIVE-CODING.md",
+          "sha256": "891073f22843adaac63e0886d309426966715ebf326095d4611123bf2401b1fd",
+          "size": 5798,
+          "executable": false
+        },
+        {
+          "path": "resources/docs/MULTI-AGENT-ALIGNMENT.md",
+          "sha256": "fc498a396fae24876e2e4d6f7415da60ff1b90dbf28a4e6a7fc211a3bb65e86f",
+          "size": 5474,
+          "executable": false
+        },
+        {
+          "path": "resources/docs/OPERATING-PROTOCOL.md",
+          "sha256": "5f140457049523a92f14b5dc9a98c2004fb79687a3f07ee9044de9c44a54ecc0",
+          "size": 5512,
+          "executable": false
+        },
+        {
+          "path": "resources/docs/ORCHESTRATION.md",
+          "sha256": "7ff763e43c3b543435d10ef644690e5405c1b53f44bb9bb59f3db45778612185",
+          "size": 5519,
+          "executable": false
+        },
+        {
+          "path": "resources/docs/PRINCIPLES.md",
+          "sha256": "019a56e7a064525f02d8ca67366261a666551cef2719286752cb5e668a729602",
+          "size": 2277,
+          "executable": false
+        },
+        {
+          "path": "resources/docs/README.md",
+          "sha256": "1770c19fae45b18200b9d96dedad3bd2ca33413f9e93330667485e8759e9e5d8",
+          "size": 912,
+          "executable": false
+        },
+        {
+          "path": "resources/docs/UNCERTAINTY.md",
+          "sha256": "11ca1df686ff3a2e8aa95ce1d516234a6321df4dd085b7258ef5f76f66caca45",
+          "size": 3478,
+          "executable": false
+        },
+        {
+          "path": "resources/docs/UX3.md",
+          "sha256": "a3fb1da2558500f9c3c1738c9fd1a134e3cd0321d357d7b7ad46058d117ff709",
+          "size": 7218,
+          "executable": false
+        },
+        {
+          "path": "resources/docs/rfcs/0001-override-protocol.md",
+          "sha256": "2e4f0afc1d4334c711cbf9266acfd2a52b6476e8602dd30204dd59936fb30138",
+          "size": 6802,
+          "executable": false
+        },
+        {
+          "path": "resources/examples/README.md",
+          "sha256": "203315bc5ecdf1f6a9637bb477414610e21a1aec8eb787935e27a82829394ee4",
+          "size": 1677,
+          "executable": false
+        },
+        {
+          "path": "resources/examples/evidence-response.json",
+          "sha256": "d087bc728037ded8988b1ae3acaa25829b48051910ae95c185912bcd6497f751",
+          "size": 1759,
+          "executable": false
+        },
+        {
+          "path": "resources/examples/feature-gate-review.md",
+          "sha256": "b52d4d18426a68b8584b77ab87beefb7150c2d64aaee5a4aede149b4f9bd2b07",
+          "size": 3666,
+          "executable": false
+        },
+        {
+          "path": "resources/examples/human-decision.json",
+          "sha256": "2fdd34bb7c0bfbddcb0eaea21723d65fa4612f0e55159c134ada98ae72f36138",
+          "size": 650,
+          "executable": false
+        },
+        {
+          "path": "resources/examples/live-coding-context-pack.json",
+          "sha256": "86856372e78cc65ddf0d918fbd0b997fc43af3cdc4939353067b68268d905d9d",
+          "size": 3898,
+          "executable": false
+        },
+        {
+          "path": "resources/examples/live-coding-product-brief.json",
+          "sha256": "ff639bed910ab974c0c0a5891c5723a161710b5669687b2f53d96f42b7af02f4",
+          "size": 4979,
+          "executable": false
+        },
+        {
+          "path": "resources/examples/live-coding-review.json",
+          "sha256": "a674100b0c6a6905c4d2a6d4313cf8da0e828d27af4d46f7775dc1b8e0f76394",
+          "size": 5214,
+          "executable": false
+        },
+        {
+          "path": "resources/examples/quick-context-pack.json",
+          "sha256": "12c8fcb0477579ae9cebaf63843f80fa4d127c7ec84004d1ed4ad9f45fcffde2",
+          "size": 2767,
+          "executable": false
+        },
+        {
+          "path": "resources/examples/quick-gate-review.json",
+          "sha256": "f89446ed3449a171edca725d7ab7db2a869bce1acef853bc18a4eafdd371a51e",
+          "size": 4364,
+          "executable": false
+        },
+        {
+          "path": "resources/examples/quick-gate-review.md",
+          "sha256": "6a1df721d0ac2c389f88c582f22b78f64a47a59d209f03e97e305601b61c96b7",
+          "size": 1381,
+          "executable": false
+        },
+        {
+          "path": "resources/examples/red-team-review.json",
+          "sha256": "aae2f73dbb8cac2b134ba7d762059bcbd131f9e9abc582e836f6c913109c63c0",
+          "size": 1172,
+          "executable": false
+        },
+        {
+          "path": "resources/examples/standard-gate-review.json",
+          "sha256": "d83c1aa8e5071d9e2b98d5e521cf262ce4bd351b970c71e662ca3bac0470bbc5",
+          "size": 4711,
+          "executable": false
+        },
+        {
+          "path": "resources/examples/stop-reframe-review.json",
+          "sha256": "c0910a813194d882f276b37c57cb27059d406bb3bd449d9d73f274f84423b62b",
+          "size": 5758,
+          "executable": false
+        },
+        {
+          "path": "resources/examples/stop-reframe-review.md",
+          "sha256": "f57f7a5765201e12fe0429ec3d85eb32fe8a3c0a97d6188a0d2fee7514a17a53",
+          "size": 898,
+          "executable": false
+        },
+        {
+          "path": "resources/examples/ux3-council-input.json",
+          "sha256": "e46db2d4525902bd47051d5542d08cc841f6c470ff1272457dce839f6d72a160",
+          "size": 10967,
+          "executable": false
+        },
+        {
+          "path": "resources/examples/ux3-council-review.json",
+          "sha256": "069f96bf17fb9c323f2727e6a0e0f3a5e38a9094af6eca00778674eba108c104",
+          "size": 6282,
+          "executable": false
+        },
+        {
+          "path": "resources/examples/ux3-council-review.md",
+          "sha256": "06566ed2284bbf787ab3f47745f6ab7258b235e066f2662978207fff25462288",
+          "size": 2833,
+          "executable": false
+        },
+        {
+          "path": "resources/examples/verdict-override.json",
+          "sha256": "af47fa9669c02efc2b9874be14439903b5cb6fb7b0b91a445c0fee66b6a86a57",
+          "size": 1272,
+          "executable": false
+        },
+        {
+          "path": "resources/examples/verdict-override.md",
+          "sha256": "f5f6b4075c1da585dcd283ea1a7438412aa77010093a467b9d43f424a1edc690",
+          "size": 1480,
+          "executable": false
+        },
+        {
+          "path": "resources/knowledge/ontology.json",
+          "sha256": "301ea58280e0b36c069e20edb1dbf58afb16f774de2f8361ebbc72d86ce70307",
+          "size": 7078,
+          "executable": false
+        },
+        {
+          "path": "resources/knowledge/rules.json",
+          "sha256": "a1d4fcc335b4d09b0e4e4cd65a177ccd31fae1b4bd050400bc35417e3859b075",
+          "size": 41395,
+          "executable": false
+        },
+        {
+          "path": "resources/knowledge/source-chapters.json",
+          "sha256": "c9daeb2273b1bd39188fd19f6d1ce61458f114db202d15cfce40f760096d1d49",
+          "size": 2840,
+          "executable": false
+        },
+        {
+          "path": "resources/prompts/README.md",
+          "sha256": "e9fbf81dd362d1a615babdf1e27f40a3a1f39702b9cf5b8e125007755ac5f001",
+          "size": 537,
+          "executable": false
+        },
+        {
+          "path": "resources/prompts/claim-analysis.md",
+          "sha256": "7dca79f4a7232ffc63532374565ad7b62e169cff6ad52a808e45290153159864",
+          "size": 850,
+          "executable": false
+        },
+        {
+          "path": "resources/prompts/gate-review.md",
+          "sha256": "26f8cf36786fb3df0f96c5e5392e65961eb9e60c241a3a2e1cc8c885bc68e565",
+          "size": 2763,
+          "executable": false
+        },
+        {
+          "path": "resources/prompts/intake.md",
+          "sha256": "3556f38cc72dc142c1482c95188cead2bcd93a158902e9cf925ef030e33b984e",
+          "size": 1478,
+          "executable": false
+        },
+        {
+          "path": "resources/prompts/mode-selector.md",
+          "sha256": "39db5b7879906f8f81595559fc6debb595b3de343db794bc5a819657527cd1e0",
+          "size": 1498,
+          "executable": false
+        },
+        {
+          "path": "resources/prompts/red-team.md",
+          "sha256": "982ed51fe0df4506bde7683e7b5cb507cc9a0a4459a0161a237ed7841a6afd3a",
+          "size": 1033,
+          "executable": false
+        },
+        {
+          "path": "resources/prompts/start-review.md",
+          "sha256": "e1bc66fbad1972722463e277d3f033cd878a3f9287f685a489e7ec1e2935214e",
+          "size": 1945,
+          "executable": false
+        },
+        {
+          "path": "resources/prompts/ux3-council.md",
+          "sha256": "654efdaf8d33aea982923ee130d9831bd0ad7c0072d7cf32caf1ad75da164c66",
+          "size": 2042,
+          "executable": false
+        },
+        {
+          "path": "resources/requirements-dev.txt",
+          "sha256": "756cc9e506ae4ee1a6f6c0507088b5cfc0dc8ba350fb2d2d46f1ffa72033adb6",
+          "size": 19,
+          "executable": false
+        },
+        {
+          "path": "resources/schemas/README.md",
+          "sha256": "5491616626667f322433158a483133148c56e802d25069400e12ea0558df0746",
+          "size": 1565,
+          "executable": false
+        },
+        {
+          "path": "resources/schemas/actor-boundary.schema.json",
+          "sha256": "17ef5347e68c4840f572987fec2831c68a03f73386eb45e9cffd00ff48324a20",
+          "size": 1066,
+          "executable": false
+        },
+        {
+          "path": "resources/schemas/claim-analysis.schema.json",
+          "sha256": "e49fc1d5baf9ffead071a859378e53cd0e15ed420d39618517c207cecf98e98f",
+          "size": 928,
+          "executable": false
+        },
+        {
+          "path": "resources/schemas/claim.schema.json",
+          "sha256": "eea1bc63967211a868e2a2c7c08740a4df7baa009f5c5d321dd7ab27e5a51a50",
+          "size": 2207,
+          "executable": false
+        },
+        {
+          "path": "resources/schemas/context-pack.schema.json",
+          "sha256": "5a05173d7ecf9b762ca74789c3c50d1885d5f6395e0327084bd26e4a86a891b3",
+          "size": 6321,
+          "executable": false
+        },
+        {
+          "path": "resources/schemas/council-input.schema.json",
+          "sha256": "e9b13dad97e1544a5626e732ade43967d34450b1f32c97fbf3bf5a3bfef1c84d",
+          "size": 2232,
+          "executable": false
+        },
+        {
+          "path": "resources/schemas/decision-rule.schema.json",
+          "sha256": "b77326951237a86ad0f7c9f8f205b863710eb9ad8fc24435f1d1f586b5fd83cc",
+          "size": 2310,
+          "executable": false
+        },
+        {
+          "path": "resources/schemas/evidence-request.schema.json",
+          "sha256": "556814e99b897a3245db9135131d4b8479a3f8934b6979ae2c6d5ace93564702",
+          "size": 1536,
+          "executable": false
+        },
+        {
+          "path": "resources/schemas/evidence-response.schema.json",
+          "sha256": "87452e48ceaf7d3a3a247fb69948ef0c47524201c71d768c9a8aaed83e59f131",
+          "size": 786,
+          "executable": false
+        },
+        {
+          "path": "resources/schemas/evidence.schema.json",
+          "sha256": "098c9ee1b731af93592bf23acb415e89e166e06bc5a5d2186f3c52de32152c1c",
+          "size": 2155,
+          "executable": false
+        },
+        {
+          "path": "resources/schemas/human-decision.schema.json",
+          "sha256": "68df675d5aafbc3ca7262cd68f8558157956b29e1822ca2ebe9ce73511e10f82",
+          "size": 1570,
+          "executable": false
+        },
+        {
+          "path": "resources/schemas/ontology.schema.json",
+          "sha256": "3204c78d2f7ceacbd78617e5e9a0816886494f359f4056e88dccecc6ed3274d1",
+          "size": 3703,
+          "executable": false
+        },
+        {
+          "path": "resources/schemas/product-brief.schema.json",
+          "sha256": "a6b4c076d9829cf40e6d54d3e5b838268805064c56fd4d23414516b27c60470d",
+          "size": 5336,
+          "executable": false
+        },
+        {
+          "path": "resources/schemas/red-team-review.schema.json",
+          "sha256": "cdf04d44a3a99aecb8444a415864f232a7d91ae0a3509bd0a6339e11e8efd129",
+          "size": 2378,
+          "executable": false
+        },
+        {
+          "path": "resources/schemas/review-result.schema.json",
+          "sha256": "5b31eafd4a775fec210b57d91457fea81231c6bb9e70735a8c55507e1d438446",
+          "size": 22851,
+          "executable": false
+        },
+        {
+          "path": "resources/schemas/reviewer-verdict.schema.json",
+          "sha256": "3bb3267fd43a59525439f1f3de999a05ea09f22f69c76bf3e1ed3fd6f3a563c6",
+          "size": 3539,
+          "executable": false
+        },
+        {
+          "path": "resources/schemas/session-config.schema.json",
+          "sha256": "ac05f5176a6c927edcf2c8d016adb157c158add4897c876800ba25bfb4191452",
+          "size": 662,
+          "executable": false
+        },
+        {
+          "path": "resources/schemas/uncertainty-review.schema.json",
+          "sha256": "b42fd906c184ad7aa391caa5f37705aa7c1a4fad3b219af417ed805b3864e2ca",
+          "size": 1458,
+          "executable": false
+        },
+        {
+          "path": "resources/schemas/verdict-override.schema.json",
+          "sha256": "e4d572a4af225e2e6809b312f989989945167d70c9bed61c66a764d05b62ac73",
+          "size": 3398,
+          "executable": false
+        },
+        {
+          "path": "resources/scripts/check_override.py",
+          "sha256": "fa829d6220d964d21c79a73565169c831b633041f9656596b4bdcfa322a5d07b",
+          "size": 2999,
+          "executable": false
+        },
+        {
+          "path": "resources/scripts/check_review.py",
+          "sha256": "5fd67d857624e6e31c43252d11855c6e3c9024f0647b25510e1ca9c995a18c13",
+          "size": 6788,
+          "executable": false
+        },
+        {
+          "path": "resources/scripts/jev_gate.py",
+          "sha256": "b84d83dfec75ec32e164ac12308df9c2c944d2f248b6545256f00e64ff5116df",
+          "size": 5999,
+          "executable": false
+        },
+        {
+          "path": "resources/templates/README.md",
+          "sha256": "1504413175e37abea9c36f1bee9690730798baacd442e0a1909b97fd36cebaf4",
+          "size": 542,
+          "executable": false
+        },
+        {
+          "path": "resources/templates/context-pack.md",
+          "sha256": "203b5fed612b7e26b7d4ba997ee66942e4aac2c050c3f355d19c0c758502b597",
+          "size": 2222,
+          "executable": false
+        },
+        {
+          "path": "resources/templates/decision-log.md",
+          "sha256": "eb107301c29bd4d340407bb27c264ce1f60cba3230f4a3745e87778d8cf00b83",
+          "size": 812,
+          "executable": false
+        },
+        {
+          "path": "resources/templates/gate-review.md",
+          "sha256": "1c0c2386bef4da0316a436620e18ffdbec8ab9aeef409ed313c10642e1ceecf7",
+          "size": 2346,
+          "executable": false
+        },
+        {
+          "path": "resources/templates/override-ledger.md",
+          "sha256": "b8777b65e2b292d921531118c16c76546ee389e64262340b0cdb57611eb234ed",
+          "size": 861,
+          "executable": false
+        },
+        {
+          "path": "resources/templates/product-brief.md",
+          "sha256": "381826b1e0ea831c67353ea006cfac2fe590131e8c2dc2b6f21d59ea0bb9f36f",
+          "size": 2056,
+          "executable": false
+        },
+        {
+          "path": "resources/templates/ux3-council-review.md",
+          "sha256": "5d8127ec36a415c05773c22f4d4cbca69ec3791872ae910a9ad3613f43bb1260",
+          "size": 1269,
+          "executable": false
+        }
+      ]
+    },
+    {
       "name": "product-domain-engine",
       "path": "skills/project-management/product-domain-engine",
       "sha256": "6c39cd6a0256497d95b9945fb7f1581bdf550f8dff72905a3fb1bd689dd0dfc8",
