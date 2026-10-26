@@ -4328,6 +4328,19 @@
       ]
     },
     {
+      "name": "skill-catalog",
+      "path": "skills/tools/skill-catalog",
+      "sha256": "40f2ab28dbb5a6c41522cfacdedd3bccbe42a4959e77a768403673ebf6b13360",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "f02b9d681800729bfa7ee6a381a8ec59950c38355908a17cb29abbe7e99fdebb",
+          "size": 2650,
+          "executable": false
+        }
+      ]
+    },
+    {
       "name": "skill-chain-prompts",
       "path": "skills/tools/skill-chain-prompts",
       "sha256": "d4d20660021a3a4d3f1e2118efff43142f867164d7bb064db42b681cd4331d83",

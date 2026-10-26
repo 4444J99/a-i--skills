@@ -8,7 +8,7 @@ from pathlib import Path
 
 from generate_lockfile import _file_records, build_lockfile
 from generate_registry import build_registry
-from refresh_skill_collections import _bundle_targets, expected_metadata
+from refresh_skill_collections import bundle_plan, expected_metadata
 from skill_lib import is_ignored_name, skill_collections
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -52,7 +52,7 @@ def validate_generated(root: Path, *, skip_marketplace: bool = False) -> list[st
             metadata.pop(".claude-plugin/marketplace.json")
         registry = build_registry(root)
         lock = build_lockfile(root)
-        targets = _bundle_targets(root)
+        plan = bundle_plan(root, collections["example"])
     except (OSError, ValueError, TypeError) as exc:
         return [f"Unable to derive expected output from canonical source: {exc}"]
 
@@ -80,8 +80,8 @@ def validate_generated(root: Path, *, skip_marketplace: bool = False) -> list[st
             errors.append(f"{path}: unreadable or invalid metadata ({exc})")
 
     locked_by_path = {entry["path"]: entry for entry in lock["skills"]}
-    names = {path.name for path in collections["example"]}
-    for target in targets:
+    for target, sources in plan:
+        names = {path.name for path in sources}
         if target.is_symlink() or not target.is_dir():
             errors.append(f"{target}: missing real bundle directory")
             continue
@@ -95,7 +95,7 @@ def validate_generated(root: Path, *, skip_marketplace: bool = False) -> list[st
         actual_names = {entry.name for entry in target.iterdir() if not is_ignored_name(entry.name)} - {".skills-generated"}
         if actual_names != names:
             errors.append(f"{target}: missing {sorted(names - actual_names)}, extra {sorted(actual_names - names)}")
-        for source in collections["example"]:
+        for source in sources:
             source_path = source.relative_to(root).as_posix()
             expected_records = locked_by_path[source_path]["files"]
             destination = target / source.name

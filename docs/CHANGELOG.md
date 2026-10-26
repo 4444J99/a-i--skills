@@ -5,6 +5,7 @@ This project follows semantic versioning.
 
 ## [Unreleased]
 ### Changed
+- **Claude residency:** `distributions/claude/skills` now holds only the default-on skills authored under `default_on` in `config/runtime-catalog.json`; the other catalog skills move to `distributions/claude/skills-catalog` (index `CATALOG.md`, doorway skill `skill-catalog`). See `docs/adr/003-default-on-skill-residency.md`
 - **Refactor:** Renamed `.build/` to `distributions/` for semantic integrity -- `.build` signals ephemeral output, but these are committed canonical artifacts
 
 ## [1.2.0] - 2026-02-06

@@ -13,6 +13,7 @@ qa-audit
 session-governance-audit
 session-lifecycle-patterns
 shell-history-hygiene
+skill-catalog
 skill-chain-prompts
 skill-creator
 speckit

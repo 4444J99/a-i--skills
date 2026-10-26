@@ -19,8 +19,11 @@ import pytest
 import skills_install as installer
 
 ROOT = Path(__file__).resolve().parents[1]
+CLAUDE_RESIDENT = "distributions/claude/skills"
+# Bundles holding every non-resident catalog skill. Claude keeps only its
+# default-on skills resident and the rest in skills-catalog.
 BUNDLES = (
-    "distributions/claude/skills",
+    "distributions/claude/skills-catalog",
     "distributions/codex/skills",
     "distributions/direct/example",
     "distributions/extensions/gemini/example-skills/skills",
@@ -84,10 +87,17 @@ def test_acceptance_clean_install_update_removal_and_failed_update(
     }
     assert first["counts"]["catalog"] > 100  # Full real catalog, not a toy fixture.
     assert {s["name"] for s in _registry(first_path)} == original_names | plugin_names
+    resident = set(
+        json.loads((source / "config/runtime-catalog.json").read_text())["default_on"]["skills"]
+    )
+    claude = {
+        p.name for p in (first_path / CLAUDE_RESIDENT).iterdir() if p.is_dir()
+    }
+    assert claude == resident
     for bundle in BUNDLES:
-        assert {
-            p.name for p in (first_path / bundle).iterdir() if p.is_dir()
-        } == original_names
+        names = {p.name for p in (first_path / bundle).iterdir() if p.is_dir()}
+        expected = original_names - resident if "claude" in bundle else original_names
+        assert names == expected
     assert not (source / "distributions").exists()  # Build did not mutate checkout.
     assert not (source / ".claude-plugin/marketplace.json").exists()
 
