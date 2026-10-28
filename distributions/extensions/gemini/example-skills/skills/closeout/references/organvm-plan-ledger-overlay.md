@@ -67,7 +67,7 @@ If not (most sessions), skip.
 Cross-check:
 - Working tree is clean (no uncommitted changes meant for this session)
 - Local main is in sync with origin (or branch tracks correctly)
-- No stray exports/temp files in workspace root (`ls /Users/4jp/Workspace/*.txt` should be empty)
+- No stray exports/temp files in the workspace root (for example, auto-named `2026-MM-DD-NNNNNN-*.txt` session exports should be relocated or absent)
 
 If stray exports exist (the auto-named `2026-MM-DD-NNNNNN-this-session-being-continued-from-a-previous-c.txt` pattern), move them to `~/Documents/session-exports/` or delete if duplicative.
 
