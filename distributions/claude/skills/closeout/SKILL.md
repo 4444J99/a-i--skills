@@ -115,9 +115,16 @@ else
   echo "(no upstream configured; remote commit ownership unverified — inspect session base if known)"
 fi
 git stash list                          # work parked outside any branch
-# Open PRs for this branch. Do not hide failures: an empty list from a failed call is not "no PRs".
-gh pr list --head "$(git branch --show-current)" || echo "(PR inventory unmeasured: gh missing, unauthenticated, or unreachable)"
+# Repeat for every session-owned branch identified in Step 1, including branches no longer checked out.
+# Use its repository explicitly; a failed call is not an empty inventory.
+gh pr list --repo <owner/repo> --head <session-owned-branch> --state all
 ```
+
+Reconcile known session outputs against ignored paths as well as `git status`:
+use `git status --short --ignored -- <known-output-paths>` for each scoped output.
+Include session-owned ignored deliverables in homing; preserve private data through
+its authorized custody owner rather than committing secrets or generated caches.
+Do not turn unrelated ignored files into new session obligations.
 
 With no upstream, an empty `git log` proves nothing. Inspect from a known session base
 (for example `git log <remote>/<default>..`) or report remote commit ownership as unverified.
@@ -145,7 +152,7 @@ already granted by the task or repository charter.
 
 Each item ends in exactly one durable form:
 
-- merged to the default branch, with the SHA;
+- merged to the default branch, or the landing branch explicitly named by the repo's delivery protocol, with the SHA;
 - an open PR with a named owner and a merge condition;
 - a filed issue, plan, or task in the repo's existing tracker (committed and pushed);
 - one explicit blocker, `BLOCKED: <atom>`, stated once, with its owner and next command
@@ -172,10 +179,11 @@ printed FAIL can read as green. Run it bare, or capture to a file and filter the
 
 ### 6. Report status words separately
 
-- **merged**: `git fetch <remote>` then `git merge-base --is-ancestor <sha> <remote>/<default>`
-  exits 0, using the remote and default resolved in Step 3. A squash or rebase merge leaves
-  the original sha off the default branch, so ancestry alone will not show it: cite the
-  repository-qualified PR as merged plus the landed commit on the default branch.
+- **merged**: `git fetch <remote>` then `git merge-base --is-ancestor <sha> <remote>/<landing>`
+  exits 0. Use the default resolved in Step 3 unless the repo's delivery protocol explicitly
+  names another landing branch; report that branch. A squash or rebase merge leaves
+  the original SHA off that branch, so cite the repository-qualified PR as merged
+  plus ancestry of its landed commit on the authorized landing branch.
 - **live**: the running checkout or installed runtime contains the commit
   (`git -C <live-root> merge-base --is-ancestor <sha> HEAD`) plus runtime evidence.
 - **observed**: evidence of the behavior itself (a log line, a probe output, a rendered page).

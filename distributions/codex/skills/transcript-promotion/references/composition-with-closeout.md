@@ -36,7 +36,9 @@ not automatically a new artifact obligation and does not block session release.
 In a repository with no closeout summary file, the generic Step 3 table exists only in the
 conversation and is not a record. The durable owner of each candidate is whatever Step 4
 produced for it: the promoted file, the filed issue or plan, or the persisted blocker.
-Promotion is invoked against that owner, never against the table.
+For cross-session continuation, preserve the transcript path and candidate anchors in
+that owner. Same-session promotion may start from the active transcript and create
+the durable owner; home the promoted result under Step 4 before final verification.
 
 ## When to invoke promotion
 
@@ -67,8 +69,9 @@ extraction-and-frontmatter mechanics would balloon the skill and conflate "audit
 - Closeout: *Do all the audit work and surface candidates.*
 - Promotion: *Take a named candidate and make it durable.*
 
-The handoff between them is a flagged row in the closeout summary, not an automatic
-invocation.
+The cross-session handoff is the persisted owner with transcript anchors; an optional
+closeout summary links to it. Same-session invocation may name the transcript candidate
+directly. Neither a summary row nor discovery alone automatically invokes promotion.
 
 ## Sequence diagram
 

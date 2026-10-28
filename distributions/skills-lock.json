@@ -1036,12 +1036,12 @@
     {
       "name": "closeout",
       "path": "skills/tools/closeout",
-      "sha256": "1270ac7da78050dbd79846878b400b0e783afd8e9588a1e805df23153af6cbf8",
+      "sha256": "859d638869f692f36045b2cb42d68d53a9891a4f2b99138ea736de3325484c94",
       "files": [
         {
           "path": "SKILL.md",
-          "sha256": "0f8c28e46a7685539f4de1660dda19ba2c2cf1601c19b2bfbbaa3405b52c8bd7",
-          "size": 13680,
+          "sha256": "d20a3e9d33fe63cfaeeab67865058bfe93ac78cf8dc4c468f7baac12af1a5553",
+          "size": 14235,
           "executable": false
         },
         {
@@ -5429,7 +5429,7 @@
     {
       "name": "transcript-promotion",
       "path": "skills/tools/transcript-promotion",
-      "sha256": "6105b890dc1a4669e7dff76c6407f39dd053deb433b6e6b2084cb1a563be47a7",
+      "sha256": "20c1911ea82234cae29ba8ad7f3ca971dae22070791b72d0396b1c9a503c8382",
       "files": [
         {
           "path": "SKILL.md",
@@ -5451,8 +5451,8 @@
         },
         {
           "path": "references/composition-with-closeout.md",
-          "sha256": "1cad7042118135197568d54c2ca495c5e43ee002ab1889f1606500c12c4d724d",
-          "size": 4644,
+          "sha256": "1d2c4b965918f3b4cd8af111827c75170fa8972bdd5bd1bf4531f02a671b064c",
+          "size": 4994,
           "executable": false
         },
         {
