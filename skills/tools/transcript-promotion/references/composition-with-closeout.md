@@ -27,10 +27,11 @@ The closeout summary table for the genesis session looked like:
 The "inline only" rows are the candidates. They survive in the JSONL transcript but
 are invisible to the plan-file pipeline.
 
-A flagged row alone does not satisfy closeout. Inline-only deliverables are un-homed
-items, so each still needs a durable form under closeout's Step 4: promoted (merged or
-filed), or `BLOCKED: <atom>` with an owner and next command recorded remotely when
-promotion cannot happen yet.
+A flagged row alone does not satisfy a task that requires a saved artifact. When
+the accepted task or repository contract requires persistence, the deliverable needs
+a durable form under closeout's Step 4: promoted (merged or filed), or an owned blocker
+when promotion cannot happen yet. An ordinary answer requested in conversation is
+not automatically a new artifact obligation and does not block session release.
 
 In a repository with no closeout summary file, the generic Step 3 table exists only in the
 conversation and is not a record. The durable owner of each candidate is whatever Step 4

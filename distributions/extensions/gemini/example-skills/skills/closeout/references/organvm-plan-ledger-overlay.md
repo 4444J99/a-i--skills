@@ -1,16 +1,17 @@
 # ORGANVM plan-ledger overlay (preserved ritual)
 
 > **This is an overlay, not the skill.** `closeout` is repo-agnostic; see `../SKILL.md`.
-> This file is the original six-step ritual, relocated here unchanged so nothing is lost
+> This file preserves the original six-step ritual with current path corrections
 > and so the cross-skill references that cite its Step numbers (`artifact-resurfacing`,
 > `transcript-promotion` → `references/composition-with-closeout.md`) stay true.
 >
-> **Apply it only when the repo opts in**: its `CLAUDE.md` carries the
-> `<!-- ORGANVM:AUTO:START -->` sentinel, or it keeps a DONE-NNN / IRF-XXX-NNN plan ledger.
-> Everywhere else it does not apply. Paths below (`~/.Codex/plans`, `data/prompt-registry/`,
+> **Apply it only when a repo-owned instruction explicitly selects this procedure.**
+> A generated context marker or ledger alone is not an opt-in. Its maintenance steps
+> apply only within the accepted task scope; native conversation archiving remains
+> separate. Paths below (`.gemini/plans`, `data/prompt-registry/`,
 > `.conductor/`) are ORGANVM conventions, not universal ones.
 >
-> **The generic floor still binds this overlay.** Files under `~/.Codex/plans` are local to
+> **The generic floor still binds this overlay.** Files under `.gemini/plans` are local to
 > the host. Per `../SKILL.md` Step 4, nothing counts as homed until it also has a remotely
 > visible owner (a pushed plan, filed issue, or PR); Step 6's summary is a convenience view,
 > not the record.
@@ -18,7 +19,7 @@
 ## When to invoke
 
 - User explicitly says: `/closeout`, "close out", "wrap up", "end the session"
-- Before any non-trivial `git push` (the close-out should precede the push)
+- When explicitly selected for session closeout; never recursively before a push
 - When the session has produced 3+ files, plans, or atoms and the user is signaling end
 
 ## Six-step protocol
@@ -32,7 +33,7 @@ Run, in parallel where possible:
 git status --short
 
 # What plans were authored in this session?
-ls -t ~/.Codex/plans/*.md 2>/dev/null | head -10
+ls -t .gemini/plans/*.md 2>/dev/null | head -10
 
 # What's the current branch and where does it stand vs origin?
 git branch --show-current
@@ -46,12 +47,12 @@ Surface a brief inventory table to the user:
 
 ### Step 2 — Walk back through plans
 
-For each plan authored this session (filter `~/.Codex/plans/*.md` by mtime within session window):
+For each plan authored this session (filter `.gemini/plans/*.md` by mtime within session window):
 
 For each plan, classify it as one of:
 - **EXECUTED**: contains `DONE-NNN` reference. No action.
 - **IN-PROGRESS**: contains `IRF-XXX-NNN` reference but no DONE-NNN. Update its frontmatter to confirm continued status.
-- **ABANDONED**: no closure reference, no follow-on commits. Move to `~/.Codex/plans/abandoned/` with a brief abandonment-reason.
+- **ABANDONED**: no closure reference, no follow-on commits. Move to `.gemini/plans/abandoned/` with a brief abandonment-reason only when abandonment is established, not inferred from missing metadata.
 
 Ask the user for ambiguous cases. Do NOT bulk-classify without confirmation — the home-scope AGENTS.md rule "Atoms are permanent — never batch-close" applies to plans-as-artifacts too.
 
@@ -107,7 +108,14 @@ This is the cross-session continuity gate.
 
 ### Step 6 — Write CLOSEOUT_SUMMARY.md
 
-Produce a session-close-out summary at `~/.Codex/plans/closeout-{date}.md` with:
+Produce a session-close-out summary at `.gemini/plans/closeout-{date}.md` with:
+
+Use that path only when it is the repository's tracked plan convention. Otherwise
+update the existing tracked session owner; never create a second local-only plan
+root. Publish the required summary with the already-authorized delivery before the
+generic final-tree verification. A summary is not a new permission checkpoint and
+does not replace completing the requested work. If no publication authority exists,
+report that artifact as retained and unfinished rather than claiming release.
 
 ```markdown
 # Session Close-Out — {date}

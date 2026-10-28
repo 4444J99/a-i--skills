@@ -1,6 +1,6 @@
 ---
 name: closeout
-description: Repo-agnostic session-end ritual. Proves every obligation this session created is homed in a durable, remotely visible owner (merged work, open PR, filed issue or plan, explicit blocker), discovers and defers to the repo's own closeout protocol when it has one, and reports merged / live / observed as separate claims. Triggers on "/closeout", "close out the session", "end of session", "wrap up", "session close", or before a planned `git push`.
+description: Finish authorized session work and release its owned resources using the repository's scoped protocol. Use for closeout, wrap-up, or session-end requests. Keep task delivery, session release, native conversation archiving, and worktree retirement separate.
 license: MIT
 complexity: beginner
 time_to_learn: 5min
@@ -25,7 +25,6 @@ triggers:
   - user-says-closeout
   - user-says-end-session
   - user-says-wrap-up
-  - before-git-push
 ---
 
 # /closeout — Session Close-Out
@@ -41,16 +40,24 @@ repo knows about itself (its plan ledger, its scripts, its merge rail) comes fro
 ## When to invoke
 
 - The user says `/closeout`, "close out", "wrap up", "end the session".
-- Before a non-trivial `git push`: closeout is then **preparation only**. It runs Steps 1-5,
-  stops at "ready to publish", and names the exact push command. It does not push without
-  authority and it does not emit the terminal line. Final closure (Steps 6-8) follows the
-  authorized publication and a readback of what was published, handoff included.
+- A push uses the repository's scoped verification and publication procedure. It does
+  not invoke this skill recursively. Existing authorization to finish and land work
+  carries through ordinary commits, pushes, review fixes and permitted merges.
 - The session produced files, commits, branches, plans, or tasks and the user signals the end.
 - A quiet session with no artifacts: complete Step 2 first, because the repo's protocol may
   still require something; if it does not, say so and exit. Closeout is fast when there is
   nothing to home.
 
 ## Steps
+
+First classify the requested result. Finish-and-land requests require completing
+the authorized delivery; an open PR or handoff does not substitute for a requested
+merge or deployment. Session release may retain unfinished work with its existing
+owner. Explicit native conversation archive/unarchive uses the provider operation:
+record any unfinished work in the conversation or its existing owner, then archive.
+It does not require Git publication, a broker release, or worktree deletion. A
+readiness question must say whether it assesses unfinished work or safe worktree
+removal; do not silently turn native history organization into filesystem retirement.
 
 ### 1. Resolve scope
 
@@ -91,14 +98,11 @@ If one exists, **it governs the repo-specific steps and the final predicate**; t
 below are the floor it must not drop. If none exists, the floor stands alone. If a repo
 points at an overlay you cannot read or run, report that precisely rather than guessing.
 
-A repo opts into the preserved ORGANVM ritual in `references/organvm-plan-ledger-overlay.md`
-only when it owns the convention itself: its own `CLAUDE.md` or `AGENTS.md` carries the
-`ORGANVM:AUTO` sentinel, or its own plan and tracker files cite concrete ledger ids
-(`DONE-` plus three digits, `IRF-` plus a domain and three digits). The literal
-placeholders `DONE-NNN` and `IRF-XXX-NNN` do not count, and neither does any text under
-`skills/`, `distributions/`, an installed `closeout` skill directory, or documentation
-examples: a repo that merely vendors this skill has not opted in. The overlay is an
-example, not a default.
+A repo opts into `references/organvm-plan-ledger-overlay.md` only through an explicit
+repo-owned instruction selecting that procedure. An `ORGANVM:AUTO` marker or a ledger
+identifier alone does not authorize broader maintenance, context regeneration, or
+new summary files. Preserve existing ledgers without turning their presence into
+new session obligations. The overlay is an example, not a default.
 
 ### 3. Inventory (read-only)
 
@@ -126,14 +130,18 @@ remote at all, report remote ownership as unverified rather than passing it. A P
 inventory that is unmeasured is a dangling row, not an empty one.
 
 Add whatever the session touched in the repo's *own* plan, task, or issue locations,
-found by looking, not by assuming a path. Also flag substantive content delivered only
-in the conversation and never written to a file; mark those rows
-`Inline only; not file-persisted`. They are un-homed items (Step 4), and the natural
-next step is the `transcript-promotion` skill if installed. Present a short table:
+found by looking, not by assuming a path. Persist a conversation deliverable when the
+accepted task requires a saved artifact or the repository contract requires one.
+Do not automatically turn an ordinary answer into a new file, promotion task, or PR.
+Present a short table when it helps:
 files changed, commits ahead of upstream, open PRs, plans or tasks touched, stashes,
 inline-only deliverables.
 
 ### 4. Home every item
+
+Complete the accepted delivery first. Homing is how remaining obligations retain an
+owner, not permission to stop authorized work early. Do not ask again for permission
+already granted by the task or repository charter.
 
 Each item ends in exactly one durable form:
 
@@ -191,13 +199,17 @@ Step 5's no-replay rule governs verification. The fixed-point check is a separat
 deliberate repeat of the *session predicate*.
 
 - **With an overlay predicate** (the overlay's session-release predicate): run it twice,
-  bare, and quote both exit codes. Both must be 0. If the overlay offers only the full
-  repository verification, Step 5's run counts as the first and one repeat is the second.
-- **With no overlay** the predicate is the Step 3 inventory re-run read-only, and it passes
+  bare, and quote both exit codes when that protocol requires an idempotence check.
+  Both must be 0. Full repository verification is not a session-release predicate;
+  reuse its unchanged passing result and inspect the owned inventory separately.
+- **With no session-release predicate**, including an overlay that defines only steps
+  or repository verification, use the Step 3 inventory re-run read-only. It passes
   on **content, not exit status**. The inventory commands exit 0 precisely when they find
   work, so a clean exit proves nothing. Both passes must show: `git status --short` empty
   (or only paths evidenced as not this session's); no unpushed commits, measured from the
-  upstream or a stated session base; no stash this session made; every open PR row carried
+  upstream or a stated session base, except commits proven published by the exact
+  repository-qualified PR head and its squash/rebase merge on the default branch;
+  no stash this session made; every open PR row carried
   by a Step 4 owner; and the PR inventory *measured*. Any unmeasured row (no upstream and
   no known base, no remote, `gh` unavailable) is a failure, not a skip. Quote what each
   pass showed.
@@ -217,6 +229,14 @@ of what remains; do not emit the statement.
 
 - **Authority is bounded by the session.** Do not push, merge, force-push, or delete
   beyond what the user or the repo's own charter granted for this session.
+- **Freeze the verified head.** Successful CI, review completion, and status changes
+  are observations, not reasons to commit new success notes or polish. Change source
+  only for an actual defect or requested scope change; record run evidence in the
+  existing PR or external receipt. Submit the permitted exact head for landing once.
+- **Bound failed checks.** Retry only after relevant evidence or state changes. A
+  broker outage or quota failure leaves release unmeasured; it does not undo verified
+  task delivery or require a fresh repair of the whole estate. Continue independent
+  authorized work and preserve the existing owner of the unavailable check.
 - **Fail closed on unknown ownership.** If you cannot tell whether a branch, worktree, or
   file is this session's, leave it alone and name it.
 - **No invented paths.** If the repo has no plan ledger, there is nothing to classify;

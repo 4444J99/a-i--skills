@@ -75,9 +75,9 @@ Those are closeout's authorities.
 
 The canonical order:
 
-1. **closeout** Steps 1 through 6 run as written. The session's own outputs are inventoried and classified.
-2. **artifact-resurfacing** runs after closeout completes, scoped to whatever drift surface the conductor names. The two skills don't share state — artifact-resurfacing reads the closeout summary doc to pick up any orphan-plan findings, but it doesn't depend on closeout's runtime state.
-3. **closeout summary update** — after artifact-resurfacing emits its polish proposals, closeout's summary doc receives an addendum noting which proposed diffs were authorized and applied in-session vs deferred. This addendum is itself a closeout-step-6 edit; if closeout has already produced the summary, the edit is a one-line append.
+1. Inventory and classify the session's owned outputs. If explicitly selected, prepare the plan-ledger overlay's summary without declaring completion.
+2. Run **artifact-resurfacing** only within the authorized drift scope. It may read that draft summary; closeout does not automatically launch a new audit.
+3. Apply authorized fixes and update the existing summary or owner before the generic closeout's final-tree verification, publication readback, and session predicate. Emit completion only after those steps. Never append new work after declaring a fixed point.
 
 ## Conflict points
 

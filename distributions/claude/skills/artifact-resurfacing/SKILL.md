@@ -50,7 +50,7 @@ Open the drift on the table. Surface the buried artifacts — stale citations, m
 
 This skill is **propose-not-apply** for any constitutional surface. It produces drift tables, edit diffs, and IRF row proposals. It does not commit edits to `CLAUDE.md`, `MEMORY.md`, `governance-rules.json`, `registry-v2.json`, or any `seed.yaml` without explicit conductor authorization in the same session.
 
-- **Closure for plans** — defer to [`closeout`](../closeout/SKILL.md). This skill does not assign DONE-NNN / IRF-XXX-NNN labels; it surfaces orphans for closeout's classifier.
+- **Closure for plans** — defer to the repository's plan owner. When the repository explicitly selects the [`closeout`](../closeout/SKILL.md) plan-ledger overlay, use its classifier; otherwise file the finding in the existing tracker. This skill does not assign DONE-NNN / IRF-XXX-NNN labels.
 - **Memory operations** — defer to your agent's memory-curation tool (for example, a built-in memory-consolidation skill, where the platform provides one) for memory file mutations. This skill emits proposed memory diffs.
 - **Cross-session continuity** — defer to [`cross-agent-handoff`](../cross-agent-handoff/SKILL.md). This skill writes the polish-log entry; handoff carries it forward.
 - **Verification of claimed transitions** — defer to [`qa-audit`](../qa-audit/SKILL.md).
@@ -111,7 +111,7 @@ For each finding, assign one class:
 - **Stale-citation** — the artifact exists on disk; the citation points at the wrong path. Polishable via citation rewrite.
 - **Missing-but-probably-never-written** — citation appears to run ahead of an unwritten artifact (e.g., a paper title cited with no draft, no commit history, no cross-scope mention). Polishable via citation annotation (`(planned — not yet written, YYYY-MM-DD)`) rather than reconstruction.
 - **Missing-but-lost** — citation points at an artifact whose creation history exists somewhere (a session transcript, an old commit, a cross-scope memory file) but the artifact itself is gone. Polishable via deep search; if search fails, propose reconstruction-from-context or citation removal.
-- **Orphan-plan** — pass through to [`closeout`](../closeout/SKILL.md)'s classifier (EXECUTED / IN-PROGRESS / ABANDONED / DELIVERED-RESEARCH). This skill does not assign closure labels.
+- **Orphan-plan** — use the explicitly selected closeout plan-ledger classifier (EXECUTED / IN-PROGRESS / ABANDONED / DELIVERED-RESEARCH), or route to the repository's existing plan/tracker owner when no classifier is selected. This skill does not assign closure labels.
 
 For ambiguous classifications, surface the finding to the conductor and stop. Universal Rule #21 ("Do what is asked — never preempt") applies.
 
@@ -149,7 +149,7 @@ grep -rl "<artifact-keyword>" ~/Code/organvm/praxis-perpetua/prompt-corpus/ 2>/d
 
 If the search returns hits, the finding reclassifies as stale-citation and the citation-fix proposer runs. If the search returns zero hits across the deep corpus, the finding reclassifies as probably-never-written and the annotation diff applies.
 
-For **orphan plans**, hand the plan path to `closeout` with a classification request. Do not move plans to `abandoned/` from this skill — closeout owns that decision.
+For **orphan plans**, record the path with the selected classifier or existing plan/tracker owner. Do not invoke a nonexistent generic classifier or move plans to `abandoned/` from this skill.
 
 See `references/constitutional-doc-policy.md` for the full rule set on what may/may not be auto-edited.
 
