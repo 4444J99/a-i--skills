@@ -1,1 +1,43 @@
-PLACEHOLDER_TO_BE_REPLACED_WITH_FULL
+{
+  "version": "2.0",
+  "hash_algorithm": "sha256-tree-v2",
+  "skills": [
+    {
+      "name": "accessibility-patterns",
+      "path": "skills/development/accessibility-patterns",
+      "sha256": "15c34c3a4ef77156edc444e9419a52601986ef7f2704e0aea17ab971275fe120",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "2328f09858ee87257cd5f2f9a80ff1776a94afbcf0ae4b9f63bced109da402e8",
+          "size": 9961,
+          "executable": false
+        },
+        {
+          "path": "references/aria-patterns.md",
+          "sha256": "e81282ab7bbb3cede1fc7a5850b79c2e00af846bf958657bfd519646819be81d",
+          "size": 5655,
+          "executable": false
+        },
+        {
+          "path": "references/testing-tools.md",
+          "sha256": "5c21134dce24b4c3b95dfb627a63384d9796f258b586ff4d1838413598189161",
+          "size": 5399,
+          "executable": false
+        },
+        {
+          "path": "references/wcag-checklist.md",
+          "sha256": "06a4977bb3591cf9af403e0b1861931bd9801fdbc00df75da0e47987e688bfae",
+          "size": 4447,
+          "executable": false
+        },
+        {
+          "path": "references/workflow-integration.md",
+          "sha256": "5be82a1fc1a51f080dcb4bd63664f5d074372fe5e00a183df764366fdb8e3b6b",
+          "size": 5973,
+          "executable": false
+        }
+      ]
+    }
+  ]
+}
