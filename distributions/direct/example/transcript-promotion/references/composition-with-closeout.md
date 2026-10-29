@@ -6,9 +6,11 @@ the promotion. They are sequential, not redundant.
 ## How closeout flags candidates
 
 The `/closeout` skill walks back through deliverables and marks each with a closure
-status. Some deliverables don't fit the standard closure classes (DONE-NNN executed,
-IRF-XXX-NNN in-progress, abandoned/) because they're substantive references delivered
-inline that have no on-disk artifact yet. Closeout flags these as:
+status. Some deliverables don't fit the standard closure forms (merged, open PR, filed
+item, explicit blocker; or, in repos that opt into the ORGANVM plan-ledger overlay,
+DONE-NNN executed, IRF-XXX-NNN in-progress, abandoned/) because they're substantive
+references delivered inline that have no on-disk artifact yet. Closeout's Step 3
+inventory flags these as:
 
 > "Inline only; not file-persisted by Claude"
 
@@ -24,6 +26,19 @@ The closeout summary table for the genesis session looked like:
 
 The "inline only" rows are the candidates. They survive in the JSONL transcript but
 are invisible to the plan-file pipeline.
+
+A flagged row alone does not satisfy a task that requires a saved artifact. When
+the accepted task or repository contract requires persistence, the deliverable needs
+a durable form under closeout's Step 4: promoted (merged or filed), or an owned blocker
+when promotion cannot happen yet. An ordinary answer requested in conversation is
+not automatically a new artifact obligation and does not block session release.
+
+In a repository with no closeout summary file, the generic Step 3 table exists only in the
+conversation and is not a record. The durable owner of each candidate is whatever Step 4
+produced for it: the promoted file, the filed issue or plan, or the persisted blocker.
+For cross-session continuation, preserve the transcript path and candidate anchors in
+that owner. Same-session promotion may start from the active transcript and create
+the durable owner; home the promoted result under Step 4 before final verification.
 
 ## When to invoke promotion
 
@@ -45,16 +60,18 @@ exposed the candidate; the promotion protocol made it durable.
 
 ## Why closeout doesn't do the promotion itself
 
-Closeout is broad and ritualized — it does plan walkback, atom walkback, git
-verification, autogen freshness gate, working-state capture, summary write. Adding
+Closeout is broad and ritualized — it does inventory, homing, git verification, status
+words, and handoff (plus plan walkback, atom walkback, and the autogen freshness gate
+under the ORGANVM overlay). Adding
 extraction-and-frontmatter mechanics would balloon the skill and conflate "audit" with
 "reconstruct." The split honors single-responsibility:
 
 - Closeout: *Do all the audit work and surface candidates.*
 - Promotion: *Take a named candidate and make it durable.*
 
-The handoff between them is a flagged row in the closeout summary, not an automatic
-invocation.
+The cross-session handoff is the persisted owner with transcript anchors; an optional
+closeout summary links to it. Same-session invocation may name the transcript candidate
+directly. Neither a summary row nor discovery alone automatically invokes promotion.
 
 ## Sequence diagram
 

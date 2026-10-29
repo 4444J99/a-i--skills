@@ -838,7 +838,7 @@
     },
     {
       "name": "closeout",
-      "description": "Session-end ritual that walks back through plans authored and atoms touched in this session, assigning each a closure status (DONE-NNN, IRF-XXX-NNN, or `.gemini/plans/abandoned/`). Verifies git state. Produces CLOSEOUT_SUMMARY.md. Triggers on \"/closeout\", \"close out the session\", \"end of session\", \"wrap up\", \"session close\", or before any planned `git push`. Addresses the 90.4% plan-orphan rate documented in docs/evaluation/self-review-2026-05-05/stale-plans-and-orphan-commits.md.",
+      "description": "Finish authorized session work and release its owned resources using the repository's scoped protocol. Use for closeout, wrap-up, or session-end requests. Keep task delivery, session release, native conversation archiving, and worktree retirement separate.",
       "category": "tools",
       "collection": "example",
       "path": "skills/tools/closeout",
@@ -852,29 +852,28 @@
       "tags": [
         "session-management",
         "hygiene",
-        "hall-monitor",
         "close-out",
-        "directive-traceability"
+        "handoff"
       ],
       "inputs": [
         "current-session-state",
-        "plans-authored-this-session",
-        "atoms-touched-this-session"
+        "repo-closeout-protocol-if-any"
       ],
       "outputs": [
-        "closure-marks",
-        "CLOSEOUT_SUMMARY-md",
-        "abandoned-plans-moved"
+        "closure-evidence",
+        "handoff-note-if-unfinished"
       ],
       "side_effects": [
+        "reads-filesystem",
+        "runs-commands",
+        "network-access",
         "creates-files",
         "modifies-git"
       ],
       "triggers": [
         "user-says-closeout",
         "user-says-end-session",
-        "user-says-wrap-up",
-        "before-git-push"
+        "user-says-wrap-up"
       ],
       "complements": [],
       "includes": [],
@@ -882,7 +881,9 @@
       "organ_affinity": [],
       "resources": {
         "scripts": [],
-        "references": [],
+        "references": [
+          "organvm-plan-ledger-overlay.md"
+        ],
         "assets": []
       }
     },

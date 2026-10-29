@@ -1,170 +1,269 @@
 ---
 name: closeout
-description: Session-end ritual that walks back through plans authored and atoms touched in this session, assigning each a closure status (DONE-NNN, IRF-XXX-NNN, or `.gemini/plans/abandoned/`). Verifies git state. Produces CLOSEOUT_SUMMARY.md. Triggers on "/closeout", "close out the session", "end of session", "wrap up", "session close", or before any planned `git push`. Addresses the 90.4% plan-orphan rate documented in docs/evaluation/self-review-2026-05-05/stale-plans-and-orphan-commits.md.
+description: Finish authorized session work and release its owned resources using the repository's scoped protocol. Use for closeout, wrap-up, or session-end requests. Keep task delivery, session release, native conversation archiving, and worktree retirement separate.
 license: MIT
 complexity: beginner
 time_to_learn: 5min
 tags:
   - session-management
   - hygiene
-  - hall-monitor
   - close-out
-  - directive-traceability
+  - handoff
 inputs:
   - current-session-state
-  - plans-authored-this-session
-  - atoms-touched-this-session
+  - repo-closeout-protocol-if-any
 outputs:
-  - closure-marks
-  - CLOSEOUT_SUMMARY-md
-  - abandoned-plans-moved
+  - closure-evidence
+  - handoff-note-if-unfinished
 side_effects:
+  - reads-filesystem
+  - runs-commands
+  - network-access
   - creates-files
   - modifies-git
 triggers:
   - user-says-closeout
   - user-says-end-session
   - user-says-wrap-up
-  - before-git-push
 ---
 
-# /closeout — Session Close-Out Ritual
+# /closeout — Session Close-Out
+
+A closeout answers one question: **is every obligation this session created now owned by
+something durable?** Not "is the code good" (verification) and not "is the estate healthy"
+(diagnostics). Four claims stay distinct and are never blurred: *session released*, *task
+completed*, *estate healthy*, *deletion eligible*.
+
+This skill works in any git repository. It carries only the universal floor. Anything a
+repo knows about itself (its plan ledger, its scripts, its merge rail) comes from the repo.
 
 ## When to invoke
 
-- User explicitly says: `/closeout`, "close out", "wrap up", "end the session"
-- Before any non-trivial `git push` (the close-out should precede the push)
-- When the session has produced 3+ files, plans, or atoms and the user is signaling end
+- The user says `/closeout`, "close out", "wrap up", "end the session".
+- A push uses the repository's scoped verification and publication procedure. It does
+  not invoke this skill recursively. Existing authorization to finish and land work
+  carries through ordinary commits, pushes, review fixes and permitted merges.
+- The session produced files, commits, branches, plans, or tasks and the user signals the end.
+- A quiet session with no artifacts: complete Step 2 first, because the repo's protocol may
+  still require something; if it does not, say so and exit. Closeout is fast when there is
+  nothing to home.
 
-## Six-step protocol
+## Steps
 
-### Step 1 — Inventory session outputs
+First classify the requested result. Finish-and-land requests require completing
+the authorized delivery; an open PR or handoff does not substitute for a requested
+merge or deployment. Session release may retain unfinished work with its existing
+owner. Explicit native conversation archive/unarchive uses the provider operation:
+record any unfinished work in the conversation or its existing owner, then archive.
+It does not require Git publication, a broker release, or worktree deletion. A
+readiness question must say whether it assesses unfinished work or safe worktree
+removal; do not silently turn native history organization into filesystem retirement.
 
-Run, in parallel where possible:
+### 1. Resolve scope
+
+Establish what "this session" owns before inspecting anything:
 
 ```bash
-# What files did this session create or modify?
-git status --short
-
-# What plans were authored in this session?
-ls -t .gemini/plans/*.md 2>/dev/null | head -10
-
-# What's the current branch and where does it stand vs origin?
+git rev-parse --show-toplevel          # the real worktree, not an installed copy of a protocol
+git worktree list
 git branch --show-current
-git log @{u}.. 2>/dev/null || echo "(no upstream tracking)"
 ```
 
-Surface a brief inventory table to the user:
-- N files modified, M created
-- K plans authored this session
-- L commits ahead of origin
+Confirm the current branch is the one intended for this session's work. Use the native session id if the harness exposes one. A session may span several
+repositories; name each root. Inspect only the accepted scope. Never adopt a sibling
+checkout or another session's worktree to obtain a green result, and never reset, stash,
+or reap work you did not start.
 
-### Step 2 — Walk back through plans
+### 2. Discover the repo's own protocol (overlay)
 
-For each plan authored this session (filter `.gemini/plans/*.md` by mtime within session window):
+Look for how this repo already closes a session, in this order, and stop at the first hit:
 
-For each plan, classify it as one of:
-- **EXECUTED**: contains `DONE-NNN` reference. No action.
-- **IN-PROGRESS**: contains `IRF-XXX-NNN` reference but no DONE-NNN. Update its frontmatter to confirm continued status.
-- **ABANDONED**: no closure reference, no follow-on commits. Move to `.gemini/plans/abandoned/` with a brief abandonment-reason.
+1. `<root>/.agents/skills/closeout/SKILL.md` (when it is not this skill)
+2. `<root>/.codex/skills/closeout/SKILL.md` (when it is not this skill)
+3. `<root>/.claude/skills/closeout/SKILL.md` (when it is not this skill)
+4. A closeout section in an `AGENTS.md` or `CLAUDE.md`, headed "Closeout", "Session end",
+   or "Session Review". Check the nearest such file to the directory you are working in
+   first, then each parent up to `<root>`; a nested file governs its own subtree.
+5. A committed predicate: `scripts/closeout*`, `done.sh`, or a `closeout` Makefile / package script
 
-Ask the user for ambiguous cases. Do NOT bulk-classify without confirmation — the home-scope AGENTS.md rule "Atoms are permanent — never batch-close" applies to plans-as-artifacts too.
+Skip a candidate in items 1, 2 and 3 only if it is the file you were invoked from or is
+byte-for-byte identical to it (`cmp -s`). Identity is decided by content, never by the
+description text: a repo that copied this skill and customized it has an overlay, and
+that overlay wins even though its description still matches. A stale or generic installed
+copy that differs in content is also treated as an overlay; report that it looks generic
+rather than silently skipping it. Finding an identical copy must not end discovery before
+items 4 and 5 are checked.
 
-### Step 3 — Walk back through atoms (if applicable)
+If one exists, **it governs the repo-specific steps and the final predicate**; the steps
+below are the floor it must not drop. If none exists, the floor stands alone. If a repo
+points at an overlay you cannot read or run, report that precisely rather than guessing.
 
-If `data/prompt-registry/prompt-atoms.json` was touched this session, identify atoms that were closed in this session and confirm their `status` field is updated.
+A repo opts into `references/organvm-plan-ledger-overlay.md` only through an explicit
+repo-owned instruction selecting that procedure. An `ORGANVM:AUTO` marker or a ledger
+identifier alone does not authorize broader maintenance, context regeneration, or
+new summary files. Preserve existing ledgers without turning their presence into
+new session obligations. The overlay is an example, not a default.
 
-If not (most sessions), skip.
-
-### Step 4 — Verify git state
-
-Cross-check:
-- Working tree is clean (no uncommitted changes meant for this session)
-- Local main is in sync with origin (or branch tracks correctly)
-- No stray exports/temp files in workspace root (`ls /Users/4jp/Workspace/*.txt` should be empty)
-
-If stray exports exist (the auto-named `2026-MM-DD-NNNNNN-this-session-being-continued-from-a-previous-c.txt` pattern), move them to `~/Documents/session-exports/` or delete if duplicative.
-
-### Step 4.5 — Verify CLAUDE.md autogen freshness (hall-monitor gate)
-
-If the active repo has a `CLAUDE.md` carrying `<!-- ORGANVM:AUTO:START -->` / `<!-- ORGANVM:AUTO:END -->` sentinels, run the gate:
+### 3. Inventory (read-only)
 
 ```bash
-~/.local/bin/claude-md-autogen-gate
+git status --short                      # modified, staged, untracked
+# Unpushed commits: empty with an upstream means none; missing upstream is an inventory state, not failure
+if git rev-parse --abbrev-ref --symbolic-full-name @{u} >/dev/null 2>&1; then
+  git log @{u}.. --oneline
+else
+  echo "(no upstream configured; remote commit ownership unverified — inspect session base if known)"
+fi
+git stash list                          # work parked outside any branch
+# Repeat for every session-owned branch identified in Step 1, including branches no longer checked out.
+# Use its repository and native forge explicitly; a failed call is not an empty inventory.
+# GitHub example (use GitLab/Bitbucket's native review inventory for those remotes):
+gh pr list --repo <owner/repo> --head <session-owned-branch> --state all
 ```
 
-If it exits non-zero, the autogen tail is older than 7 days. **Refuse to mark the session as DONE.** Refresh first:
+Reconcile known session outputs against ignored paths as well as `git status`:
+use `git status --short --ignored -- <known-output-paths>` for each scoped output.
+Include session-owned ignored deliverables in homing; preserve private data through
+its authorized custody owner rather than committing secrets or generated caches.
+Do not turn unrelated ignored files into new session obligations.
 
-```bash
-organvm context sync --write     # autogen sections only
-# or
-organvm refresh                  # full 10-step pipeline
-```
+With no upstream, an empty `git log` proves nothing. Inspect from a known session base
+(for example `git log <remote>/<default>..`) or report remote commit ownership as unverified.
 
-Then re-stage `CLAUDE.md` and commit (the `claude-md-autogen-freshness` pre-commit hook will re-verify), and re-run the gate.
+Resolve the remote and default branch instead of assuming `origin/main`: use the remote
+the branch tracks (`git config branch.<name>.remote`), else the only remote, else name
+the remote you chose; take its default from `git symbolic-ref --short refs/remotes/<remote>/HEAD`.
+Use that `<remote>/<default>` wherever Step 6 or the session base needs one. With no
+remote at all, report remote ownership as unverified rather than passing it. A PR
+inventory that is unmeasured is a dangling row, not an empty one. Select the
+repository's native review mechanism from its remote and delivery protocol. When
+that protocol has no pull/merge-request workflow, record that measured fact and
+verify publication directly; absence of GitHub alone is not a release failure.
 
-Bypass only with explicit user authorization:
+Add whatever the session touched in the repo's *own* plan, task, or issue locations,
+found by looking, not by assuming a path. Persist a conversation deliverable when the
+accepted task requires a saved artifact or the repository contract requires one.
+Do not automatically turn an ordinary answer into a new file, promotion task, or PR.
+Present a short table when it helps:
+files changed, commits ahead of upstream, open PRs, plans or tasks touched, stashes,
+inline-only deliverables.
 
-```bash
-AUTOGEN_FRESHNESS_THRESHOLD_DAYS=999 ~/.local/bin/claude-md-autogen-gate
-```
+### 4. Home every item
 
-Pairs with the pre-commit hook (`claude-md-autogen-freshness`); together they catch staleness at both the commit boundary and the session boundary. Root-cause precedent: 32-day autogen-tail staleness traced on 2026-05-16 to `organvm refresh` step 6 soft-failing on `system-system--system: invalid tier 'sovereign'` (closed via schema + validator lockstep edit; see GH `4444J99/domus-semper-palingenesis#30`, IRF-DOM-048).
+Complete the accepted delivery first. Homing is how remaining obligations retain an
+owner, not permission to stop authorized work early. Do not ask again for permission
+already granted by the task or repository charter.
 
-### Step 5 — Update active-handoff (if exists)
+Each item ends in exactly one durable form:
 
-If `.conductor/active-handoff.md` exists in any active repo, update it with:
-- What this session accomplished
-- What's locked / not-yet-attempted
-- What the next session should pick up
+- merged to the default branch, or the landing branch explicitly named by the repo's delivery protocol, with the SHA;
+- an open PR with a named owner and a merge condition;
+- a filed issue, plan, or task in the repo's existing tracker (committed and pushed);
+- one explicit blocker, `BLOCKED: <atom>`, stated once, with its owner and next command
+  recorded in a persisted, remotely visible record (an issue, a PR, or a pushed handoff).
+  Without that record, report the item as unfinished, not blocked.
 
-This is the cross-session continuity gate.
+"On disk" is not a form. A timed-out lane, an empty diff, a stale-looking branch, or a
+remote-pushed branch is not closed; it is an item that still needs one of the four forms.
+Never batch-close plans or tasks without the user's confirmation. Never delete a plan;
+move it to the repo's abandoned/archive convention if it has one.
 
-### Step 6 — Write CLOSEOUT_SUMMARY.md
+### 5. Verify once, on the final tree
 
-Produce a session-close-out summary at `.gemini/plans/closeout-{date}.md` with:
+Run the repo's verification for what changed, once per changed tree: use the overlay's
+verification command when it defines build/test/lint verification; otherwise use the
+narrowest build/test/lint the repo declares (CI config, Makefile, package scripts).
+A session-release predicate checks ownership and publication separately; it never
+replaces applicable implementation verification. Do not replay a green verification
+run on an unchanged tree.
 
-```markdown
-# Session Close-Out — {date}
+The final tree includes any handoff or plan edit this closeout makes. If work remains,
+write the Step 7 handoff **before** this run, so the verified tree is the one that is
+published; a handoff written afterwards makes the verification stale.
 
-## Outputs
-- {N} files created, {M} modified
-- {K} plans authored: {filenames}
-- {L} commits made (SHAs): {sha-list}
+Read the **predicate's own exit code**. `predicate | tail` reports `tail`'s status, so a
+printed FAIL can read as green. Run it bare, or capture to a file and filter the copy.
 
-## Closure marks
-- EXECUTED plans (DONE-NNN refs): {list}
-- IN-PROGRESS plans (IRF refs): {list}
-- ABANDONED plans (moved): {list}
+### 6. Report status words separately
 
-## Pending
-- Uncommitted changes: {if any}
-- Unpushed commits: {if any}
-- Active handoff: {path if exists}
+- **merged**: `git fetch <remote>` then `git merge-base --is-ancestor <sha> <remote>/<landing>`
+  exits 0. Use the default resolved in Step 3 unless the repo's delivery protocol explicitly
+  names another landing branch; report that branch. A squash or rebase merge leaves
+  the original SHA off that branch, so cite the repository-qualified PR as merged
+  plus ancestry of its landed commit on the authorized landing branch.
+- **live**: the running checkout or installed runtime contains the commit
+  (`git -C <live-root> merge-base --is-ancestor <sha> HEAD`) plus runtime evidence.
+- **observed**: evidence of the behavior itself (a log line, a probe output, a rendered page).
 
-## Hand-off note for next session
-{one-paragraph context for resumability}
-```
+Never write "verified end-to-end" without *observed*. Never claim a status above its evidence.
 
-## Rules to honor
+### 7. Hand off only what is unfinished
 
-- **Never batch-close atoms or plans without explicit user confirmation.** Per Universal Rule (memory rule #53): atoms are permanent, never batch-close.
-- **Never delete plan files.** Move to `abandoned/` instead, preserving the history (per the plan-discipline section of the home AGENTS.md).
-- **Never push as part of closeout** unless user has explicitly authorized push for this session. Closeout's job is to *prepare* for push, not perform it.
-- **If the session produced no notable artifacts**, say so and exit cleanly. Closeout is fast on quiet sessions.
+If work remains, write the handoff into the repo's existing continuation owner (a
+handoff file, plan, or issue that already exists): what was done, what is locked, what
+the next session picks up first. Do not create a new file or capsule unless the
+overlay asks for one. A finished session needs no successor.
 
-## Why this exists
+Write it before Step 5 verifies the tree. A handoff held only in the working tree or the
+conversation is not a record: publish it with the authorized push and read it back from
+the remote before Step 8. If publication is not authorized, the item stays unfinished.
 
-Per `docs/evaluation/self-review-2026-05-05/stale-plans-and-orphan-commits.md`:
+### 8. Idempotent fixed point
 
-> 90.4% of plans are ORPHANED. Of 427 plans in `~/.Codex/plans/`, 386 contain neither a DONE-NNN nor IRF reference. Only 20 (4.7%) are EXECUTED, 21 (4.9%) are IN-PROGRESS.
+Step 5's no-replay rule governs verification. The fixed-point check is a separate,
+deliberate repeat of the *session predicate*.
 
-The orphan rate is a direct artifact of the absence of a close-out ritual. This skill is the ritual.
+- **With an overlay predicate** (the overlay's session-release predicate): run it twice,
+  bare, and quote both exit codes when that protocol requires an idempotence check.
+  Both must be 0. Full repository verification is not a session-release predicate;
+  reuse its unchanged passing result and inspect the owned inventory separately.
+- **With no session-release predicate**, including an overlay that defines only steps
+  or repository verification, use the Step 3 inventory re-run read-only. It passes
+  on **content, not exit status**. The inventory commands exit 0 precisely when they find
+  work, so a clean exit proves nothing. Both passes must show: `git status --short` empty
+  (or only paths evidenced as not this session's); no unpushed commits, measured from the
+  upstream or a stated session base, except commits proven published by the exact
+  repository-qualified PR head and its squash/rebase merge on the default branch;
+  no stash this session made; every open PR row carried
+  by a Step 4 owner; and the PR inventory *measured*. Any unmeasured row (no upstream and
+  no known base, no remote, `gh` unavailable) is a failure, not a skip. Quote what each
+  pass showed.
 
-The cost of skipping is invisible bookkeeping debt: plans accumulate, atoms stay open against doctrine that already encodes them, the system can't programmatically answer "what was done?". The cost of doing it is ~3-5 minutes per session.
+The second pass must create no files, branches, issues, or PRs and leave no process
+running or state behind; the short-lived commands that run the predicate itself are
+expected and are not a violation.
+
+Only then emit, as the last line:
+
+`CLOSEOUT COMPLETE — idempotent fixed point, zero dangling items`
+
+Nothing follows it. If any step failed, report the real outcome and the precise owner
+of what remains; do not emit the statement.
+
+## Rules
+
+- **Authority is bounded by the session.** Do not push, merge, force-push, or delete
+  beyond what the user or the repo's own charter granted for this session.
+- **Freeze the verified head.** Successful CI, review completion, and status changes
+  are observations, not reasons to commit new success notes or polish. Change source
+  only for an actual defect or requested scope change; record run evidence in the
+  existing PR or external receipt. Submit the permitted exact head for landing once.
+- **Bound failed checks.** Retry only after relevant evidence or state changes. A
+  broker outage or quota failure leaves release unmeasured; it does not undo verified
+  task delivery or require a fresh repair of the whole estate. Continue independent
+  authorized work and preserve the existing owner of the unavailable check.
+- **Fail closed on unknown ownership.** If you cannot tell whether a branch, worktree, or
+  file is this session's, leave it alone and name it.
+- **No invented paths.** If the repo has no plan ledger, there is nothing to classify;
+  do not create `~/.<tool>/plans` or a summary file to have something to close.
+- **A filed task is homed, not done.** Filing creates an owner; it does not satisfy the
+  task's own acceptance predicate.
+- **A genuine external gate** is stated once as `BLOCKED: <atom>` and homed with its
+  owner, predicate, and next command. Then keep closing every other item.
 
 ## Related
 
-- `docs/evaluation/SELF-REVIEW-MASTER-2026-05-05.md` — Pathology #4: plan-author cadence vastly exceeds plan-execution cadence (21:1)
-- `docs/evaluation/self-review-2026-05-05/stale-plans-and-orphan-commits.md` — full data behind the 90.4% orphan rate
-- Universal Rule #2: "Nothing local only" — close-out is what makes "nothing local only" achievable per session
+- `references/organvm-plan-ledger-overlay.md`: the preserved six-step plan/atom ledger
+  ritual for repos that opt into it.
+- `artifact-resurfacing` and `transcript-promotion` compose with closeout; each carries a
+  "composition with closeout" note in its own references.
