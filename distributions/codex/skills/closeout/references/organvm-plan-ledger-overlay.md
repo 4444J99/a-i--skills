@@ -73,13 +73,17 @@ If stray exports exist (the auto-named `2026-MM-DD-NNNNNN-this-session-being-con
 
 ### Step 4.5 — Verify CLAUDE.md autogen freshness (hall-monitor gate)
 
-If the active repo has a `CLAUDE.md` carrying `<!-- ORGANVM:AUTO:START -->` / `<!-- ORGANVM:AUTO:END -->` sentinels, run the gate:
+Only when generated-context maintenance is part of the accepted task, and the active
+repo has a `CLAUDE.md` carrying `<!-- ORGANVM:AUTO:START -->` / `<!-- ORGANVM:AUTO:END -->`
+sentinels, run the gate. Markers alone do not add maintenance to session closeout:
 
 ```bash
 ~/.local/bin/claude-md-autogen-gate
 ```
 
-If it exits non-zero, the autogen tail is older than 7 days. **Refuse to mark the session as DONE.** Refresh first:
+If it exits non-zero, record the maintenance finding with its existing owner. It
+does not invalidate independently verified session delivery. When refreshing is
+within the accepted task, refresh through its existing owner:
 
 ```bash
 organvm context sync --write     # autogen sections only
@@ -143,7 +147,7 @@ report that artifact as retained and unfinished rather than claiming release.
 
 - **Never batch-close atoms or plans without explicit user confirmation.** Per Universal Rule (memory rule #53): atoms are permanent, never batch-close.
 - **Never delete plan files.** Move to `abandoned/` instead, preserving the history (per the plan-discipline section of the home AGENTS.md).
-- **Never push as part of closeout** unless user has explicitly authorized push for this session. Closeout's job is to *prepare* for push, not perform it.
+- **Complete authorized publication as part of delivery.** Existing authorization to finish and land work carries through ordinary commits, pushes and permitted merges; do not ask again merely because closeout was invoked.
 - **If the session produced no notable artifacts**, say so and exit cleanly. Closeout is fast on quiet sessions.
 
 ## Why this exists

@@ -116,7 +116,8 @@ else
 fi
 git stash list                          # work parked outside any branch
 # Repeat for every session-owned branch identified in Step 1, including branches no longer checked out.
-# Use its repository explicitly; a failed call is not an empty inventory.
+# Use its repository and native forge explicitly; a failed call is not an empty inventory.
+# GitHub example (use GitLab/Bitbucket's native review inventory for those remotes):
 gh pr list --repo <owner/repo> --head <session-owned-branch> --state all
 ```
 
@@ -134,7 +135,10 @@ the branch tracks (`git config branch.<name>.remote`), else the only remote, els
 the remote you chose; take its default from `git symbolic-ref --short refs/remotes/<remote>/HEAD`.
 Use that `<remote>/<default>` wherever Step 6 or the session base needs one. With no
 remote at all, report remote ownership as unverified rather than passing it. A PR
-inventory that is unmeasured is a dangling row, not an empty one.
+inventory that is unmeasured is a dangling row, not an empty one. Select the
+repository's native review mechanism from its remote and delivery protocol. When
+that protocol has no pull/merge-request workflow, record that measured fact and
+verify publication directly; absence of GitHub alone is not a release failure.
 
 Add whatever the session touched in the repo's *own* plan, task, or issue locations,
 found by looking, not by assuming a path. Persist a conversation deliverable when the
@@ -166,9 +170,12 @@ move it to the repo's abandoned/archive convention if it has one.
 
 ### 5. Verify once, on the final tree
 
-Run the repo's verification for what changed, once per changed tree: the overlay's
-predicate if there is one, otherwise the narrowest build/test/lint the repo declares
-(CI config, Makefile, package scripts). Do not replay a green run on an unchanged tree.
+Run the repo's verification for what changed, once per changed tree: use the overlay's
+verification command when it defines build/test/lint verification; otherwise use the
+narrowest build/test/lint the repo declares (CI config, Makefile, package scripts).
+A session-release predicate checks ownership and publication separately; it never
+replaces applicable implementation verification. Do not replay a green verification
+run on an unchanged tree.
 
 The final tree includes any handoff or plan edit this closeout makes. If work remains,
 write the Step 7 handoff **before** this run, so the verified tree is the one that is
